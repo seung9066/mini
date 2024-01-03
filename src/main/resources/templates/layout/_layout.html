@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko" 
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>SGG</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.7.13/dist/vue.js"></script> -->
+    <script type="text/javascript" th:src="@{/js/sggProgramDesign.js}"></script>
+    <script type="text/javascript" th:src="@{/js/sggGrid_New.js}"></script>
+    <script type="text/javascript" th:src="@{/js/sggChart.js}"></script>
+    <link th:href="@{/style/menu.css}" rel="stylesheet"/>
+</head>
+
+<body>
+<!-- ======= Header ======= -->
+<header>
+    <div id="header">
+        <br>
+        <h1 id="head" onclick="location.href='/'" style="text-align: center; color: white;">SGG</h1>
+        <nav id="topMenu">
+            <ul>
+                <li class="menuLink" onclick="location.href='/program/programDesign'">프로그램설계서</li>
+                <li class="menuLink">a</li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<!-- End Header -->
+
+<article layout:fragment="content" id="content"></article>
+
+<!-- ======= Footer ======= -->
+<footer id="footer">
+    <div id="bottom">
+        이것저것끄적끄적
+    </div>
+</footer>
+</body>
+
+</html>

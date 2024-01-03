@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="layout/_layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sggProgramDesign</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <h3>복사한 쿼리를 왼쪽 박스에 더블클릭 시 자동으로 변환, 복사됨</h3>
+        <h4>초기화 하지 않고 계속 쿼리 변환시 매개변수 컬럼, 테이블, 반환값, 매개변수 점점 쌓임</h4>
+        <div class="typeFrm">
+            <label>오라클 마이바티스<input type="radio" name="type" value="oracleMybatis" checked></label>
+        </div>
+        <br>
+        <div class="writeFrm">
+            <label>산출물 양식 사용<input type="checkbox" id="writeChk" checked></label>
+            <label>순번<input type="number" value=1 id="writeNo"></label>
+            <label>제목<input type="text" id="writeHead"></label>
+            <button onclick="btnReset()">초기화</button>
+        </div>
+        <br>
+        <label>테이블 양식 사용<input type="checkbox" id="tblFrmChk" onchange="chkFrm()"></label>
+        <br>
+        <div id="tblFrmT" style="display: none;">
+            <div class="tblFrm" id="tblDiv">
+                <label>테이블 양식<input type="text" id="tableFrm0" name="tableFrm"></label>
+            </div>
+            <br>
+            <button onclick="newTableFrm()">테이블 양식 추가</button>
+            <button onclick="resetTableFrm()">테이블 양식 초기화</button>
+            <br>
+        </div>
+        <br>
+        <textarea id="txtQueryBefore" ondblclick="paste()" style="width: 600px; height: 500px;"></textarea>
+        <textarea id="txtQueryAfter" style="width: 600px; height: 500px;"></textarea>
+        <br>
+        <h4>매개변수 컬럼, 테이블, 반환값</h4>
+        <textarea id="param" style="width: 400px; height: 400px;"></textarea>
+        <textarea id="tab" style="width: 400px; height: 400px;"></textarea>
+        <textarea id="sel" style="width: 400px; height: 400px;"></textarea>
+        <br>
+        <h4>매개변수</h4>
+        <textarea id="parameter" style="width: 400px; height: 400px;"></textarea>
+    </div>
+</body>
+</html>
