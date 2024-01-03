@@ -24,15 +24,7 @@ FROM jenkins/jenkins:latest
         
         
           
-          RUN apt-get -y update && apt-get install -y --no-install-recommends \
-        
-        
-          
-              vim \
-        
-        
-          
-              apt-utils
+          RUN apt-get -y update && apt-get install -y --no-install-recommends \ vim \ apt-utils
         
         
           
