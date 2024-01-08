@@ -81,7 +81,6 @@
 		                <artifactId>docker-maven-plugin</artifactId>
 		                <version>0.26.0</version>
 		                <configuration>
-					<dockerHost>tcp://64.110.84.45:2375</dockerHost>
 		                    <images>
 		                        <image>
 		                            <name>sgg</name>
