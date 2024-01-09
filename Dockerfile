@@ -4,6 +4,8 @@ FROM openjdk:17-alpine
 #컨테이너 안에 jar 파일은 app.jar 될꺼임
 COPY target/sgg-0.0.1-SNAPSHOT.jar app.jar
 
+EXPOSE 8090
+
 ENTRYPOINT ["java", "-jar", "app.jar"]
 
 #FROM jenkins/jenkins:latest
