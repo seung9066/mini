@@ -17,6 +17,7 @@
     <script type="text/javascript" th:src="@{/js/sggProgramDesign.js}"></script>
     <script type="text/javascript" th:src="@{/js/sggGrid_New.js}"></script>
     <script type="text/javascript" th:src="@{/js/sggChart.js}"></script>
+    <script type="text/javascript" th:src="@{/js/sggDefault.js}"></script>
     <link th:href="@{/style/menu.css}" rel="stylesheet"/>
 </head>
 
@@ -24,6 +25,9 @@
 <!-- ======= Header ======= -->
 <header>
     <div id="header">
+        <div id="loginHref">
+            <a>로그인</a>
+        </div>
         <br>
         <h1 id="head" onclick="location.href='/'" style="text-align: center; color: white;">SGG</h1>
         <nav id="topMenu">
@@ -44,6 +48,21 @@
         이것저것끄적끄적
     </div>
 </footer>
+
+<script type="text/javascript">
+    getMenu();
+
+    function getMenu() {
+        var map = {'url' : '/menu/getMenu'
+                    , 'data':{'userAuth' : '999'}};
+
+        var menuData = ajaxPost(map);
+
+        for (let i = 0; i < menuData.length; i++) {
+            console.log(menuData[i]);
+        }
+     }
+</script>
 </body>
 
 </html>

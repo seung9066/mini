@@ -43,3 +43,9 @@
     text-align: center;
     color: white;
 }
+#loginHref {
+    color: white;
+    display: inline-block;
+    float: right;
+    margin: 10px;
+}

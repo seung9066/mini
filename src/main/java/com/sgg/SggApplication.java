@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan(basePackages = "com.sgg.java.**.mapper")
+@MapperScan(basePackages = "com.sgg.**.mapper")
 public class SggApplication {
 
 	public static void main(String[] args) {
