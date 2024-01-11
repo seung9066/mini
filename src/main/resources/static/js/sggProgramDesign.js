@@ -1,3 +1,12 @@
+$(document).ready(function(){
+    $("#txtQueryBefore").bind('paste', function() {
+        var el = $(this);
+        setTimeout(function(){
+            runApp();
+        },100);
+    });
+})
+
 function paste() {
     navigator.clipboard.readText().then(clipboardText => {
         document.getElementById('txtQueryBefore').value = clipboardText;
