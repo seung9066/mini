@@ -1,15 +1,61 @@
 <!DOCTYPE html>
 <html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="layout/_layout">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SGG</title>
+
+    <script type="text/javascript" th:src="@{/js/index.js}"></script>
 </head>
 <body>
     <div layout:fragment="content">
-        <h1>이것저것</h1>
+
+        <section id="hero" class="d-flex align-items-center">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
+                        <h1>SGG.miniProject</h1>
+                        <h2><a href="https://github.com/seung9066/mini.git">https://github.com/seung9066/mini.git</a></h2>
+                        <div class="d-flex justify-content-center justify-content-lg-start">
+                            <a href="" class="btn-get-started scrollto">new account</a>
+                            &nbsp&nbsp&nbsp
+                            <a href="" class="btn-get-started scrollto">sign in</a>
+                            <a href="https://youtu.be/J6xK6SuvE7I?si=cLSzWuwB5MxumU3Z" class="glightbox btn-watch-video"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
+                        <img src="assets/img/hero-img.png" class="img-fluid animated" alt="">
+                    </div>
+                </div>
+            </div>
+
+        </section><!-- End Hero -->
+
+        <section id="about" class="about">
+            <div class="container" data-aos="fade-up">
+
+                <div class="section-title">
+                    <h2>소개</h2>
+                </div>
+
+                <div class="row content">
+                    <div class="col-lg-6">
+                        <p>
+                            다양한 것들을 만들어서 보관용도 및 테스트용 프로젝트
+                        </p>
+                        <ul id="prjLine">
+                        </ul>
+                    </div>
+                    <div class="col-lg-6 pt-4 pt-lg-0" id="pre">
+                    </div>
+                </div>
+
+            </div>
+        </section><!-- End About Us Section -->
     </div>
 </body>
 </html>

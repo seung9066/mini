@@ -6,7 +6,7 @@
 <mapper namespace="com.sgg.menu.mapper.MenuMapper">
 
     <!-- 메뉴목록 불러오기 -->
-	<select id="getMenu" parameterType="map" resultType="map">
+	<select id="getMenu" parameterType="map" resultType="resultMap">
         /* com.sgg.menu.mapper.MenuMapper.getMenu */
         SELECT LEVEL LEV
             , MENU_ID
@@ -25,4 +25,37 @@
         CONNECT BY UP_MENU_ID = PRIOR MENU_ID
         ORDER SIBLINGS BY MENU_NO
     </select>
+
+    <!-- 소개 목록 불러오기 -->
+    <select id="getLine" parameterType="map" resultType="resultMap">
+        SELECT LINE_NO
+            , CONTENT_DTL
+            , USER_ID
+            , USE_YN
+            , DEL_YN
+        FROM SGG_PRJ_LINE
+        WHERE 1 = 1
+        AND USE_YN = 'Y'
+        AND DEL_YN = 'N'
+        ORDER BY LINE_NO
+    </select>
+
+    <!-- 소개 내용 불러오기 -->
+    <select id="getPre" parameterType="map" resultType="resultMap">
+        SELECT PRE_NO
+            , PRE_HEAD
+            , PRE_DTL
+            , USER_ID
+            , USE_YN
+            , DEL_YN
+        FROM SGG_PRE
+        WHERE 1 = 1
+        AND PRE_NO = (SELECT NVL(MAX(PRE_NO), 0) AS PRE_NO
+                        FROM SGG_PRE
+                        WHERE 1 = 1
+                        AND USE_YN = 'Y'
+                        AND DEL_YN = 'N'
+                        )
+    </select>
+
 </mapper>

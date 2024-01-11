@@ -9,41 +9,130 @@
 </head>
 <body>
     <div layout:fragment="content">
-        <h3>복사한 쿼리를 왼쪽 박스에 더블클릭 시 자동으로 변환, 복사됨</h3>
-        <h4>초기화 하지 않고 계속 쿼리 변환시 매개변수 컬럼, 테이블, 반환값, 매개변수 점점 쌓임</h4>
-        <div class="typeFrm">
-            <label>오라클 마이바티스<input type="radio" name="type" value="oracleMybatis" checked></label>
-        </div>
-        <br>
-        <div class="writeFrm">
-            <label>산출물 양식 사용<input type="checkbox" id="writeChk" checked></label>
-            <label>순번<input type="number" value=1 id="writeNo"></label>
-            <label>제목<input type="text" id="writeHead"></label>
-            <button onclick="btnReset()">초기화</button>
-        </div>
-        <br>
-        <label>테이블 양식 사용d<input type="checkbox" id="tblFrmChk" onchange="chkFrm()"></label>
-        <br>
-        <div id="tblFrmT" style="display: none;">
-            <div class="tblFrm" id="tblDiv">
-                <label>테이블 양식<input type="text" id="tableFrm0" name="tableFrm"></label>
-            </div>
-            <br>
-            <button onclick="newTableFrm()">테이블 양식 추가</button>
-            <button onclick="resetTableFrm()">테이블 양식 초기화</button>
-            <br>
-        </div>
-        <br>
-        <textarea id="txtQueryBefore" ondblclick="paste()" style="width: 600px; height: 500px;"></textarea>
-        <textarea id="txtQueryAfter" style="width: 600px; height: 500px;"></textarea>
-        <br>
-        <h4>매개변수 컬럼, 테이블, 반환값</h4>
-        <textarea id="param" style="width: 400px; height: 400px;"></textarea>
-        <textarea id="tab" style="width: 400px; height: 400px;"></textarea>
-        <textarea id="sel" style="width: 400px; height: 400px;"></textarea>
-        <br>
-        <h4>매개변수</h4>
-        <textarea id="parameter" style="width: 400px; height: 400px;"></textarea>
+        <main id="main">
+
+            <section id="breadcrumbs" class="breadcrumbs">
+                <div class="container" id="showPath">
+                </div>
+            </section>
+
+            <section class="inner-page">
+                <div class="container">
+                    <section id="pricing" class="pricing">
+                        <div class="container" data-aos="fade-up">
+
+                            <div class="section-title">
+                                <h2>복사한 쿼리를 왼쪽 박스에 더블클릭 시 자동으로 변환, 복사됨</h2>
+                                <p>초기화 하지 않고 계속 쿼리 변환시 매개변수 컬럼, 테이블, 반환값, 매개변수 점점 쌓임</p>
+                            </div>
+
+                            <div class="typeFrm">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="type" value="oracleMybatis" id="oracleMybatis" checked>
+                                    <label class="form-check-label" for="oracleMybatis">
+                                        오라클 마이바티스
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="writeFrm">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="writeChk" checked>
+                                    <label class="form-check-label" for="writeChk">
+                                        산출물 양식 사용
+                                    </label>
+                                </div>
+                                <label>순번<input type="number" value=1 id="writeNo"></label>
+                                <label>제목<input type="text" id="writeHead"></label>
+                                <button type="button" class="btn btn-sm btn-primary" onclick="btnReset()">초기화</button>
+                            </div>
+
+                            <br>
+
+                            <div class="form-check">
+
+                                <input class="form-check-input" type="checkbox" value="" id="tblFrmChk" onchange="chkFrm()">
+                                <label class="form-check-label" for="tblFrmChk">
+                                    테이블 양식 사용
+                                </label>
+
+                            </div>
+
+                            <br>
+
+                            <div id="tblFrmT" style="display: none;">
+
+                                <div class="tblFrm" id="tblDiv">
+                                    <label>테이블 양식<input type="text" id="tableFrm0" name="tableFrm"></label>
+                                </div>
+
+                                <br>
+
+                                <button type="button" class="btn btn-sm btn-primary" onclick="newTableFrm()">테이블 양식 추가</button>
+                                <button type="button" class="btn btn-sm btn-primary" onclick="resetTableFrm()">테이블 양식 초기화</button>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-xl" data-aos="fade-up" data-aos-delay="100">
+                                    <div class="box">
+                                        <h3>변환할 쿼리</h3>
+                                        <textarea class="form-control" name="message" rows="20" id="txtQueryBefore" ondblclick="paste()" required></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl" data-aos="fade-up" data-aos-delay="100">
+                                    <div class="box">
+                                        <h3>변환후 쿼리</h3>
+                                        <textarea class="form-control" name="message" rows="20" id="txtQueryAfter" required></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                                    <div class="box">
+                                        <h3>매개변수 컬럼</h3>
+                                        <textarea class="form-control" name="message" rows="20" id="param" required></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                                    <div class="box">
+                                        <h3>테이블</h3>
+                                        <textarea class="form-control" name="message" rows="20" id="tab" required></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                                    <div class="box">
+                                        <h3>반환값</h3>
+                                        <textarea class="form-control" name="message" rows="20" id="sel" required></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                                    <div class="box">
+                                        <h3>매개변수</h3>
+                                        <textarea class="form-control" name="message" rows="20" id="parameter" required></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </section><!-- End Pricing Section -->
+
+                </div>
+            </section>
+        </main><!-- End #main -->
+
     </div>
 </body>
 </html>
