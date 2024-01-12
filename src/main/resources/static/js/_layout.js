@@ -15,7 +15,7 @@ function drawMenu() {
 
     for (let i = 0; i < menu.length; i++) {
         if (menu[i].lev == '1') {
-            html += '<li class="dropdown"><a href=""><span>' + menu[i].menuName + '</span> <i class="bi bi-chevron-down"></i></a>';
+            html += '<li class="dropdown"><a href="#"><span>' + menu[i].menuName + '</span> <i class="bi bi-chevron-down"></i></a>';
             html += '<ul>';
         } else {
             html += '<li><a href="' + menu[i].menuPath + '">' + menu[i].menuName + '</a></li>';

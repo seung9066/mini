@@ -2,8 +2,6 @@ package com.sgg.menu.service.impl;
 
 import com.sgg.menu.mapper.MenuMapper;
 import com.sgg.menu.service.MenuService;
-import com.sgg.test.mapper.TestMapper;
-import com.sgg.test.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
