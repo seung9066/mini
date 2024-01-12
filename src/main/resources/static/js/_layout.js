@@ -22,6 +22,7 @@ function drawMenu() {
             if (i != menu.length - 1) {
                 if (menu[i+1].lev == '1') {
                     html += '</ul>';
+                    html += '</li>';
                 }
             }
         }
