@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sgg.index.mapper.IndexMapper">
+
+    <!-- 소개 목록 불러오기 -->
+    <select id="getLine" parameterType="map" resultType="resultMap">
+        /* com.sgg.menu.mapper.MenuMapper.getLine */
+        SELECT LINE_NO
+            , CONTENT_DTL
+            , USER_ID
+            , USE_YN
+            , DEL_YN
+        FROM SGG_PRJ_LINE
+        WHERE 1 = 1
+        AND USE_YN = 'Y'
+        AND DEL_YN = 'N'
+        ORDER BY LINE_NO
+    </select>
+
+    <!-- 소개 내용 불러오기 -->
+    <select id="getPre" parameterType="map" resultType="resultMap">
+        /* com.sgg.menu.mapper.MenuMapper.getPre */
+        SELECT PRE_NO
+            , PRE_HEAD
+            , PRE_DTL
+            , USER_ID
+            , USE_YN
+            , DEL_YN
+        FROM (
+            SELECT *
+            FROM SGG_PRE
+            WHERE 1 = 1
+            AND USE_YN = 'Y'
+            AND DEL_YN = 'N'
+            ORDER BY DBMS_RANDOM.VALUE
+        )
+        WHERE ROWNUM = 1
+    </select>
+
+</mapper>

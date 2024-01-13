@@ -4,7 +4,41 @@ $(document).ready(function(){
 
     // 소개 내용
     drawPre();
+
+    // 확장자별 파일 수
+    drawFile();
 });
+
+// 확장자별 파일 수
+function drawFile() {
+    // 파일 수
+    var fileCnt = getFile();
+    var keys = Object.keys(fileCnt);
+    var vals = Object.values(fileCnt);
+
+    // #fileSkill에 담아줄 내용
+    var html = '';
+
+    for (let i = 0; i < keys.length; i++) {
+        html += '<div class="progress">';
+        html += '<span class="skill">' + keys[i] + ' <i class="val">' + vals[i] + '</i></span>';
+        html += '<div class="progress-bar-wrap">';
+        html += '<div class="progress-bar" role="progressbar" aria-valuenow="' + vals[i] + '" aria-valuemin="0" aria-valuemax="100"></div>';
+        html += '</div>';
+        html += '</div>';
+    };
+
+    $('#fileSkill').append(html);
+}
+
+function getFile() {
+    var map = {'url' : '/index/getCntFile'
+                , 'data':{'userAuth' : '999'}};
+
+    var data = ajaxPost(map);
+
+    return data;
+}
 
 // 소개내용 그려주기
 function drawPre() {
@@ -25,8 +59,8 @@ function drawPre() {
 
 // 소개내용 가져오기
 function getPre() {
-    var map = {'url' : '/menu/getPre'
-                    , 'data':{'userAuth' : '999'}};
+    var map = {'url' : '/index/getPre'
+                , 'data':{'userAuth' : '999'}};
 
     var data = ajaxPost(map);
 
@@ -50,7 +84,7 @@ function drawPrjLine() {
 
 // 소개 목록 가져오기
 function getPrjLine() {
-    var map = {'url' : '/menu/getLine'
+    var map = {'url' : '/index/getLine'
                 , 'data':{'userAuth' : '999'}};
 
     var data = ajaxPost(map);

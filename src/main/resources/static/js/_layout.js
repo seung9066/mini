@@ -5,7 +5,14 @@ $(document).ready(function(){
     getNowPath();
 })
 
-// 메뉴바 그리기
+$(document).on('click', '.navbar .dropdown > a', function(e) {
+    if (document.querySelector('#navbar').classList.contains('navbar-mobile')) {
+      e.preventDefault()
+      this.nextElementSibling.classList.toggle('dropdown-active')
+    }
+});
+
+// 메뉴바 그리기ßß
 function drawMenu() {
     // 메뉴목록
     var menu = getMenu();

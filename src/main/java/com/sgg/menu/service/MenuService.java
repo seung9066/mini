@@ -10,7 +10,4 @@ public interface MenuService {
 
     List<Map<String, Object>> getMenu(Map<String, String> map) throws Exception;
 
-    List<Map<String, Object>> getLine(Map<String, String> map) throws Exception;
-
-    List<Map<String, Object>> getPre(Map<String, String> map) throws Exception;
 }

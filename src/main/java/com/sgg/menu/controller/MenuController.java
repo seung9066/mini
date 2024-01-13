@@ -29,28 +29,4 @@ public class MenuController {
         return menuService.getMenu(map);
     }
 
-    /**
-     * 소개 목록
-     * @param map
-     * @return List<Map<String, String>>
-     */
-    @PostMapping("/menu/getLine")
-    @ResponseBody
-    public List<Map<String, Object>> getLine(@RequestBody Map<String, String> map) throws Exception{
-
-        return menuService.getLine(map);
-    }
-
-    /**
-     * 소개내용
-     * @param map
-     * @return List<Map<String, String>>
-     */
-    @PostMapping("/menu/getPre")
-    @ResponseBody
-    public List<Map<String, Object>> getPre(@RequestBody Map<String, String> map) throws Exception{
-
-        return menuService.getPre(map);
-    }
-    
 }
