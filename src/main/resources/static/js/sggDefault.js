@@ -53,12 +53,6 @@ function regSggChk(type, val) {
         return emailRule.test(val);
     }
 
-    // 주민등록번호
-    if (type == '') {
-        var resNumber = \d{2}([0]\d|[1][0-2])([0][1-9]|[1-2]\d|[3][0-1])[-]*[1-4]\d{6};
-        return resNumber.test(val);
-    }
-
     // type이 잘못 되었을 시
     return false;
 }
