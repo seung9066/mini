@@ -40,4 +40,40 @@
         WHERE ROWNUM = 1
     </select>
 
+    <!-- contact 내용 -->
+    <select id="getContact" parameterType="map" resultType="resultMap">
+        WITH SNS AS
+        (
+            SELECT A1.TEL_NO
+            , A1.EMAIL
+            , DECODE(A2.SNS, 'github', A2.SNS_ADDR) AS GITHUB
+            , DECODE(A2.SNS, 'kakaotalk', A2.SNS_ADDR) AS KAKAO
+            , A2.SNS_NO
+            , A1.CITY
+            FROM SGG_USER_INFO A1
+            , SGG_USER_SNS A2
+            WHERE 1 = 1
+            AND A1.USER_ID = A2.USER_ID
+            AND A1.DEL_YN = 'N'
+            AND A2.DEL_YN = 'N'
+            AND A1.USER_ID = 'sgg'
+            AND (A2.SNS = 'github' OR A2.SNS = 'kakaotalk')
+        )
+        SELECT TEL_NO
+        , EMAIL
+        , GITHUB
+        , KAKAO
+        , CITY
+        FROM (
+            SELECT TEL_NO
+            , EMAIL
+            , CITY
+            , GITHUB
+            , CASE WHEN KAKAO IS NULL THEN LEAD(KAKAO) OVER(ORDER BY SNS_NO)    /* LEAD 다음 열 가져오기 */
+            ELSE KAKAO
+            END AS KAKAO
+            FROM SNS
+        )
+        WHERE GITHUB IS NOT NULL
+    </select>
 </mapper>

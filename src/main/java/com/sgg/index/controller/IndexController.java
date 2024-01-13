@@ -49,6 +49,18 @@ public class IndexController {
     }
 
     /**
+     * 소개내용
+     * @param map
+     * @return List<Map<String, String>>
+     */
+    @PostMapping("/index/getContact")
+    @ResponseBody
+    public Map<String, Object> getContact(@RequestBody Map<String, String> map) throws Exception{
+
+        return indexService.getContact(map);
+    }
+
+    /**
      * 확장자별 파일 수
      * @param map
      * @return List<Map<String, String>>

@@ -7,9 +7,38 @@ $(document).ready(function(){
 
     // 확장자별 파일 수
     drawFile();
+
+    // 주소 가져오기
+    drawSnsAddr();
 });
 
-// 확장자별 파일 수
+// 주소 그려주기
+function drawSnsAddr() {
+    var sns = getSnsAddr();
+
+    $('#contactTel').prop({href: 'tel:' + sns.telNo});
+    $('#contactSms').prop({href: 'sms:' + sns.telNo});
+    $('#contactGithub').prop({href: sns.github});
+    $('#contactKakao').prop({href: sns.kakao});
+    $('#infoCity').html(sns.city);
+    $('#infoEmail').html(sns.email);
+
+    // 전화번호 정규식
+    var telNo = regSgg('tel', sns.telNo);
+    $('#infoTelNo').html(telNo);
+}
+
+// 주소 가져오기
+function getSnsAddr() {
+    var map = {'url' : '/index/getContact'
+                , 'data':{}};
+
+    var data = ajaxPost(map);
+
+    return data;
+}
+
+// 확장자별 파일 수 그려주기
 function drawFile() {
     // 파일 수
     var fileCnt = getFile();
@@ -19,11 +48,18 @@ function drawFile() {
     // #fileSkill에 담아줄 내용
     var html = '';
 
+    var max = 100;
+    for (let i = 0; i < vals.length; i++) {
+        if (max < vals[i]) {
+            max = vals[i];
+        }
+    }
+
     for (let i = 0; i < keys.length; i++) {
         html += '<div class="progress">';
         html += '<span class="skill">' + keys[i] + ' <i class="val">' + vals[i] + '</i></span>';
         html += '<div class="progress-bar-wrap">';
-        html += '<div class="progress-bar" role="progressbar" aria-valuenow="' + vals[i] + '" aria-valuemin="0" aria-valuemax="100"></div>';
+        html += '<div class="progress-bar" role="progressbar" aria-valuenow="' + vals[i] + '" aria-valuemin="0" aria-valuemax="' + max + '"></div>';
         html += '</div>';
         html += '</div>';
     };
@@ -31,6 +67,7 @@ function drawFile() {
     $('#fileSkill').append(html);
 }
 
+// 확장자별 파일 수 가져오기
 function getFile() {
     var map = {'url' : '/index/getCntFile'
                 , 'data':{'userAuth' : '999'}};

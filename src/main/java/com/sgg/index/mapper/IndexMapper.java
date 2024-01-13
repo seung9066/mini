@@ -11,4 +11,6 @@ public interface IndexMapper {
     public List<Map<String, Object>> getLine(Map<String, String> map);
 
     public List<Map<String, Object>> getPre(Map<String, String> map);
+
+    Map<String, Object> getContact(Map<String, String> map);
 }

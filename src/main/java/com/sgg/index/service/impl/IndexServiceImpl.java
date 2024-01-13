@@ -35,4 +35,14 @@ public class IndexServiceImpl implements IndexService {
 
         return indexMapper.getPre(map);
     }
+
+    /**
+     * contact 내용
+     * @param map
+     * @return Map<String, String>
+     */
+    @Override
+    public Map<String, Object> getContact(Map<String, String> map) throws Exception {
+        return indexMapper.getContact(map);
+    }
 }
