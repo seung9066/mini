@@ -12,6 +12,12 @@ $(document).on('click', '.navbar .dropdown > a', function(e) {
     }
 });
 
+// 메뉴 이동
+function goPage(path) {
+    $('#pagePath').val(path);
+    $('#goPage').submit();
+}
+
 // 메뉴바 그리기ßß
 function drawMenu() {
     // 메뉴목록
@@ -25,7 +31,7 @@ function drawMenu() {
             html += '<li class="dropdown"><a href="#"><span>' + menu[i].menuName + '</span> <i class="bi bi-chevron-down"></i></a>';
             html += '<ul>';
         } else {
-            html += '<li><a href="' + menu[i].menuPath + '">' + menu[i].menuName + '</a></li>';
+            html += '<li><a href="javascript:goPage(\'' + menu[i].menuPath + '\');">' + menu[i].menuName + '</a></li>';
             if (i != menu.length - 1) {
                 if (menu[i+1].lev == '1') {
                     html += '</ul>';

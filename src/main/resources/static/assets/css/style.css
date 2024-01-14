@@ -1642,7 +1642,7 @@ section {
   background: #37517e;
 }
 
-#footer .footer-newsletter {
+#subsLogin .subsLogin-newsletter {
   padding: 50px 0;
   background: #f3f5fa;
   text-align: center;
@@ -1650,7 +1650,7 @@ section {
   color: #444444;
 }
 
-#footer .footer-newsletter h4 {
+#subsLogin .subsLogin-newsletter h4 {
   font-size: 24px;
   margin: 0 0 20px 0;
   padding: 0;
@@ -1659,7 +1659,7 @@ section {
   color: #37517e;
 }
 
-#footer .footer-newsletter form {
+#subsLogin .subsLogin-newsletter .loginFrm {
   margin-top: 30px;
   background: #fff;
   padding: 6px 10px;
@@ -1669,13 +1669,19 @@ section {
   text-align: left;
 }
 
-#footer .footer-newsletter form input[type=email] {
+#subsLogin .subsLogin-newsletter .loginFrm input[type=id] {
   border: 0;
   padding: 4px 8px;
   width: calc(100% - 100px);
 }
 
-#footer .footer-newsletter form input[type=submit] {
+#subsLogin .subsLogin-newsletter .loginFrm input[type=password] {
+  border: 0;
+  padding: 4px 8px;
+  width: calc(100% - 100px);
+}
+
+#subsLogin .subsLogin-newsletter .loginFrm input[type=button] {
   position: absolute;
   top: 0;
   right: 0;
@@ -1691,20 +1697,20 @@ section {
   box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
 }
 
-#footer .footer-newsletter form input[type=submit]:hover {
+#subsLogin .subsLogin-newsletter .loginFrm input[type=submit]:hover {
   background: #209dd8;
 }
 
-#footer .footer-top {
+#subsLogin .subsLogin-top {
   padding: 60px 0 30px 0;
   background: #fff;
 }
 
-#footer .footer-top .footer-contact {
+#subsLogin .subsLogin-top .footer-contact {
   margin-bottom: 30px;
 }
 
-#footer .footer-top .footer-contact h3 {
+#subsLogin .subsLogin-top .footer-contact h3 {
   font-size: 28px;
   margin: 0 0 10px 0;
   padding: 2px 0 2px 0;
@@ -1714,7 +1720,7 @@ section {
   color: #37517e;
 }
 
-#footer .footer-top .footer-contact p {
+#subsLogin .subsLogin-top .footer-contact p {
   font-size: 14px;
   line-height: 24px;
   margin-bottom: 0;
@@ -1722,7 +1728,7 @@ section {
   color: #5e5e5e;
 }
 
-#footer .footer-top h4 {
+#subsLogin .subsLogin-top h4 {
   font-size: 16px;
   font-weight: bold;
   color: #37517e;
@@ -1730,46 +1736,46 @@ section {
   padding-bottom: 12px;
 }
 
-#footer .footer-top .footer-links {
+#subsLogin .subsLogin-top .footer-links {
   margin-bottom: 30px;
 }
 
-#footer .footer-top .footer-links ul {
+#subsLogin .subsLogin-top .footer-links ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-#footer .footer-top .footer-links ul i {
+#subsLogin .subsLogin-top .footer-links ul i {
   padding-right: 2px;
   color: #47b2e4;
   font-size: 18px;
   line-height: 1;
 }
 
-#footer .footer-top .footer-links ul li {
+#subsLogin .subsLogin-top .footer-links ul li {
   padding: 10px 0;
   display: flex;
   align-items: center;
 }
 
-#footer .footer-top .footer-links ul li:first-child {
+#subsLogin .subsLogin-top .footer-links ul li:first-child {
   padding-top: 0;
 }
 
-#footer .footer-top .footer-links ul a {
+#subsLogin .subsLogin-top .footer-links ul a {
   color: #777777;
   transition: 0.3s;
   display: inline-block;
   line-height: 1;
 }
 
-#footer .footer-top .footer-links ul a:hover {
+#subsLogin .subsLogin-top .footer-links ul a:hover {
   text-decoration: none;
   color: #47b2e4;
 }
 
-#footer .footer-top .social-links a {
+#subsLogin .subsLogin-top .social-links a {
   font-size: 18px;
   display: inline-block;
   background: #47b2e4;
@@ -1784,13 +1790,13 @@ section {
   transition: 0.3s;
 }
 
-#footer .footer-top .social-links a:hover {
+#subsLogin .subsLogin-top .social-links a:hover {
   background: #209dd8;
   color: #fff;
   text-decoration: none;
 }
 
-#footer .footer-bottom {
+#subsLogin .subsLogin-bottom {
   padding-top: 30px;
   padding-bottom: 30px;
   color: #fff;
@@ -1810,7 +1816,7 @@ section {
 }
 
 @media (max-width: 768px) {
-  #footer .footer-bottom {
+  #subsLogin .subsLogin-bottom {
     padding-top: 20px;
     padding-bottom: 20px;
   }

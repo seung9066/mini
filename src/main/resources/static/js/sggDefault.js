@@ -25,6 +25,12 @@ function ajaxPost(map) {
     return returnData;
 }
 
+// 아작스 겟 통신
+// map : {'url':url, 'data'::data}
+function ajaxGet(map) {
+
+}
+
 // 정규식 변환
 // type = 정규식 방식
 // val = 변환할 값
