@@ -1,21 +1,19 @@
 package com.sgg.login.controller;
 
-import com.sgg.index.service.IndexService;
-import com.sgg.login.service.LoginService;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.sgg.login.service.LoginService;
+
+import jakarta.servlet.http.HttpSession;
 
 
 @Controller
@@ -39,13 +37,40 @@ public class LoginController {
     /**
      * 로그인
      * @param map
-     * @return List<Map<String, String>>
+     * @return boolean
      */
     @PostMapping("/login/loginChk")
     @ResponseBody
-    public Map<String, Object> loginChk(@RequestBody Map<String, String> map) throws Exception{
+    public boolean loginChk(@RequestBody Map<String, String> map, HttpSession session) throws Exception{
 
-        return loginService.loginChk(map);
+        return loginService.loginChk(map, session);
+    }
+
+    /**
+     * 로그아웃
+     * @param map
+     * @return boolean
+     */
+    @PostMapping("/login/logout")
+    @ResponseBody
+    public boolean logout(@RequestBody Map<String, String> map, HttpSession session) throws Exception{
+        session.removeAttribute("userId");
+        session.removeAttribute("userNm");
+        session.removeAttribute("userAuth");
+
+        return true;
+    }
+
+    /**
+     * 회원가입
+     * @param map
+     * @return boolean
+     */
+    @PostMapping("/login/newAccount")
+    @ResponseBody
+    public boolean newAccount(@RequestParam Map<String, String> map, HttpSession session) throws Exception{
+
+        return loginService.newAccount(map, session);
     }
 
 }

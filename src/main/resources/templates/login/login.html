@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SGG</title>
 
-    <script type="text/javascript" th:src="@{/js/login.js}"></script>
+    <script type="text/javascript" th:src="@{/js/login/login.js}"></script>
 </head>
 <body>
 <div layout:fragment="content">
@@ -20,10 +20,10 @@
                         <div class="col-lg-6">
                             <h4>로그인</h4>
                             <div class="loginFrm" id="idDiv">
-                                <input type="id" id="loginId" name="loginId"><input type="button" value="login" id="idChk">
+                                <input type="id" id="loginId" name="loginId" placeholder="아이디"><input type="button" value="login" id="idChk">
                             </div>
                             <div class="loginFrm" id="pwDiv">
-                                <input type="password" id="loginPw" name="loginPw"><input type="button" value="login" id="pwChk">
+                                <input type="password" id="loginPw" name="loginPw" placeholder="비밀번호"><input type="button" value="login" id="pwChk">
                             </div>
                         </div>
                     </div>

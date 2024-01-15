@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/_layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGG</title>
+
+    <script type="text/javascript" th:src="@{/js/mypage/myAccountDtl.js}"></script>
+</head>
+<body>
+<div layout:fragment="content">
+    <section id="about" class="about">
+        <div id="subsLogin">
+            <div class="subsLogin-newsletter">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-6">
+                            <h4>내 정보</h4>
+                            <form action="" id="frmNewAccount">
+	                            <div class="loginFrm">
+	                                <input type="id" id="userId" name="userId" placeholder="아이디" required="Y" th:value="${session.userId}" readonly>
+	                            </div>
+	                            <div class="loginFrm">
+	                                <input type="text" id="userNm" name="userNm" placeholder="이름" required="Y" th:value="${session.userNm}">
+	                            </div>
+                                <div class="loginFrm">
+	                                <input type="text" id="telNo" name="telNo" placeholder="전화번호" required="Y">
+	                            </div>
+                            </form>
+                            <br>
+                            <p id="loginFail"></p>
+                           	<input type="button" value="저장" id="btnNewAccount">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

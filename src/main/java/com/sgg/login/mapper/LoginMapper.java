@@ -10,5 +10,9 @@ public interface LoginMapper {
 
     public Map<String, Object> getId(Map<String, String> map);
 
-    public Map<String, Object> loginChk(Map<String, String> map);
+    public int loginChk(Map<String, String> map);
+
+    public Map<String, String> getUser(Map<String, String> map);
+
+    public int newAccount(Map<String, String> map);
 }

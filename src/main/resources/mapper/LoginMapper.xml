@@ -12,16 +12,51 @@
         FROM SGG_USER
         WHERE 1 = 1
         AND USER_ID = #{userId}
+        AND DEL_YN = 'N'
     </select>
 
     <!-- 로그인 -->
-    <select id="loginChk" parameterType="map" resultType="resultMap">
+    <select id="loginChk" parameterType="map" resultType="int">
         /* com.sgg.login.mapper.LoginMapper.getId */
         SELECT COUNT(*) AS CNT
         FROM SGG_USER
         WHERE 1 = 1
         AND USER_ID = #{userId}
         AND USER_PW = #{userPw}
+        AND DEL_YN = 'N'
     </select>
+
+    <!-- 로그인 유저 정보 -->
+    <select id="getUser" parameterType="map" resultType="resultMap">
+        /* com.sgg.login.mapper.LoginMapper.getUser */
+        SELECT USER_ID
+            , USER_NM
+            , USER_AUTH
+        FROM SGG_USER
+        WHERE 1 = 1
+        AND USER_ID = #{userId}
+        AND DEL_YN = 'N'
+    </select>
+
+    <!-- 회원가입 -->
+    <insert id="newAccount" parameterType="map">
+        /* com.sgg.login.mapper.LoginMapper.newAccount */
+        INSERT INTO SGG_USER
+        (	USER_ID
+            , USER_PW
+            , USER_NM
+            , USER_AUTH
+            , DEL_YN
+            , LOGIN_CNT
+        )
+        VALUES
+        (	#{userId}
+            , #{userPw}
+            , #{userNm}
+            , '001'
+            , 'N'
+            , 0
+        )
+    </insert>
 
 </mapper>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/_layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGG</title>
+
+    <script type="text/javascript" th:src="@{/js/login/newAccount.js}"></script>
+</head>
+<body>
+<div layout:fragment="content">
+    <section id="about" class="about">
+        <div id="subsLogin">
+            <div class="subsLogin-newsletter">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-6">
+                            <h4>회원가입</h4>
+                            <form action="" id="frmNewAccount">
+	                            <div class="loginFrm">
+	                                <input type="id" id="loginId" name="userId" placeholder="아이디" required="Y" regChk="id"><input type="button" value="중복체크" id="idChk">
+	                            </div>
+	                            <div id="afterIdChk">
+		                            <div class="loginFrm">
+		                                <input type="password" id="loginPw" name="userPw" placeholder="비밀번호" required="Y" regChk="pw">
+		                            </div>
+		                            <div class="loginFrm">
+		                                <input type="password" id="loginPwChk" name="userPwChk" placeholder="비밀번호 확인" required="Y" regChk="pw">
+		                            </div>
+		                            <div class="loginFrm">
+		                                <input type="text" id="loginNm" name="userNm" placeholder="이름" required="Y">
+		                            </div>
+	                            </div>
+                            </form>
+                            <br>
+                            <p id="loginFail"></p>
+                           	<input type="button" value="회원가입" id="btnNewAccount">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

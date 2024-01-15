@@ -1,14 +1,17 @@
 package com.sgg.login.service.impl;
 
-import com.sgg.index.mapper.IndexMapper;
-import com.sgg.index.service.IndexService;
-import com.sgg.login.mapper.LoginMapper;
-import com.sgg.login.service.LoginService;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
+import com.sgg.config.cmnUtil;
+import com.sgg.login.mapper.LoginMapper;
+import com.sgg.login.service.LoginService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Service
 public class LoginServiceImpl implements LoginService {
@@ -32,7 +35,49 @@ public class LoginServiceImpl implements LoginService {
      * @return Map<String, String>
      */
     @Override
-    public Map<String, Object> loginChk(Map<String, String> map) throws Exception {
-        return loginMapper.loginChk(map);
+    public boolean loginChk(Map<String, String> map, HttpSession session) throws Exception {
+        // 비밀번호 단방향 암호화
+        String result = "";
+        result = cmnUtil.hashEncpt(map.get("userPw"));
+        map.put("userPw", result);
+
+        int cnt = loginMapper.loginChk(map);
+        if (cnt > 0) {
+            // 로그인성공
+            Map<String, String> loginMap = loginMapper.getUser(map);
+
+            session.setAttribute("userId", loginMap.get("userId"));
+            session.setAttribute("userNm", loginMap.get("userNm"));
+            session.setAttribute("userAuth", loginMap.get("userAuth"));
+            return true;
+        } else {
+            return false;
+        }
     }
+
+    /**
+     * 회원가입
+     * @param map
+     * @return int
+     */
+    @Override
+    public boolean newAccount(Map<String, String> map, HttpSession session) throws Exception {
+        // 비밀번호 단방향 암호화
+        String result = "";
+        result = cmnUtil.hashEncpt(map.get("userPw"));
+        map.put("userPw", result);
+
+        int chk = loginMapper.newAccount(map);
+        if (chk > 0) {
+            // 로그인성공
+            session.setAttribute("userId", map.get("userId"));
+            session.setAttribute("userNm", map.get("userNm"));
+            session.setAttribute("userAuth", map.get("userAuth"));
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

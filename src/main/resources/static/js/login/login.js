@@ -1,4 +1,8 @@
 $(document).ready(function(){
+	// 아이디 포커스
+	$('#loginId').focus();
+
+	// 비밀번호 입력 인풋
     $('#pwDiv').hide();
 
     // 아이디 존재여부 체크
@@ -10,6 +14,24 @@ $(document).ready(function(){
     $('#pwChk').on('click', function() {
         pwChk();
     });
+
+    // 아이디 엔터키
+    $("#loginId").on("keyup", function(key){
+		if(key.keyCode==13) {
+			idChk();
+
+			if ($('#loginId').attr('readonly')) {
+				$('#loginPw').focus();
+			}
+		}
+	});
+
+	// 패스워드 엔터키
+    $("#loginPw").on("keyup", function(key){
+		if(key.keyCode==13) {
+			pwChk();
+		}
+	});
 });
 
 // 아이디 존재여부 체크
@@ -53,11 +75,16 @@ function pwChk() {
 
     var data = ajaxPost(map);
 
-    if (data.cnt > 0) {
-        // 로그인 성공
-        alert('a')
+    if (data) {
+		// 로그인 성공
+        chkSession();
     } else {
         // 로그인 실패
         $('#loginFail').html('잘못된 비밀번호 입니다.');
     }
+}
+
+// 로그인 성공
+function chkSession() {
+	location.href="/"
 }

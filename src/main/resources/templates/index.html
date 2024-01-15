@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="layout/_layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/_layout">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,134 +11,135 @@
     <script type="text/javascript" th:src="@{/js/index.js}"></script>
 </head>
 <body>
-    <div layout:fragment="content">
+<div layout:fragment="content">
 
-        <section id="hero" class="d-flex align-items-center">
+    <section id="hero" class="d-flex align-items-center">
 
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
-                        <h1>SGG.miniProject</h1>
-                        <h2><a href="https://github.com/seung9066/mini.git">https://github.com/seung9066/mini.git</a></h2>
-                        <div class="d-flex justify-content-center justify-content-lg-start">
-                            <a href="" class="btn-get-started scrollto">new account</a>
-                            &nbsp&nbsp&nbsp
-                            <a href="javascript:goPage('login/login')" class="btn-get-started scrollto">sign in</a>
-                            <a href="https://youtu.be/J6xK6SuvE7I?si=cLSzWuwB5MxumU3Z" class="glightbox btn-watch-video"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>
-                        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
+                    <h1>SGG.miniProject</h1>
+                    <h2><a href="https://github.com/seung9066/mini.git">https://github.com/seung9066/mini.git</a></h2>
+                    <div class="d-flex justify-content-center justify-content-lg-start">
+                        <a href="javascript:goPage('login/newAccount')" class="btn-get-started scrollto" th:if="${session.userId == null}">new account</a>
+                        &nbsp&nbsp&nbsp
+                        <a href="javascript:goPage('login/login')" class="btn-get-started scrollto" th:if="${session.userId == null}">sign in</a>
+                        <a href="javascript:logout('login/logout')" class="btn-get-started scrollto" th:if="${session.userId != null}">log out</a>
+                        <a href="https://youtu.be/J6xK6SuvE7I?si=cLSzWuwB5MxumU3Z" class="glightbox btn-watch-video"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>
                     </div>
-                    <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
-                        <img src="assets/img/hero-img.png" class="img-fluid animated" alt="">
-                    </div>
+                </div>
+                <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
+                    <img src="assets/img/hero-img.png" class="img-fluid animated" alt="">
+                </div>
+            </div>
+        </div>
+
+    </section><!-- End Hero -->
+
+    <section id="about" class="about">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>소개</h2>
+            </div>
+
+            <div class="row content">
+                <div class="col-lg-6">
+                    <p>
+                        다양한 것들을 만들어서 보관용도 및 테스트용 프로젝트
+                    </p>
+                    <ul id="prjLine">
+                    </ul>
+                </div>
+                <div class="col-lg-6 pt-4 pt-lg-0" id="pre">
                 </div>
             </div>
 
-        </section><!-- End Hero -->
+        </div>
+    </section><!-- End About Us Section -->
 
-        <section id="about" class="about">
-            <div class="container" data-aos="fade-up">
+    <!-- ======= Skills Section ======= -->
+    <section id="skills" class="skills section-bg">
+        <div class="container" data-aos="fade-up">
 
-                <div class="section-title">
-                    <h2>소개</h2>
+            <div class="row">
+                <div class="col-lg-6 d-flex align-items-center" data-aos="fade-right" data-aos-delay="100">
+                    <img src="assets/img/skills.png" class="img-fluid" alt="">
+                </div>
+                <div class="col-lg-6 pt-4 pt-lg-0 content" data-aos="fade-left" data-aos-delay="100">
+                    <h3>파일</h3>
+                    <p class="fst-italic">
+                        해당 프로젝트 각 파일 수
+                    </p>
+
+                    <div class="skills-content" id="fileSkill">
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section><!-- End Skills Section -->
+
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>Contact</h2>
+                <p>최승현</p>
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-5 d-flex align-items-stretch">
+                    <div class="info">
+                        <div class="address">
+                            <i class="bi bi-geo-alt"></i>
+                            <h4>Location:</h4>
+                            <p id="infoCity"></p>
+                        </div>
+
+                        <div class="email">
+                            <i class="bi bi-envelope"></i>
+                            <h4>Email:</h4>
+                            <p id="infoEmail"></p>
+                        </div>
+
+                        <div class="phone">
+                            <i class="bi bi-phone"></i>
+                            <h4>Call:</h4>
+                            <p id="infoTelNo"></p>
+                        </div>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d207072.6113112554!2d128.39154850437575!3d35.8119719149593!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3565e3b8b2efadd5%3A0xba92e029a0382e30!2z64yA6rWs6rSR7Jet7Iuc!5e0!3m2!1sko!2skr!4v1704952820088!5m2!1sko!2skr" frameborder="0" style="border:0; width: 100%; height: 290px;" allowfullscreen></iframe>
+                    </div>
+
                 </div>
 
-                <div class="row content">
-                    <div class="col-lg-6">
-                        <p>
-                            다양한 것들을 만들어서 보관용도 및 테스트용 프로젝트
-                        </p>
-                        <ul id="prjLine">
-                        </ul>
-                    </div>
-                    <div class="col-lg-6 pt-4 pt-lg-0" id="pre">
+                <div class="team col-lg-7" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="member d-flex align-items-start">
+                        <div class="pic"><img src="assets/img/team/team-1.jpeg" class="img-fluid" alt=""></div>
+                        <div class="member-info">
+                            <h4>최승현</h4>
+                            <span>developer</span>
+                            <p>예~ 사장님~ 초이입니다~ 초이~</p>
+                            <p>아니 사장님~</p>
+                            <p>왜 이렇게 돈을 많이 줬어요~</p>
+                            <p>아이고~~~</p>
+                            <div class="social">
+                                <a href="" id="contactTel"><i class="ri-phone-fill"></i></a>
+                                <a href="" id="contactSms"><i class="ri-message-fill"></i></a>
+                                <a href="" id="contactGithub"><i class="ri-github-fill"></i></a>
+                                <a href="" id="contactKakao"> <i class="bi bi-person-fill"></i> </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
             </div>
-        </section><!-- End About Us Section -->
 
-        <!-- ======= Skills Section ======= -->
-        <section id="skills" class="skills section-bg">
-            <div class="container" data-aos="fade-up">
-
-                <div class="row">
-                    <div class="col-lg-6 d-flex align-items-center" data-aos="fade-right" data-aos-delay="100">
-                        <img src="assets/img/skills.png" class="img-fluid" alt="">
-                    </div>
-                    <div class="col-lg-6 pt-4 pt-lg-0 content" data-aos="fade-left" data-aos-delay="100">
-                        <h3>파일</h3>
-                        <p class="fst-italic">
-                            해당 프로젝트 각 파일 수
-                        </p>
-
-                        <div class="skills-content" id="fileSkill">
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
-        </section><!-- End Skills Section -->
-
-        <!-- ======= Contact Section ======= -->
-        <section id="contact" class="contact">
-            <div class="container" data-aos="fade-up">
-
-                <div class="section-title">
-                    <h2>Contact</h2>
-                    <p>최승현</p>
-                </div>
-
-                <div class="row">
-
-                    <div class="col-lg-5 d-flex align-items-stretch">
-                        <div class="info">
-                            <div class="address">
-                                <i class="bi bi-geo-alt"></i>
-                                <h4>Location:</h4>
-                                <p id="infoCity"></p>
-                            </div>
-
-                            <div class="email">
-                                <i class="bi bi-envelope"></i>
-                                <h4>Email:</h4>
-                                <p id="infoEmail"></p>
-                            </div>
-
-                            <div class="phone">
-                                <i class="bi bi-phone"></i>
-                                <h4>Call:</h4>
-                                <p id="infoTelNo"></p>
-                            </div>
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d207072.6113112554!2d128.39154850437575!3d35.8119719149593!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3565e3b8b2efadd5%3A0xba92e029a0382e30!2z64yA6rWs6rSR7Jet7Iuc!5e0!3m2!1sko!2skr!4v1704952820088!5m2!1sko!2skr" frameborder="0" style="border:0; width: 100%; height: 290px;" allowfullscreen></iframe>
-                        </div>
-
-                    </div>
-
-                    <div class="team col-lg-7" data-aos="zoom-in" data-aos-delay="100">
-                        <div class="member d-flex align-items-start">
-                            <div class="pic"><img src="assets/img/team/team-1.jpeg" class="img-fluid" alt=""></div>
-                            <div class="member-info">
-                                <h4>최승현</h4>
-                                <span>developer</span>
-                                <p>예~ 사장님~ 초이입니다~ 초이~</p>
-                                <p>아니 사장님~</p>
-                                <p>왜 이렇게 돈을 많이 줬어요~</p>
-                                <p>아이고~~~</p>
-                                <div class="social">
-                                    <a href="" id="contactTel"><i class="ri-phone-fill"></i></a>
-                                    <a href="" id="contactSms"><i class="ri-message-fill"></i></a>
-                                    <a href="" id="contactGithub"><i class="ri-github-fill"></i></a>
-                                    <a href="" id="contactKakao"> <i class="bi bi-person-fill"></i> </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-        </section><!-- End Contact Section -->
-    </div>
+        </div>
+    </section><!-- End Contact Section -->
+</div>
 </body>
 </html>

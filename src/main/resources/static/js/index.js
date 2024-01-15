@@ -10,7 +10,20 @@ $(document).ready(function(){
 
     // 주소 가져오기
     drawSnsAddr();
+
 });
+
+// 로그아웃
+function logout(path) {
+	var map = {'url' : path
+                , 'data':{}};
+
+    var data = ajaxPost(map);
+
+    if (data) {
+		location.href = '/';
+	}
+}
 
 // 주소 그려주기
 function drawSnsAddr() {
@@ -24,7 +37,7 @@ function drawSnsAddr() {
     $('#infoEmail').html(sns.email);
 
     // 전화번호 정규식
-    var telNo = regSgg('tel', sns.telNo);
+    var telNo = sggReg('tel', sns.telNo);
     $('#infoTelNo').html(telNo);
 }
 

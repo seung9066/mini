@@ -1681,6 +1681,12 @@ section {
   width: calc(100% - 100px);
 }
 
+#subsLogin .subsLogin-newsletter .loginFrm input[type=text] {
+  border: 0;
+  padding: 4px 8px;
+  width: calc(100% - 100px);
+}
+
 #subsLogin .subsLogin-newsletter .loginFrm input[type=button] {
   position: absolute;
   top: 0;
@@ -1697,7 +1703,23 @@ section {
   box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
 }
 
-#subsLogin .subsLogin-newsletter .loginFrm input[type=submit]:hover {
+#subsLogin .subsLogin-newsletter #btnNewAccount {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  border: 0;
+  background: none;
+  font-size: 16px;
+  margin-top: 20px;
+  padding: 12px 20px;
+  background: #47b2e4;
+  color: #fff;
+  transition: 0.3s;
+  border-radius: 50px;
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+#subsLogin .subsLogin-newsletter .loginFrm input[type=button]:hover {
   background: #209dd8;
 }
 

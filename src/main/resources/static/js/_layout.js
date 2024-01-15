@@ -94,7 +94,7 @@ function getNowPath() {
 // 메뉴 목록 가져오기
 function getMenu() {
     var map = {'url' : '/menu/getMenu'
-                , 'data':{'userAuth' : '999'}};
+                , 'data':{}};
 
     var data = ajaxPost(map);
 
