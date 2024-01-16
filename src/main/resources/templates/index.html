@@ -141,5 +141,10 @@
         </div>
     </section><!-- End Contact Section -->
 </div>
+
+<script th:if="${session.userAuth == '001'}">
+    chkAuth();
+</script>
+
 </body>
 </html>

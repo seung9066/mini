@@ -16,9 +16,9 @@ $(document).ready(function(){
 
 });
 
-// 신규회원 체크
-function chkNew() {
-
+// 신규권한 체크
+function chkAuth() {
+    alert('마이페이지 내 정보 수정에서 추가 정보를 입력하여 주세요.');
 }
 
 // 로그아웃

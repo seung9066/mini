@@ -13,11 +13,6 @@ $(document).on('click', '.navbar .dropdown > a', function(e) {
     }
 });
 
-// 신규권한 체크
-function chkAuth() {
-    alert('마이페이지 내 정보 수정에서 추가 정보를 입력하여 주세요.');
-}
-
 // 메뉴 이동
 function goPage(path) {
     $('#pagePath').val(path);
