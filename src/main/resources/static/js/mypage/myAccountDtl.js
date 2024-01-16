@@ -84,7 +84,7 @@ function saveAccount() {
 
 	if (data == 2) {
 		alert('수정이 완료되었습니다.');
-		location.reload();
+		history.go(0);
 	} else {
 		alert('error');
 	}

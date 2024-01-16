@@ -92,7 +92,7 @@ function sggGrid(pageNum, gridName) {
 
     // 테이블 페이징
     $.ajax({
-        url: './' + grid.url + '.do',
+        url: grid.url,
         type: grid.type,
         data: data,
         dataType: 'json',
@@ -314,7 +314,7 @@ function sggGrid(pageNum, gridName) {
     if (grid.buttonUrl != '') {
         // 페이징 버튼
         $.ajax({
-            url: './' + grid.buttonUrl + '.do',
+            url: grid.buttonUrl,
             type: grid.type,
             data: data,
             async: false,

@@ -13,12 +13,6 @@ $(document).on('click', '.navbar .dropdown > a', function(e) {
     }
 });
 
-// 메뉴 이동
-function goPage(path) {
-    $('#pagePath').val(path);
-    $('#goPage').submit();
-}
-
 // 메뉴바 그리기ßß
 function drawMenu() {
     // 메뉴목록

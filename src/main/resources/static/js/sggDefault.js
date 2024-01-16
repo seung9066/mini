@@ -255,3 +255,42 @@ function sggRegChkAttr(id) {
 
 	return true;
 }
+
+// 공통코드 조회
+// map : {cdId : '', upCdId : '', exCode : [], id : ''}
+function getCode(map) {
+    var obj = {url : '/cmn/getCode'
+                , data : map};
+
+    var data = ajaxPost(obj);
+
+    var html = '';
+
+    for (let i = 0; i < data.length; i++) {
+        html += '<option value="' + data[i].cdDtl + '">' + data[i].cdDtlName + '</option>';
+    }
+
+    $('#' + map.id).append(html);
+}
+
+// 메뉴 이동
+function goPage(path) {
+    $('#pagePath').val(path);
+    $('#goPage').submit();
+}
+
+// 데이터 담은 메뉴 이동
+function goPageMap(path, map) {
+    $('#goPage').attr('action', path);
+
+    var html = '';
+    for (let key in map) {
+        var k = `${key}`;
+        var v = `${map[key]}`;
+
+        html += '<input type="text" name="' + k + '" value="' + v + '">';
+    }
+    $('#goPage').append(html);
+
+    $('#goPage').submit();
+}

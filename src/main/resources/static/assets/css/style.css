@@ -1559,7 +1559,8 @@ legend {
 }
 
 .contact .php-email-form input,
-.contact .php-email-form textarea {
+.contact .php-email-form textarea,
+.contact .php-email-form select {
   border-radius: 0;
   box-shadow: none;
   font-size: 14px;
@@ -1567,11 +1568,13 @@ legend {
 }
 
 .contact .php-email-form input:focus,
-.contact .php-email-form textarea:focus {
+.contact .php-email-form textarea:focus,
+.contact .php-email-form select:focus {
   border-color: #47b2e4;
 }
 
-.contact .php-email-form input {
+.contact .php-email-form input,
+.contact .php-email-form select {
   height: 44px;
 }
 
