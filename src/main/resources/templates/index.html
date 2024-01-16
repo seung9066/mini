@@ -9,6 +9,9 @@
     <title>SGG</title>
 
     <script type="text/javascript" th:src="@{/js/index.js}"></script>
+    <script th:if="${session.userAuth == '001'}">
+        chkAuth();
+    </script>
 </head>
 <body>
 <div layout:fragment="content">
@@ -141,10 +144,6 @@
         </div>
     </section><!-- End Contact Section -->
 </div>
-
-<script th:if="${session.userAuth == '001'}">
-    chkAuth();
-</script>
 
 </body>
 </html>
