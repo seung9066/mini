@@ -11,7 +11,15 @@ $(document).ready(function(){
     // 주소 가져오기
     drawSnsAddr();
 
+    // 신규회원 체크
+
+
 });
+
+// 신규회원 체크
+function chkNew() {
+
+}
 
 // 로그아웃
 function logout(path) {

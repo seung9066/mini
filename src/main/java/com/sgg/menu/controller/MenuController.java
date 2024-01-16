@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,13 +29,16 @@ public class MenuController {
      */
     @PostMapping("/menu/getMenu")
     @ResponseBody
-    public List<Map<String, Object>> getMenu(@RequestBody Map<String, String> map, HttpSession session) throws Exception{
+    public List<Map<String, Object>> getMenu(@RequestBody Map<String, String> map, HttpSession session, Model model) throws Exception{
 
         if (!StringUtils.isEmpty((String) session.getAttribute("userAuth"))) {
             map.put("userAuth", (String) session.getAttribute("userAuth"));
         } else {
             map.put("userAuth", "000");
         }
+
+        model.addAttribute("userAuth", map.get("userAuth"));
+
         return menuService.getMenu(map);
     }
 

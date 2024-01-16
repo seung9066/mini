@@ -3,6 +3,7 @@ $(document).ready(function(){
     drawMenu();
     // 현재 메뉴
     getNowPath();
+
 })
 
 $(document).on('click', '.navbar .dropdown > a', function(e) {
@@ -11,6 +12,11 @@ $(document).on('click', '.navbar .dropdown > a', function(e) {
       this.nextElementSibling.classList.toggle('dropdown-active')
     }
 });
+
+// 신규권한 체크
+function chkAuth() {
+    alert('마이페이지 내 정보 수정에서 추가 정보를 입력하여 주세요.');
+}
 
 // 메뉴 이동
 function goPage(path) {

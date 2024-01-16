@@ -30,9 +30,8 @@ function myAccount() {
 	var data = ajaxPostSerial(map);
 	
 	if (data) {
-		alert('확인');
 		goPage('mypage/myAccountDtl');
 	} else {
-		alert('error');
+		alert('비밀번호를 확인해주세요');
 	}
 }

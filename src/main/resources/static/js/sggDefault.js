@@ -1,14 +1,14 @@
-// map : {'url':url, 'data':data}
+// obj : {'url':url, 'data':data}
 // 아작스 포스트 통신
-function ajaxPost(map) {
-    var dataMap = map.data;
+function ajaxPost(obj) {
+    var dataMap = obj.data;
 
     var jsonData = JSON.stringify(dataMap);
 
     var returnData = '';
 
     $.ajax({
-        url:map.url,
+        url:obj.url,
         type:'POST',
         contentType: 'application/json',
         data:jsonData,
@@ -58,16 +58,38 @@ function ajaxGet(map) {
 // 필수값 체크
 // id = 태그 아이디
 function sggNullChk(id) {
+    // 필수 설정을 준 태그들
 	for (let i = 0; i < $('#' + id).find('[required=Y]').length; i++) {
+	    // 인풋 타입
+		var type = $($('#' + id).find('[required=Y]').get(i)).attr('type');
+		// 값
 		var val = $($('#' + id).find('[required=Y]').get(i)).val();
-		var nm = $($('#' + id).find('[required=Y]').get(i)).attr('placeholder');
-		if (val.trim() == '') {
-			if (nm != '') {
-				alert(nm + ' 을(를) 입력해주세요.');
-				$($('#' + id).find('[required=Y]').get(i)).focus();
-			}
+		// 태그아이디
+		var tagId = $($('#' + id).find('[required=Y]').get(i)).attr('id');
+		// 알림 이름 (라벨명)
+		var nm = $('label[for="' + tagId + '"]').text();
 
-			return false;
+		if (type == 'radio') {
+		    // 라디오는 name으로 관리
+            var tagNm = $($('#' + id).find('[required=Y]').get(i)).attr('name');
+            // 체크된 라디오가 있는지 확인
+            var radioChk = $('input:radio[name="' + tagNm + '"]:checked').length;
+            // 라디오는 legend 태그의 글자로
+            nm = $('legend[name="' + tagNm + '"]').text();
+
+            if (radioChk == 0) {
+                alert(nm + ' 을(를) 선택해주세요.');
+                $($('#' + id).find('[required=Y]').get(i)).focus();
+
+                return false;
+            }
+		} else {
+            if (val.trim() == '') {
+                alert(nm + ' 을(를) 입력해주세요.');
+                $($('#' + id).find('[required=Y]').get(i)).focus();
+
+                return false;
+            }
 		}
 	}
 
@@ -76,14 +98,57 @@ function sggNullChk(id) {
 
 // 값 바인딩
 // id = 태그 아이디
-// map = 바인딩할 데이터 맵
-function sggBindMap(map) {
-    var keys = Object.keys(map);
-    var vals = Object.values(map);
+// obj = 바인딩할 데이터 맵
+function sggBindMap(obj) {
+    for (let key in obj) {
+        var k = `${key}`;
+        var v = `${obj[key]}`;
 
-    for (let i = 0; i < keys.length; i++) {
-        $('#' + keys[i]).val(vals[i]);
+        if ($('#' + k).length > 0) {
+            var type = $('#' + k).prop('tagName');
+            if (type == 'INPUT' || type == 'TEXTAREA') {
+                $('#' + k).val(v);
+            } else {
+                $('#' + k).html(v);
+            }
+        } else if ($('input[name=' + k + ']').length > 0) {
+            $('input:radio[name="' + k + '"]:input[value="' + v + '"]').attr("checked", true);
+        }
     }
+}
+
+// 값을 맵에 넣어주기
+function sggDataToMap(obj) {
+    var map = new Map();
+
+    for (let key in obj) {
+        var k = `${key}`;
+        var v = `${obj[key]}`;
+        if (`${obj[key]}` != '') {
+            map.set(k, v);
+        } else {
+            if ($('#' + k).length > 0) {
+                var type = $('#' + k).prop('tagName');
+                if (type == 'INPUT' || type == 'TEXTAREA') {
+                    var vv = $('#' + k).val();
+                    vv = vv.trim();
+                    map.set(key, vv);
+                } else {
+                    var vv = $('#' + k).text();
+                    vv = vv.trim();
+                    map.set(key, vv);
+                }
+            } else if ($('input[name=' + k + ']').length > 0) {
+                var vv = $('input[name=' + k + ']').val();
+                vv = vv.trim();
+                map.set(k, vv);
+            }
+        }
+    }
+
+    map = Object.fromEntries(map);
+
+    return map;
 }
 
 // 정규식 변환
@@ -136,7 +201,8 @@ function sggRegChkAttr(id) {
 	for (let i = 0; i < $('#' + id).find('[regChk]').length; i++) {
 		var val = $($('#' + id).find('[regChk]').get(i)).val();
 		var type = $($('#' + id).find('[regChk]').get(i)).attr('regChk');
-		var nm = $($('#' + id).find('[regChk]').get(i)).attr('placeholder');
+		var tagId = $($('#' + id).find('[regChk]').get(i)).attr('id');
+		var nm = $('label[for="' + tagId + '"]').text();
 
 		// 전화번호
 	    if (type == 'tel') {

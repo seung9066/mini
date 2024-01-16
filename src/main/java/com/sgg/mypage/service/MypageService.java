@@ -12,7 +12,7 @@ public interface MypageService {
 	boolean chkMypage(Map<String, String> map, HttpSession session) throws Exception;
 
 
-    Map<String, Object> saveAccount(Map<String, String> map, HttpSession session) throws Exception;
+    int saveAccount(Map<String, String> map, HttpSession session) throws Exception;
 
     Map<String, Object> getAccount(Map<String, String> map, HttpSession session) throws Exception;
 }

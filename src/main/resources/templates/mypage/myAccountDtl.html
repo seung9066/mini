@@ -9,36 +9,98 @@
     <title>SGG</title>
 
     <script type="text/javascript" th:src="@{/js/mypage/myAccountDtl.js}"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
 </head>
 <body>
 <div layout:fragment="content">
-    <section id="about" class="about">
-        <div id="subsLogin">
-            <div class="subsLogin-newsletter">
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-6">
-                            <h4>내 정보</h4>
-                            <form action="" id="frmNewAccount">
-	                            <div class="loginFrm">
-	                                <input type="id" id="userId" name="userId" placeholder="아이디" required="Y" th:value="${session.userId}" readonly>
-	                            </div>
-	                            <div class="loginFrm">
-	                                <input type="text" id="userNm" name="userNm" placeholder="이름" required="Y" th:value="${session.userNm}">
-	                            </div>
-                                <div class="loginFrm">
-	                                <input type="text" id="telNo" name="telNo" placeholder="전화번호" required="Y">
-	                            </div>
-                            </form>
-                            <br>
-                            <p id="loginFail"></p>
-                           	<input type="button" value="저장" id="btnNewAccount">
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <section id="breadcrumbs" class="breadcrumbs">
+        <div class="container" id="showPath">
         </div>
     </section>
+
+    <section id="contact" class="contact">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>내 정보</h2>
+                <p>정보 수정</p>
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-12 mt-5 mt-lg-0 d-flex align-items-stretch">
+                    <div class="php-email-form" id="frmNewAccount">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="userId">아이디</label>
+                                <input type="text" name="userId" class="form-control" id="userId" readonly required="Y" th:value="${session.userId}">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="userNm">이름</label>
+                                <input type="text" class="form-control" name="userNm" id="userNm" readonly required="Y">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="telNo">전화번호</label>
+                                <input type="text" name="telNo" class="form-control" id="telNo" required="Y" regChk="tel">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="email">이메일</label>
+                                <input type="text" class="form-control" name="email" id="email" required="Y" regChk="email">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <legend name="gen">성별</legend>
+                                <label for="genM">남자</label>
+                                <input type="radio" name="gen" required="Y" id="genM" value="M">
+                                <label for="genF">여자</label>
+                                <input type="radio" name="gen" required="Y" id="genF" value="F">
+                            </div>
+                        </div>
+
+                        <div class="text-left"><input type="button" value="도로명주소" id="btnKakaoMap"></div>
+                        <br>
+
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="zip">우편번호</label>
+                                <input type="text" name="zip" class="form-control" id="zip" required="Y" readonly>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="city">시도</label>
+                                <input type="text" class="form-control" name="city" id="city" required="Y" readonly>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="addr">주소</label>
+                                <input type="text" name="addr" class="form-control" id="addr" required="Y" readonly>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="addrDtl">상세주소</label>
+                                <input type="text" class="form-control" name="addrDtl" id="addrDtl">
+                            </div>
+                        </div>
+
+                        <div class="my-3">
+                            <div class="loading">Loading</div>
+                            <div class="error-message"></div>
+                            <div class="sent-message">Your message has been sent. Thank you!</div>
+                        </div>
+                        <div class="text-center"><input type="button" id="btnNewAccount" value="저장"></div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section><!-- End Contact Section -->
 </div>
 </body>
 </html>

@@ -9,7 +9,9 @@ public interface MypageMapper {
 
 	public int chkMypage(Map<String, String> map);
 
-    public Map<String, Object> saveAccount(Map<String, String> map);
+    public int saveAccount(Map<String, String> map);
 
     public Map<String, Object> getAccount(Map<String, String> map);
+
+    public int upAccountAuth(Map<String, String> map);
 }
