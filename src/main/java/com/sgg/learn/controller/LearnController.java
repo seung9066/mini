@@ -54,7 +54,7 @@ public class LearnController {
     public String goDtl(@RequestParam Map<String, String> map, Model model) throws Exception{
         model.addAttribute("codeNo", map.get("codeNo"));
 
-        return "/learn/cmnDtlCode";
+        return "learn/cmnDtlCode";
     }
 
     /**

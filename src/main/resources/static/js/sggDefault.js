@@ -288,7 +288,7 @@ function goPageMap(path, map) {
         var k = `${key}`;
         var v = `${map[key]}`;
 
-        html += '<input type="text" name="' + k + '" value="' + v + '">';
+        html += '<input type="hidden" name="' + k + '" value="' + v + '">';
     }
     $('#goPage').append(html);
 

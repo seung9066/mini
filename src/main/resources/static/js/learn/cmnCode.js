@@ -1,11 +1,17 @@
 $(document).ready(function(){
-     sggGrid(1, grid1.tblId);
+    sggGrid(1, grid1.tblId);
 
-     drawCode();
+    drawCode();
 
-     $('#search').on('click', function() {
-        sggGrid(1, grid1.tblId);
-     });
+    // 작성
+    $('#btnWrite').on('click', function() {
+        goWrite();
+    });
+
+    // 조회
+    $('#search').on('click', function() {
+       sggGrid(1, grid1.tblId);
+    });
 });
 
 var grid1 =
@@ -45,8 +51,14 @@ var grid1 =
 // 그리드들 배열에 담아주는 작업 필수
 var gridList = [grid1];
 
+// 상세조회
 function getDtl() {
     goPageMap('/learn/goDtl', {codeNo : grid1.trRowData[0]});
+}
+
+// 작성 페이지 이동
+function goWrite() {
+    goPageMap('/learn/goDtl', {codeNo : ''});
 }
 
 function drawCode() {
