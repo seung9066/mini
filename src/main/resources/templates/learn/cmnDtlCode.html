@@ -36,15 +36,14 @@
                 <br><br><br>
             </div>
 
-            <div class="section-title">
+            <div class="section-title" id="divTitle">
                 <h2>공통코드</h2>
-                <label for="title"></label>
-                <input type="text" id="title" class="titleInput">
+                <label for="title">제목</label>
+                <input type="text" id="title" class="titleInput" required="Y">
                 <br>
                 <div id="divType" style="float: left;">
                     <label for="type">&nbsp; 타입 &nbsp;</label>
                     <select id="type" name="type">
-                        <option value=""> 전체 </option>
                     </select>
                 </div>
                 <br>
@@ -54,6 +53,7 @@
                 <div class="col-lg-12 mt-5 mt-lg-0 d-flex align-items-stretch">
                     <div class="php-email-form" id="frmNewAccount">
                         <div class="btnFrm" id="btnFrm">
+                            <input type="button" value="colorScripter" id="btnCS">
                             <input type="button" value="코드추가" id="btnDiv">
                             <input type="button" value="코드삭제" id="btnDivDel">
                         </div>
@@ -62,6 +62,7 @@
 
                         </div>
                         <div class="btnFrm" id="btnFrm1">
+                            <input type="button" value="colorScripter" id="btnCS1">
                             <input type="button" value="코드추가" id="btnDiv1">
                             <input type="button" value="코드삭제" id="btnDivDel1">
                         </div>

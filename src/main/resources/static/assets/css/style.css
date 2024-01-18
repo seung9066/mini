@@ -1624,6 +1624,11 @@ legend {
   margin: 10px;
 }
 
+.ce-code-text {
+  width: 100%;
+  height: auto;
+}
+
 .titleInput {
   width: 50%;
   text-align: center;

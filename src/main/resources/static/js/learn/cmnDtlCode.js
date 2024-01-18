@@ -94,16 +94,37 @@ function getDtl() {
         }
     }
 
+    // 인텔리제이에서 가져온 코드 글자크기 조정
     for (let i = 0; i < $('pre').length; i++) {
         var style = $($('pre').get(i)).attr('style');
         style = style.replace('font-size:9.8pt;', 'font-size: 14px;');
 
         $('pre').attr('style', style);
     }
+
+    // color scripter에서 가져온 코드 배경크기 조정
+    for (let i = 0; i < $('.ce-code-text').length; i++) {
+        var style = $($('.ce-code-text').get(i)).attr('style');
+
+        var wid = style.indexOf('width');
+        var hei = style.indexOf('height');
+
+        var widStyle = style.substr(0, wid);
+        var heiStyle = style.substr(hei);
+        var semi = heiStyle.substr(heiStyle.indexOf(';'));
+
+        style = widStyle + semi;
+
+        $('.ce-code-text').attr('style', style);
+    }
 }
 
 // 저장
 function doSave() {
+    if (!sggNullChk('divTitle')) {
+        return false;
+    };
+
     var arr = [];
 
     var cnt = 0;
