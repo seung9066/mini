@@ -69,6 +69,7 @@
             , A2.DIV_CODE
             , A1.CODE_TITLE
             , A1.CODE_TYPE_CD
+            , A1.USER_ID
         FROM SGG_CMN_CODE A1
             , SGG_CMN_CODE_DTL A2
         WHERE 1 = 1

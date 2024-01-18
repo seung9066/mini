@@ -25,6 +25,8 @@ $(document).ready(function(){
     });
 });
 
+var userId = '';
+
 var pWriteId = '';
 
 function chkCodeNo(chk) {
@@ -48,6 +50,12 @@ function chkCodeNo(chk) {
 
         $('#btnUpdate').hide();
     }
+
+    if ($('#layoutUserId').val() != userId) {
+        if ($('#layoutUserAuth').val() != '999') {
+            $('#btnUpdate').hide();
+        }
+    }
 }
 
 // 내용
@@ -61,6 +69,8 @@ function getDtl() {
 
         $('#title').val(data[0].codeTitle);
         $('#type').val(data[0].codeTypeCd);
+
+        userId = data[0].userId;
 
         var divNo = '';
         var id = '';

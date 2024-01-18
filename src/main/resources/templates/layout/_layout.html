@@ -42,6 +42,8 @@
 <body>
 <!-- ======= Header ======= -->
 <header id="header" class="fixed-top header-inner-pages">
+    <input type="hidden" id="layoutUserId" th:value="${session.userId}">
+    <input type="hidden" id="layoutUserAuth" th:value="${session.userAuth}">
     <div class="container d-flex align-items-center">
 
         <h1 class="logo me-auto"><a href="/">SGG</a></h1>
