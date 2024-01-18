@@ -13,4 +13,12 @@ public interface LearnMapper {
     public int getListCnt(Map<String, String> map);
 
     List<Map<String, Object>> getDtl(Map<String, String> map);
+
+    int doSave(Map<String, String> stringStringMap);
+
+    String getCodeNo();
+
+    int doSaveDtl(Map<String, String> stringStringMap);
+
+    int delDtl(Map<String, String> newMap);
 }

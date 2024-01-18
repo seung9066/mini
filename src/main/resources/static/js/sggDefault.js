@@ -117,7 +117,7 @@ function sggBindMap(obj) {
     }
 }
 
-// 값을 맵에 넣어주기
+// 값을 맵에 넣어준 뒤 다시 object 타입으로 반환
 function sggDataToMap(obj) {
     var map = new Map();
 
@@ -274,12 +274,14 @@ function getCode(map) {
 }
 
 // 메뉴 이동
+// path : 이동할 주소
 function goPage(path) {
     $('#pagePath').val(path);
     $('#goPage').submit();
 }
 
 // 데이터 담은 메뉴 이동
+// 폼태그에 데이터 담을 input 생성, 데이터 처리는 기본 컨트롤러에서 불가능해서 따로 action path를 바꿔줌
 function goPageMap(path, map) {
     $('#goPage').attr('action', path);
 
@@ -293,4 +295,15 @@ function goPageMap(path, map) {
     $('#goPage').append(html);
 
     $('#goPage').submit();
+}
+
+// 문자열 길이기준 자르기
+// str : 문자
+// size : 자를 길이
+function sggSplitLength(str, size) {
+    let result = [];
+    for (let i = 0; i < str.length; i += size) {
+        result.push(str.substring(i, i + size));
+    }
+    return result;
 }

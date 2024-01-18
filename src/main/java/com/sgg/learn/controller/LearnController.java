@@ -69,4 +69,16 @@ public class LearnController {
         return learnService.getDtl(map);
     }
 
+    /**
+     * 등록
+     * @param map
+     * @return int
+     */
+    @PostMapping("/learn/doSave")
+    @ResponseBody
+    public int doSave(@RequestBody Map<String, Object> map, HttpSession session) throws Exception{
+
+        return learnService.doSave(map, session);
+    }
+
 }

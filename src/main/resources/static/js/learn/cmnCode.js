@@ -25,7 +25,7 @@ var grid1 =
  // 테이블 아이디
  tblId: 'tbl',
  // 테이블 th 컬럼명으로 정해줄 내용, th(컬럼) 수 보다 td 수가 많을 경우 해당 td hidden 처리
- th: ['번호', '언어', '제목'],
+ th: ['글번호', '언어', '제목'],
  // 페이징 between (1 ~ row 번까지)
  row: '10',
  // 페이징 버튼 용 게시글 총 수 url
@@ -63,7 +63,7 @@ function goWrite() {
 
 function drawCode() {
 
-    var map = {cdId : 'CODE_TYPE'
+    var map = {cdId : 'CODE_TYPE_CD'
                 , upCdId : ''
                 , exCode : []
                 , id : 'type'};

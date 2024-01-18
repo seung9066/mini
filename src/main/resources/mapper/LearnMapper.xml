@@ -8,62 +8,138 @@
     <!-- 목록 조회 -->
     <select id="getList" parameterType="map" resultType="resultMap">
         /* com.sgg.learn.mapper.LearnMapper.getList */
-        SELECT A1.CODE_NO
-            , (SELECT CD_DTL_NAME
-                FROM SGG_CD_DTL
-                WHERE 1 = 1
-                AND CD_DTL = A1.CODE_TYPE
-                AND CD_ID = 'CODE_TYPE'
-                AND DEL_YN = 'N') AS CODE_TYPE
-            , A1.CODE_TITLE
-        FROM SGG_CMN_CODE A1
-            , SGG_CMN_CODE_DTL A2
-        WHERE 1 = 1
-        AND A1.CODE_NO = A2.CODE_NO
-        AND A1.DEL_YN = 'N'
-        <if test="type != null and type != ''">
-            AND A1.CODE_TYPE = #{type}
-        </if>
-        <if test="title != null and title != ''">
-            AND A1.CODE_TITLE LIKE '%' || #{title} || '%'
-        </if>
+        SELECT CODE_NO
+            , CODE_TYPE_CD
+            , CODE_TITLE
+        FROM (
+            SELECT CODE_NO
+                , (SELECT CD_DTL_NAME
+                    FROM SGG_CD_DTL
+                    WHERE 1 = 1
+                    AND CD_DTL = CODE_TYPE_CD
+                    AND CD_ID = 'CODE_TYPE_CD'
+                    AND DEL_YN = 'N') AS CODE_TYPE_CD
+                , CODE_TITLE
+                , ROW_NUMBER() OVER(ORDER BY CODE_NO) AS RNUM
+            FROM SGG_CMN_CODE
+            WHERE 1 = 1
+            AND DEL_YN = 'N'
+            <if test="type != null and type != ''">
+                AND CODE_TYPE_CD = #{type}
+            </if>
+            <if test="title != null and title != ''">
+                AND CODE_TITLE LIKE '%' || #{title} || '%'
+            </if>
+        )
+        WHERE RNUM BETWEEN ((#{page} - 1) * #{row}) + 1 AND #{page} * #{row}
     </select>
 
     <!-- 목록 수 -->
     <select id="getListCnt" parameterType="map" resultType="int">
         /* com.sgg.learn.mapper.LearnMapper.getListCnt */
         SELECT COUNT(*)
-        FROM (SELECT A1.CODE_NO
+        FROM (
+            SELECT ROW_NUMBER() OVER(ORDER BY CODE_NO) AS RNUM
+                , CODE_NO
                 , (SELECT CD_DTL_NAME
                     FROM SGG_CD_DTL
                     WHERE 1 = 1
-                    AND CD_DTL = A1.CODE_TYPE
-                    AND CD_ID = 'CODE_TYPE'
-                    AND DEL_YN = 'N') AS CODE_TYPE
-                , A1.CODE_TITLE
-                FROM SGG_CMN_CODE A1
-                    , SGG_CMN_CODE_DTL A2
-                WHERE 1 = 1
-                AND A1.CODE_NO = A2.CODE_NO
-                AND A1.DEL_YN = 'N'
-                <if test="type != null and type != ''">
-                    AND A1.CODE_TYPE = #{type}
-                </if>
-                <if test="title != null and title != ''">
-                    AND A1.CODE_TITLE LIKE '%' || #{title} || '%'
-                </if>)
+                    AND CD_DTL = CODE_TYPE_CD
+                    AND CD_ID = 'CODE_TYPE_CD'
+                    AND DEL_YN = 'N') AS CODE_TYPE_CD
+                , CODE_TITLE
+            FROM SGG_CMN_CODE A1
+            WHERE 1 = 1
+            AND DEL_YN = 'N'
+            <if test="type != null and type != ''">
+                AND CODE_TYPE_CD = #{type}
+            </if>
+            <if test="title != null and title != ''">
+                AND CODE_TITLE LIKE '%' || #{title} || '%'
+            </if>
+        )
     </select>
 
     <!-- 상세조회 -->
     <select id="getDtl" parameterType="map" resultType="resultMap">
         /* com.sgg.learn.mapper.LearnMapper.getDtl */
-        SELECT A1.DIV_NO
-            , A1.DIV_CODE
-            , A2.CODE_TITLE
-        FROM SGG_CMN_CODE_DTL A1
-            , SGG_CMN_CODE A2
+        SELECT A2.CODE_NO
+            , A2.DIV_NO
+            , A2.DIV_NO_NO
+            , A2.DIV_CODE
+            , A1.CODE_TITLE
+            , A1.CODE_TYPE_CD
+        FROM SGG_CMN_CODE A1
+            , SGG_CMN_CODE_DTL A2
         WHERE 1 = 1
         AND A1.CODE_NO = A2.CODE_NO
-        AND A1.CODE_NO = #{codeNo}
+        AND A1.DEL_YN = 'N'
+        AND A2.CODE_NO = #{codeNo}
+        ORDER BY DIV_NO, DIV_NO_NO
     </select>
+
+    <!-- codeNo -->
+    <select id="getCodeNo" resultType="string">
+        /* com.sgg.learn.mapper.LearnMapper.getCodeNo */
+        SELECT NVL(MAX(CODE_NO), 0) + 1 AS CODE_NO
+        FROM SGG_CMN_CODE
+    </select>
+
+    <!-- 등록 -->
+    <insert id="doSave" parameterType="map">
+        /* com.sgg.learn.mapper.LearnMapper.doSave */
+        MERGE INTO SGG_CMN_CODE A1
+        USING DUAL
+        ON (A1.CODE_NO = #{codeNo})
+        WHEN MATCHED THEN
+        UPDATE
+        SET A1.CODE_TYPE_CD = #{codeTypeCd}
+            , A1.CODE_TITLE = #{codeTitle}
+            , A1.DEL_YN = #{delYn}
+        WHEN NOT MATCHED THEN
+        INSERT
+        (	A1.CODE_NO
+            , A1.CODE_TYPE_CD
+            , A1.CODE_TITLE
+            , A1.USER_ID
+            , A1.DEL_YN
+        )
+        VALUES
+        (	#{codeNo}
+            , #{codeTypeCd}
+            , #{codeTitle}
+            , #{userId}
+            , 'N'
+        )
+    </insert>
+
+    <!-- 상세 등록 -->
+    <insert id="doSaveDtl" parameterType="map">
+        /* com.sgg.learn.mapper.LearnMapper.doSaveDtl */
+        <selectKey keyProperty="colNo" resultType="resultMap" order="BEFORE">
+            SELECT NVL(MAX(COL_NO), 0) + 1 AS COL_NO
+            FROM SGG_CMN_CODE_DTL
+        </selectKey>
+        INSERT INTO SGG_CMN_CODE_DTL
+        (   CODE_NO
+            , DIV_NO
+            , DIV_NO_NO
+            , DIV_CODE
+            , COL_NO
+        )
+        VALUES
+        (   #{codeNo}
+            , #{divNo}
+            , #{divNoNo}
+            , #{divCode}
+            , #{colNo}
+        )
+    </insert>
+
+    <!-- 등록 전 삭제 -->
+    <delete id="delDtl" parameterType="map">
+        /* com.sgg.learn.mapper.LearnMapper.delDtl */
+        DELETE FROM SGG_CMN_CODE_DTL
+        WHERE CODE_NO = #{codeNo}
+    </delete>
 </mapper>

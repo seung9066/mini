@@ -14,4 +14,6 @@ public interface LearnService {
     int getListCnt(Map<String, String> map) throws Exception;
 
     List<Map<String, Object>> getDtl(Map<String, String> map) throws Exception;
+
+    int doSave(Map<String, Object> map, HttpSession session) throws Exception;
 }
