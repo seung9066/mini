@@ -12,7 +12,6 @@ $(document).ready(function(){
 
     // 코드삭제 숨기기
     $('#btnDivDel').hide();
-    $('#btnDivDel1').hide();
 
     // 글쓰기 포커스
     $('.pWrite').on('focus', function() {
@@ -34,7 +33,6 @@ function chkCodeNo(chk) {
     if (chk == 1) {
         $('#btnSave').hide();
         $('#btnFrm').hide();
-        $('#btnFrm1').hide();
         $('#divType').hide();
         $('#title').attr('readonly', true);
         $('#title').css('border', 'none');
@@ -43,7 +41,6 @@ function chkCodeNo(chk) {
     } else {
         $('#btnSave').show();
         $('#btnFrm').show();
-        $('#btnFrm1').show();
         $('#divType').show();
         $('#title').attr('readonly', false);
         $('#title').css('border', '1px solid #ccc');
@@ -179,6 +176,8 @@ function doSave() {
     if (data > 0) {
         // 목록으로
         $('#btnList').click();
+    } else if (data == -1) {
+        alert('관리자만 등록이 가능합니다.');
     }
 }
 
@@ -204,7 +203,6 @@ function addFrm() {
     $('#pWrite' + cnt).focus();
 
     $('#btnDivDel').show();
-    $('#btnDivDel1').show();
 }
 
 // 코드 삭제
@@ -212,7 +210,6 @@ function delFrm() {
     $('#' + pWriteId).remove();
     // 코드 삭제 가리기
     $('#btnDivDel').hide();
-    $('#btnDivDel1').hide();
     // 삭제할 코드 아이디
     pWriteId = '';
     var cnt = $('.pWrite').length;
@@ -228,7 +225,6 @@ function delFrm() {
 function getPWriteId(id) {
     // 코드 삭제 보여주기
     $('#btnDivDel').show();
-    $('#btnDivDel1').show();
     // 삭제할 코드 id
     pWriteId = id;
 }
@@ -261,13 +257,13 @@ function getChg() {
 
 // 클릭 이벤트 감지
 function chkOnclick(id) {
-    if (id == 'btnDivDel' || id == 'btnDivDel1') {
+    if (id == 'btnDivDel') {
        delFrm();
 
        return false;
     }
 
-    if (id == 'btnDiv' || id == 'btnDiv1') {
+    if (id == 'btnDiv') {
        addFrm();
 
        return false;
@@ -290,14 +286,13 @@ function chkOnclick(id) {
         return false;
     }
 
-    if (id == 'btnCS' || id == 'btnCS1') {
+    if (id == 'btnCS') {
         window.open('https://colorscripter.com/', 'Popup', 'width=700, height=800');
     }
 
     if (id.substr(0, 6) != 'pWrite') {
        // 글 작성 칸이 아닐 시
        $('#btnDivDel').hide();
-       $('#btnDivDel1').hide();
        pWriteId = '';
 
        return false;

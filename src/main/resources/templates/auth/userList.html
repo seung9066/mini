@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/_layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGG</title>
+
+    <script type="text/javascript" th:src="@{/js/auth/userList.js}"></script>
+
+</head>
+<body>
+<div layout:fragment="content">
+    <section id="breadcrumbs" class="breadcrumbs">
+        <div class="container" id="showPath">
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>회원목록</h2>
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-12 mt-5 mt-lg-0 d-flex align-items-stretch">
+                    <div class="php-email-form" id="frmNewAccount">
+                        <form id="frm">
+                            <label for="type">타입</label>
+                            <select id="type" name="type">
+                                <option value=""> 전체 </option>
+                            </select>
+                            <label for="userNmSearch">이름</label>
+                            <input type="text" id="userNmSearch" name="userNmSearch">
+                            <input type="button" id="search" name="search" value="조회" style="float:right;">
+                            <br><br>
+                            <table id="tbl" class="sggGrid">
+
+                            </table>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <br><br>
+
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>상세정보</h2>
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-12 mt-5 mt-lg-0 d-flex align-items-stretch">
+                    <div class="php-email-form" id="userDtlFrm">
+                        <form id="dtlFrm">
+
+
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section><!-- End Contact Section -->
+</div>
+</body>
+</html>

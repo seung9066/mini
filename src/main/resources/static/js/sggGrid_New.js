@@ -464,9 +464,9 @@ function getRowData(This, gridName) {
         if (mli.find('td')[i].innerText != '') {
             grid.trRowData.push(mli.find('td')[i].innerText);
         } else {
-            if (i != 0) {
+            if ($(mli.find('td')[i]).find('input').val() != '') {
                 // hidden value 담기
-                grid.trRowData.push(mli.find('td').find('input').val());
+                grid.trRowData.push($(mli.find('td')[i]).find('input').val());
             }
         }
     }

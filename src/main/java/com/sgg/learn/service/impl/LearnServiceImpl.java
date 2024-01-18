@@ -59,48 +59,52 @@ public class LearnServiceImpl implements LearnService {
     @Override
     public int doSave(Map<String, Object> map, HttpSession session) throws Exception {
         int cnt = 0;
-        
-        // Map에서 Map 가져오기
-        Object mapVal = map.get("code");
 
-        String codeNo = "";
+        if (session.getAttribute("userAuth").equals("999")) {
+            // Map에서 Map 가져오기
+            Object mapVal = map.get("code");
 
-        // Map로 형변환
-        if (mapVal instanceof Map) {
-            Map<String, String> newMap = (Map<String, String>) mapVal;
-            
-            // 신규, 수정 체크
-            if (StringUtils.isEmpty(newMap.get("codeNo"))) {
-                codeNo = learnMapper.getCodeNo();
-            } else {
-                codeNo = newMap.get("codeNo");
+            String codeNo = "";
 
-                // 기존 코드 제거
-                cnt += learnMapper.delDtl(newMap);
+            // Map로 형변환
+            if (mapVal instanceof Map) {
+                Map<String, String> newMap = (Map<String, String>) mapVal;
+
+                // 신규, 수정 체크
+                if (StringUtils.isEmpty(newMap.get("codeNo"))) {
+                    codeNo = learnMapper.getCodeNo();
+                } else {
+                    codeNo = newMap.get("codeNo");
+
+                    // 기존 코드 제거
+                    cnt += learnMapper.delDtl(newMap);
+                }
+
+                if (StringUtils.isEmpty(newMap.get("delYn"))) {
+                    newMap.put("delYn", "N");
+                }
+
+                // 코드 타이틀 등록
+                newMap.put("codeNo", codeNo);
+                newMap.put("userId", (String) session.getAttribute("userId"));
+                cnt += learnMapper.doSave(newMap);
             }
 
-            if (StringUtils.isEmpty(newMap.get("delYn"))) {
-                newMap.put("delYn", "N");
-            }
-            
-            // 코드 타이틀 등록
-            newMap.put("codeNo", codeNo);
-            newMap.put("userId", (String) session.getAttribute("userId"));
-            cnt += learnMapper.doSave(newMap);
-        }
+            // Map에서 List 가져오기
+            Object value = map.get("dtl");
 
-        // Map에서 List 가져오기
-        Object value = map.get("dtl");
+            // List로 형변환
+            if (value instanceof List<?>) {
+                List<Map<String, String>> list = (List<Map<String, String>>) value;
 
-        // List로 형변환
-        if (value instanceof List<?>) {
-            List<Map<String, String>> list = (List<Map<String, String>>) value;
-            
-            // 코드 등록
-            for (int i = 0; i < list.size(); i++) {
-                list.get(i).put("codeNo", codeNo);
-                cnt += learnMapper.doSaveDtl(list.get(i));
+                // 코드 등록
+                for (int i = 0; i < list.size(); i++) {
+                    list.get(i).put("codeNo", codeNo);
+                    cnt += learnMapper.doSaveDtl(list.get(i));
+                }
             }
+        } else {
+            cnt = -1;
         }
 
         return cnt;

@@ -17,18 +17,14 @@ $(document).ready(function(){
 
     // 아이디 엔터키
     $("#loginId").on("keyup", function(key){
-		if(key.keyCode==13) {
+		if(key.keyCode==13) {
 			idChk();
-
-			if ($('#loginId').attr('readonly')) {
-				$('#loginPw').focus();
-			}
 		}
 	});
 
 	// 패스워드 엔터키
     $("#loginPw").on("keyup", function(key){
-		if(key.keyCode==13) {
+		if(key.keyCode==13) {
 			pwChk();
 		}
 	});
@@ -54,6 +50,8 @@ function idChk() {
         $('#pwDiv').show();
         // 로그인 실패 문구 초기화
         $('#loginFail').html('');
+
+        $('#loginPw').focus();
     } else {
         // 존재하지 않으면
         // 로그인 실패 문구

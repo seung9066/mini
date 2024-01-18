@@ -9,8 +9,8 @@
     <select id="getList" parameterType="map" resultType="resultMap">
         /* com.sgg.learn.mapper.LearnMapper.getList */
         SELECT CODE_NO
-            , CODE_TYPE_CD
             , CODE_TITLE
+            , CODE_TYPE_CD
         FROM (
             SELECT CODE_NO
                 , (SELECT CD_DTL_NAME
@@ -20,7 +20,7 @@
                     AND CD_ID = 'CODE_TYPE_CD'
                     AND DEL_YN = 'N') AS CODE_TYPE_CD
                 , CODE_TITLE
-                , ROW_NUMBER() OVER(ORDER BY CODE_NO) AS RNUM
+                , ROW_NUMBER() OVER(ORDER BY CODE_NO DESC) AS RNUM
             FROM SGG_CMN_CODE
             WHERE 1 = 1
             AND DEL_YN = 'N'
