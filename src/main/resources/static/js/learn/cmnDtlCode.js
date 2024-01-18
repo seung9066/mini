@@ -111,9 +111,11 @@ function getDtl() {
 
         var widStyle = style.substr(0, wid);
         var heiStyle = style.substr(hei);
-        var semi = heiStyle.substr(heiStyle.indexOf(';'));
+        var semi = heiStyle.substr((heiStyle.indexOf(';') + 1));
 
         style = widStyle + semi;
+
+        console.log(style)
 
         $('.ce-code-text').attr('style', style);
     }
