@@ -29,7 +29,7 @@ var grid1 =
     // th css 하나의 {}만 입력시 모든 th에 적용, grid.th.lengh 만큼 적으면 각각 적용
     , thCss: [{'width':'20%'}, {'width':'20%'}, {'width':'60%'}]
     // 첫컬럼 타입 (checkbox, radio, ''이면 아무것도 없는거)
-    , tdType : 'radio'
+    , tdType : ''
     // 첫컬럼에 따른 row 데이터 담을 배열
     , tdTypeData: []
 }
