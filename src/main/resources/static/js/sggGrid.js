@@ -68,7 +68,7 @@ function sggGridRun(pageNum, gridFrmId) {
     if (grid.ajaxBtnUrl) {
         grid.totalCnt = sggGridAjax(data, grid.ajaxBtnUrl, grid.ajaxType);
         // tfoot 그리기
-        sggGridDrawBtn(pageNum, grid);
+        sggGridTFoot(pageNum, grid);
     }
 
     // css 적용
@@ -316,11 +316,6 @@ function sggGridTbodyData(grid) {
         }
     }
 
-}
-
-// 버튼 그리기
-function sggGridDrawBtn(pageNum, grid) {
-    sggGridTFoot(pageNum, grid);
 }
 
 // 버튼 양식 그리기
