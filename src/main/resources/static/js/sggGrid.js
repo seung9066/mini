@@ -526,7 +526,7 @@ function sggGridClickHover(grid) {
     var gridTbody = document.getElementById(grid.frmId + '_tbody');
 
     if (gridTbody) {
-        var gridTrs = document.querySelectorAll('tr');
+        var gridTrs = gridTbody.querySelectorAll('tr');
 
         if (gridTrs) {
             gridTrs.forEach(function (tr) {
