@@ -184,7 +184,11 @@ function addFrm() {
     // pWrite 아이디에 붙여줄 번호
     var cnt = $('.pWrite').length + 1;
     // pWrite 생성
-    $('#frmCode').append('<div id="pWrite' + cnt + '" class="pWrite" contenteditable="true"></div>');
+    if (pWriteId != '') {
+        $('#' + pWriteId).after('<div id="pWrite' + cnt + '" class="pWrite" contenteditable="true"></div>');
+    } else {
+        $('#frmCode').append('<div id="pWrite' + cnt + '" class="pWrite" contenteditable="true"></div>');
+    }
 
     // focus function 걸어주기
     $('#pWrite' + cnt).on('focus', function() {
@@ -201,6 +205,12 @@ function addFrm() {
     $('#pWrite' + cnt).focus();
 
     $('#btnDivDel').show();
+
+    // 아이디 새로 붙여주기
+    for (let i = 0; i < cnt + 1; i++) {
+        var id = 'pWrite' + (i + 1);
+        $($('.pWrite').get(i)).attr('id', id);
+    }
 }
 
 // 코드 삭제
