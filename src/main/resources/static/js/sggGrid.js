@@ -1,50 +1,50 @@
-var grid1 =
-{
-    // 그리드를 그려줄 폼태그 아이디
-    frmId : 'frm'
-    // 그리드 데이터(미리 값을 담아주거나 ajax통신을 통해 받아온 데이터)
-    , data : []
-    // ajax url
-    , ajaxUrl : '/learn/getList'
-    // ajax GET, POST
-    , ajaxType : 'POST'
-    // 테이블 컬럼 {컬럼명, 한글명}
-    , th : {'codeNo' : '코드번호', 'codeTypeCd' : '타입', 'codeTitle' : '제목'}
-    // 그리드 row 수 값이 없으면 모두 다 출력
-    , row : 10
-    // ajax 버튼용 총 게시글 수 url
-    , ajaxBtnUrl : '/learn/getListCnt'
-    // 총 게시글 수
-    , totalCnt : 0
-    // 버튼 수
-    , btn : 10
-    // tr onclick function명
-    , tonC : ''
-    // tr onclick시 데이터 담아줄 배열
-    , trData : {}
-    // callback function명
-    , callback : ''
-    // table css
-    , tbCss : {'width' : '100%;', 'text-align' : 'center'}
-    // th css 하나의 {}만 입력시 모든 th에 적용, grid.th.lengh 만큼 적으면 각각 적용
-    , thCss: [{'width':'20%'}, {'width':'20%'}, {'width':'60%'}]
-    // 첫컬럼 타입 (checkbox, radio, ''이면 아무것도 없는거)
-    , tdType : ''
-    // 첫컬럼에 따른 row 데이터 담을 배열
-    , tdTypeData: []
-}
-
-var sggGridList = [grid1]
+//var grid1 =
+//{
+//    // 그리드를 그려줄 폼태그 아이디
+//    frmId : 'frm'
+//    // 그리드 데이터(미리 값을 담아주거나 ajax통신을 통해 받아온 데이터)
+//    , data : []
+//    // ajax url
+//    , ajaxUrl : '/learn/getList'
+//    // ajax GET, POST
+//    , ajaxType : 'POST'
+//    // 테이블 컬럼 {컬럼명, 한글명}
+//    , th : {'codeNo' : '코드번호', 'codeTypeCd' : '타입', 'codeTitle' : '제목'}
+//    // 그리드 row 수 값이 없으면 모두 다 출력
+//    , row : 10
+//    // ajax 버튼용 총 게시글 수 url
+//    , ajaxBtnUrl : '/learn/getListCnt'
+//    // 총 게시글 수
+//    , totalCnt : 0
+//    // 버튼 수
+//    , btn : 10
+//    // tr onclick function명
+//    , tonC : ''
+//    // tr onclick시 데이터 담아줄 배열
+//    , trData : {}
+//    // callback function명
+//    , callback : ''
+//    // table css
+//    , tbCss : {'width' : '100%;', 'text-align' : 'center'}
+//    // th css 하나의 {}만 입력시 모든 th에 적용, grid.th.lengh 만큼 적으면 각각 적용
+//    , thCss: [{'width':'20%'}, {'width':'20%'}, {'width':'60%'}]
+//    // 첫컬럼 타입 (checkbox, radio, ''이면 아무것도 없는거)
+//    , tdType : ''
+//    // 첫컬럼에 따른 row 데이터 담을 배열
+//    , tdTypeData: []
+//}
+//
+//var sggGridList = [grid1]
+//
+//$(document).ready(function(){
+//    sggGridRun(1, grid1.frmId);
+//});
 
 // 클릭 시 색상 hover 방지용
 var sggGridTr = 0;
 
 // 클릭된 버튼 표시용
 var sggPgNum = 0;
-
-$(document).ready(function(){
-    sggGridRun(1, grid1.frmId);
-});
 
 function sggGridRun(pageNum, gridFrmId) {
     // 새로 그렸으니 tr onclick 색상용 변수 비워주기
@@ -232,17 +232,17 @@ function sggGridTbodyData(grid) {
     // 데이터가 없을 때
     if (data.length == 0) {
         if (grid.tdType == 'checkbox' || grid.tdType == 'radio') {
-            html += '<tr><td colspan="' + (grid.th.length + 1) + '">조회된 데이터가 없습니다</td></tr>';
+            html += '<tr><td colspan="' + (thLength + 1) + '">조회된 데이터가 없습니다</td></tr>';
         } else {
-            html += '<tr><td colspan="' + grid.th.length + '">조회된 데이터가 없습니다</td></tr>';
+            html += '<tr><td colspan="' + thLength + '">조회된 데이터가 없습니다</td></tr>';
         }
 
         // 빈줄 row 수만큼 등록
         for (let i = 0; i < (grid.row - 1); i++) {
             if (grid.tdType == 'checkbox' || grid.tdType == 'radio') {
-                html += '<tr><td colspan="' + (grid.th.length + 1) + '">&nbsp</td></tr>';
+                html += '<tr><td colspan="' + (thLength + 1) + '">&nbsp</td></tr>';
             } else {
-                html += '<tr><td colspan="' + grid.th.length + '">&nbsp</td></tr>';
+                html += '<tr><td colspan="' + thLength + '">&nbsp</td></tr>';
             }
         }
     } else {
@@ -251,7 +251,7 @@ function sggGridTbodyData(grid) {
             if (i < data.length) {
                 // tr onclick 함수 있을 때 없을 때
                 if (grid.tonC != '') {
-                    html += '<tr id="' + grid.frmId + '_' + i + '" onclick="' + grid.tonC + '(this);">';
+                    html += '<tr id="' + grid.frmId + '_' + i + '">';
                 } else {
                     html += '<tr id="' + grid.frmId + '_' + i + '">';
                 }
@@ -347,7 +347,7 @@ function sggGridTFootData(pageNum, grid) {
     }
 
     // 총 버튼 수
-    var totalB = Math.ceil(grid.totalCnt / grid.row);console
+    var totalB = Math.ceil(grid.totalCnt / grid.row);
 
     // 시작 버튼이 1 보다 작은 경우 방지
     if (totalB < 1) {
@@ -584,14 +584,33 @@ function sggGridBtnCss(grid) {
 
 // 이벤트, 함수
 function sggGridFnc(grid) {
-    // 체크박스
-    sggGridChk(grid);
     // tr onclick
     sggGridtrData(grid);
+    // 체크박스
+    sggGridChk(grid);
     // 라디오
     sggGridRadio(grid);
     // 콜백함수
     sggGridCallBack(grid);
+}
+
+// tr onclick
+function sggGridtrData(grid) {
+    var gridTbl = document.getElementById(grid.frmId + '_tbl');
+    var trs = gridTbl.querySelectorAll('tbody tr');
+
+    if (trs) {
+        trs.forEach(function (tr) {
+            tr.addEventListener('click', function () {
+                var id = this.id;
+                var frm = grid.frmId + '_';
+                id = id.replace(frm, '');
+                grid.trData = grid.data[id];
+
+                eval(grid.tonC + '()');
+            });
+        });
+    }
 }
 
 // checkbox
@@ -647,23 +666,6 @@ function sggGridCheckRow(grid) {
 
             grid.tdTypeData.push(grid.data[id]);
         }
-    }
-}
-
-// tr onclick
-function sggGridtrData(grid) {
-    var gridTbl = document.getElementById(grid.frmId + '_tbl');
-    var trs = gridTbl.querySelectorAll('tbody tr');
-
-    if (trs) {
-        trs.forEach(function (tr) {
-            tr.addEventListener('click', function () {
-                var id = this.id;
-                var frm = grid.frmId + '_';
-                id = id.replace(frm, '');
-                grid.trData = grid.data[id];
-            });
-        });
     }
 }
 

@@ -25,6 +25,7 @@
                 , A2.CITY
                 , A2.ADDR
                 , A2.ADDR_DTL
+                , A2.GEN
             FROM SGG_USER A1
                 , SGG_USER_INFO A2
             WHERE 1 = 1
@@ -33,6 +34,9 @@
             AND A2.DEL_YN = 'N'
             <if test="type != null and type != ''">
                 AND A1.USER_AUTH = #{type}
+            </if>
+            <if test="userIdSearch != null and userIdSearch != ''">
+                AND A1.USER_ID LIKE '%' || #{userIdSearch} || '%'
             </if>
             <if test="userNmSearch != null and userNmSearch != ''">
                 AND A1.USER_NM LIKE '%' || #{userNmSearch} || '%'
@@ -60,6 +64,7 @@
                 , A2.CITY
                 , A2.ADDR
                 , A2.ADDR_DTL
+                , A2.GEN
             FROM SGG_USER A1
                 , SGG_USER_INFO A2
             WHERE 1 = 1
@@ -68,6 +73,9 @@
             AND A2.DEL_YN = 'N'
             <if test="type != null and type != ''">
                 AND A1.USER_AUTH = #{type}
+            </if>
+            <if test="userIdSearch != null and userIdSearch != ''">
+                AND A1.USER_ID LIKE '%' || #{userIdSearch} || '%'
             </if>
             <if test="userNmSearch != null and userNmSearch != ''">
                 AND A1.USER_NM LIKE '%' || #{userNmSearch} || '%'

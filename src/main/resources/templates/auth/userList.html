@@ -34,13 +34,13 @@
                             <select id="type" name="type">
                                 <option value=""> 전체 </option>
                             </select>
+                            <label for="userIdSearch">아이디</label>
+                            <input type="text" id="userIdSearch" name="userIdSearch">
                             <label for="userNmSearch">이름</label>
                             <input type="text" id="userNmSearch" name="userNmSearch">
                             <input type="button" id="search" name="search" value="조회" style="float:right;">
                             <br><br>
-                            <table id="tbl" class="sggGrid">
 
-                            </table>
                         </form>
                     </div>
                 </div>
@@ -62,9 +62,70 @@
                 <div class="col-lg-12 mt-5 mt-lg-0 d-flex align-items-stretch">
                     <div class="php-email-form" id="userDtlFrm">
                         <form id="dtlFrm">
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="userId">아이디</label>
+                                    <input type="text" name="userId" class="form-control" id="userId" readonly required="Y">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="userNm">이름</label>
+                                    <input type="text" class="form-control" name="userNm" id="userNm" readonly required="Y">
+                                </div>
+                            </div>
 
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="telNo">전화번호</label>
+                                    <input type="text" name="telNo" class="form-control" id="telNo" required="Y" regChk="tel">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="email">이메일</label>
+                                    <input type="text" class="form-control" name="email" id="email" required="Y" regChk="email">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <legend name="gen">성별</legend>
+                                    <label for="genM">남자</label>
+                                    <input type="radio" name="gen" required="Y" id="genM" value="M">
+                                    <label for="genF">여자</label>
+                                    <input type="radio" name="gen" required="Y" id="genF" value="F">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="userAuth">등급</label>
+                                    <select id="userAuth" name="userAuth" required="Y">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="text-left"><input type="button" value="도로명주소" id="btnKakaoMap"></div>
+                            <br>
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="zip">우편번호</label>
+                                    <input type="text" name="zip" class="form-control" id="zip" required="Y" readonly>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="city">시도</label>
+                                    <input type="text" class="form-control" name="city" id="city" required="Y" readonly>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="addr">주소</label>
+                                    <input type="text" name="addr" class="form-control" id="addr" required="Y" readonly>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="addrDtl">상세주소</label>
+                                    <input type="text" class="form-control" name="addrDtl" id="addrDtl">
+                                </div>
+                            </div>
 
                         </form>
+                        <div class="text-center"><input type="button" id="btnSave" value="저장"></div>
                     </div>
                 </div>
 

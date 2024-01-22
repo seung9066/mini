@@ -28,7 +28,8 @@ function ajaxPost(obj) {
 // map : {'url':url, 'frmId':frmId}
 // 폼 태그 시리얼라이즈 아작스 포스트
 function ajaxPostSerial(map) {
-	var data = $('#' + map.frmId).serialize();
+    var frmData = new FormData(document.getElementById(map.frmId));
+    var data = new URLSearchParams(frmData).toString();
 
 	var returnData = '';
 
@@ -58,40 +59,43 @@ function ajaxGet(map) {
 // 필수값 체크
 // id = 태그 아이디
 function sggNullChk(id) {
-    // 필수 설정을 준 태그들
-	for (let i = 0; i < $('#' + id).find('[required=Y]').length; i++) {
-	    // 인풋 타입
-		var type = $($('#' + id).find('[required=Y]').get(i)).attr('type');
-		// 값
-		var val = $($('#' + id).find('[required=Y]').get(i)).val();
-		// 태그아이디
-		var tagId = $($('#' + id).find('[required=Y]').get(i)).attr('id');
-		// 알림 이름 (라벨명)
-		var nm = $('label[for="' + tagId + '"]').text();
+    var element = document.getElementById(id).querySelectorAll('[required=Y]');
+    if (element) {
+        // 필수 설정을 준 태그들
+        for (let i = 0; i < element.length; i++) {
+            // 인풋 타입
+            var type = element[i].getAttribute('type');
+            // 값
+            var val = element[i].value;
+            // 태그아이디
+            var tagId = element[i].getAttribute('id');
+            // 알림 이름 (라벨명)
+            var nm = document.querySelector('label[for="' + tagId + '"]').textContent;
 
-		if (type == 'radio') {
-		    // 라디오는 name으로 관리
-            var tagNm = $($('#' + id).find('[required=Y]').get(i)).attr('name');
-            // 체크된 라디오가 있는지 확인
-            var radioChk = $('input:radio[name="' + tagNm + '"]:checked').length;
-            // 라디오는 legend 태그의 글자로
-            nm = $('legend[name="' + tagNm + '"]').text();
+            if (type == 'radio') {
+                // 라디오는 name으로 관리
+                var tagNm = element[i].getAttribute('name');
+                // 체크된 라디오가 있는지 확인
+                var radioChk = document.querySelector('input[type="radio"][name="' + tagNm + '"]:checked').length;
+                // 라디오는 legend 태그의 글자로
+                nm = document.querySelector('legend[name="' + tagNm + '"]').textContent;
 
-            if (radioChk == 0) {
-                alert(nm + ' 을(를) 선택해주세요.');
-                $($('#' + id).find('[required=Y]').get(i)).focus();
+                if (radioChk == 0) {
+                    alert(nm + ' 을(를) 선택해주세요.');
+                    element[i].focus();
 
-                return false;
+                    return false;
+                }
+            } else {
+                if (val.trim() == '') {
+                    alert(nm + ' 을(를) 입력해주세요.');
+                    element[i].focus();
+
+                    return false;
+                }
             }
-		} else {
-            if (val.trim() == '') {
-                alert(nm + ' 을(를) 입력해주세요.');
-                $($('#' + id).find('[required=Y]').get(i)).focus();
-
-                return false;
-            }
-		}
-	}
+        }
+    }
 
 	return true;
 }
@@ -104,15 +108,18 @@ function sggBindMap(obj) {
         var k = `${key}`;
         var v = `${obj[key]}`;
 
-        if ($('#' + k).length > 0) {
-            var type = $('#' + k).prop('tagName');
-            if (type == 'INPUT' || type == 'TEXTAREA') {
-                $('#' + k).val(v);
+        if (document.getElementById(k)) {
+            var type = document.getElementById(k).tagName;
+            if (type == 'INPUT' || type == 'TEXTAREA' || type == 'SELECT') {
+                document.getElementById(k).value = v;
             } else {
-                $('#' + k).html(v);
+                document.getElementById(k).innerText = v;
             }
-        } else if ($('input[name=' + k + ']').length > 0) {
-            $('input:radio[name="' + k + '"]:input[value="' + v + '"]').attr("checked", true);
+        } else if (document.querySelectorAll('input[name="' + k + '"]').length > 0) {
+            var radioElement = document.querySelector('input[type="radio"][name="' + k + '"][value="' + v + '"]');
+            if (radioElement) {
+                radioElement.checked = true;
+            }
         }
     }
 }
@@ -127,19 +134,19 @@ function sggDataToMap(obj) {
         if (`${obj[key]}` != '') {
             map.set(k, v);
         } else {
-            if ($('#' + k).length > 0) {
-                var type = $('#' + k).prop('tagName');
+            if (document.querySelectorAll('#' + k).length > 0) {
+                var type = document.getElementById(k).tagName;
                 if (type == 'INPUT' || type == 'TEXTAREA') {
-                    var vv = $('#' + k).val();
+                    var vv = document.getElementById(k).value;
                     vv = vv.trim();
                     map.set(key, vv);
                 } else {
-                    var vv = $('#' + k).text();
+                    var vv = document.getElementById(k).textContent;
                     vv = vv.trim();
                     map.set(key, vv);
                 }
-            } else if ($('input[name=' + k + ']').length > 0) {
-                var vv = $('input[name=' + k + ']').val();
+            } else if (document.querySelectorAll('input[name="' + k + '"]').length > 0) {
+                var vv = document.querySelector('input[name="' + k + '"]').value;
                 vv = vv.trim();
                 map.set(k, vv);
             }
@@ -195,63 +202,66 @@ function sggRegChk(type, val) {
     return false;
 }
 
-// 필수값 체크
+// 정규식 체크
 // id = 태그 아이디
 function sggRegChkAttr(id) {
-	for (let i = 0; i < $('#' + id).find('[regChk]').length; i++) {
-		var val = $($('#' + id).find('[regChk]').get(i)).val();
-		var type = $($('#' + id).find('[regChk]').get(i)).attr('regChk');
-		var tagId = $($('#' + id).find('[regChk]').get(i)).attr('id');
-		var nm = $('label[for="' + tagId + '"]').text();
+    var element = document.getElementById(id).querySelectorAll('[regChk]');
+    if (element) {
+        for (let i = 0; i < element.length; i++) {
+        		var val = element[i].value;
+        		var type = element[i].getAttribute('regChk');
+        		var tagId = element[i].getAttribute('id');
+        		var nm = document.querySelector('label[for="' + tagId + '"]').textContent;
 
-		// 전화번호
-	    if (type == 'tel') {
-	        var phoneRule = /(^02.{0}|^01.{1}|[0-9]{3,4})([0-9]{3,4})([0-9]{4})/g;
-	        if (!phoneRule.test(val)) {
-				if (nm != '') {
-					alert(nm + ' 을(를) 올바르게 입력해주세요.');
-					$($('#' + id).find('[regChk]').get(i)).focus();
-				}
-		        return false;
-			}
-	    }
+        		// 전화번호
+        	    if (type == 'tel') {
+        	        var phoneRule = /(^02.{0}|^01.{1}|[0-9]{3,4})([0-9]{3,4})([0-9]{4})/g;
+        	        if (!phoneRule.test(val)) {
+        				if (nm != '') {
+        					alert(nm + ' 을(를) 올바르게 입력해주세요.');
+                            element[i].focus();
+        				}
+        		        return false;
+        			}
+        	    }
 
-	    // 이메일
-	    if (type == 'email') {
-	        var emailRule = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-	        if (!emailRule.test(val)) {
-				if (nm != '') {
-					alert(nm + ' 을(를) 올바르게 입력해주세요.');
-					$($('#' + id).find('[regChk]').get(i)).focus();
-				}
-		        return false;
-			}
-	    }
+        	    // 이메일
+        	    if (type == 'email') {
+        	        var emailRule = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+        	        if (!emailRule.test(val)) {
+        				if (nm != '') {
+        					alert(nm + ' 을(를) 올바르게 입력해주세요.');
+                            element[i].focus();
+        				}
+        		        return false;
+        			}
+        	    }
 
-	    // 비밀번호 영문 숫자 특수기호 조합 8자리 이상
-	    if (type == 'pw') {
-			var pwRule = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
-			if (!pwRule.test(val)) {
-				if (nm != '') {
-					alert(nm + ' 을(를) 올바르게 입력해주세요.');
-					$($('#' + id).find('[regChk]').get(i)).focus();
-				}
-		        return false;
-			}
-		}
+        	    // 비밀번호 영문 숫자 특수기호 조합 8자리 이상
+        	    if (type == 'pw') {
+        			var pwRule = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
+        			if (!pwRule.test(val)) {
+        				if (nm != '') {
+        					alert(nm + ' 을(를) 올바르게 입력해주세요.');
+                            element[i].focus();
+        				}
+        		        return false;
+        			}
+        		}
 
-		// 아이디 영문 숫자 조합 8자리 이상
-		if (type == 'id') {
-			var idRule = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,15}$/;
-			if (!idRule.test(val)) {
-				if (nm != '') {
-					alert(nm + ' 을(를) 올바르게 입력해주세요.');
-					$($('#' + id).find('[regChk]').get(i)).focus();
-				}
-		        return false;
-			}
-		}
-	}
+        		// 아이디 영문 숫자 조합 8자리 이상
+        		if (type == 'id') {
+        			var idRule = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,15}$/;
+        			if (!idRule.test(val)) {
+        				if (nm != '') {
+        					alert(nm + ' 을(를) 올바르게 입력해주세요.');
+                            element[i].focus();
+        				}
+        		        return false;
+        			}
+        		}
+        	}
+    }
 
 	return true;
 }
@@ -270,20 +280,21 @@ function getCode(map) {
         html += '<option value="' + data[i].cdDtl + '">' + data[i].cdDtlName + '</option>';
     }
 
-    $('#' + map.id).append(html);
+    var selectEle = document.getElementById(map.id);
+    selectEle.insertAdjacentHTML('beforeend', html);
 }
 
 // 메뉴 이동
 // path : 이동할 주소
 function goPage(path) {
-    $('#pagePath').val(path);
-    $('#goPage').submit();
+    document.getElementById('pagePath').value = path;
+    document.getElementById('goPage').submit();
 }
 
 // 데이터 담은 메뉴 이동
 // 폼태그에 데이터 담을 input 생성, 데이터 처리는 기본 컨트롤러에서 불가능해서 따로 action path를 바꿔줌
 function goPageMap(path, map) {
-    $('#goPage').attr('action', path);
+    document.getElementById('goPage').setAttribute('action', path);
 
     var html = '';
     for (let key in map) {
@@ -292,9 +303,10 @@ function goPageMap(path, map) {
 
         html += '<input type="hidden" name="' + k + '" value="' + v + '">';
     }
-    $('#goPage').append(html);
+    var goPageElement = document.getElementById('goPage');
+    goPageElement.insertAdjacentHTML('beforeend', html);
 
-    $('#goPage').submit();
+    document.getElementById('goPage').submit();
 }
 
 // 문자열 길이기준 자르기
@@ -306,4 +318,17 @@ function sggSplitLength(str, size) {
         result.push(str.substring(i, i + size));
     }
     return result;
+}
+
+// 이벤트 추가
+// map(list) : id : '태그아이디', event : '태그이벤트', eventDtl : '이벤트 function'
+function sggEvent(map) {
+    for (let i = 0; i < map.length; i++) {
+        var ele = document.getElementById(map[i].id);
+        if (ele) {
+            ele.addEventListener(map[i].event, function () {
+                eval(map[i].eventDtl + '()');
+            });
+        }
+    }
 }

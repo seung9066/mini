@@ -122,8 +122,6 @@ function getDtl() {
 
         style = widStyle + semi;
 
-        console.log(style)
-
         $('.ce-code-text').attr('style', style);
     }
 }
