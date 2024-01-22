@@ -324,12 +324,12 @@ function drawCode() {
 function addEvent() {
     var map = [{id : 'btnDel'
                 , event : 'click'
-                , eventDtl : ''}];
+                , eventDtl : 'doDel'}];
 
     sggEvent(map);
 }
 
 // 삭제 이벤트
-function doDel() {
+function doDel(ele) {
 
 }
