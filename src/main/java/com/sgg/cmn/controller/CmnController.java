@@ -60,4 +60,11 @@ public class CmnController {
         return cmnService.getData(map, param);
     }
 
+    @PostMapping("/cmn/upData")
+    @ResponseBody
+    public int upData(@RequestBody Map<String, Object> map) throws Exception{
+
+        return cmnService.upData(map);
+    }
+
 }

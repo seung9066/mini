@@ -5,6 +5,7 @@ import com.sgg.cmn.service.CmnService;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 import org.thymeleaf.util.ArrayUtils;
 import org.thymeleaf.util.MapUtils;
 
@@ -66,6 +67,30 @@ public class CmnServiceImpl implements CmnService {
         } else {
             return sqlSession.selectOne(String.valueOf(map.get("path")), map.get("data"));
         }
+    }
+
+    /**
+     * 업데이트
+     * @param map
+     * @return
+     * @throws Exception
+     */
+    public int upData(Map<String, Object> map) throws Exception{
+        int chk = 0;
+
+        if (!ObjectUtils.isEmpty(map.get("data"))) {
+            if (map.get("data") instanceof java.util.Map) {
+                chk = sqlSession.update(String.valueOf(map.get("path")), map.get("data"));
+            }
+            if (map.get("data").getClass().isArray()) {
+                Object[] arr = (Object[]) map.get("data");
+                for (int i = 0; i < arr.length; i++) {
+                    chk += sqlSession.update(String.valueOf(map.get("path")), arr[i]);
+                }
+            }
+        }
+
+        return chk;
     }
 
 }

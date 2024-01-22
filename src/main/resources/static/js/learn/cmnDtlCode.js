@@ -22,6 +22,8 @@ $(document).ready(function(){
         event.stopPropagation();
         chkOnclick($(this).attr('id'));
     });
+
+    addEvent();
 });
 
 var userId = '';
@@ -316,4 +318,18 @@ function drawCode() {
                 , id : 'type'};
 
     getCode(map);
+}
+
+// 이벤트 추가
+function addEvent() {
+    var map = [{id : 'btnDel'
+                , event : 'click'
+                , eventDtl : ''}];
+
+    sggEvent(map);
+}
+
+// 삭제 이벤트
+function doDel() {
+
 }
