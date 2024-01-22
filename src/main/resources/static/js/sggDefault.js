@@ -442,3 +442,36 @@ function sggGetData(obj) {
 
     return returnData;
 }
+
+// 공통 업데이트
+// obj : {path : '쿼리', data : {}, frmId : '폼태그 아이디'}
+function sggUpdate() {
+    if (obj.frmId) {
+        var frmData = new FormData(document.getElementById(obj.frmId));
+        var data = {};
+        frmData.forEach(function(value, key){
+            obj.data[key] = value;
+        });
+    }
+
+    var jsonData = JSON.stringify(obj);
+
+    var returnData = '';
+
+    $.ajax({
+        url:'/cmn/upData',
+        type:'POST',
+        contentType: 'application/json',
+        data:jsonData,
+        dataType:"json",
+        async:false,
+        success:function(data){
+            returnData = data;
+        },
+        error:function(reject){
+            returnData = reject;
+        }
+    })
+
+    return returnData;
+}
