@@ -2,15 +2,20 @@ package com.sgg.cmn.service.impl;
 
 import com.sgg.cmn.mapper.CmnMapper;
 import com.sgg.cmn.service.CmnService;
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.ArrayUtils;
+import org.thymeleaf.util.MapUtils;
 
 import java.util.List;
 import java.util.Map;
 
 @Service
 public class CmnServiceImpl implements CmnService {
+
+    @Autowired
+    private SqlSession sqlSession;
 
     @Autowired
     CmnMapper cmnMapper;
@@ -29,6 +34,38 @@ public class CmnServiceImpl implements CmnService {
         }
 
         return codeList;
+    }
+
+    /**
+     * 목록 조회
+     * @param map
+     * @param param
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<Map<String, Object>> getList(Map<String, Object> map, Map<String, Object> param) throws Exception {
+        if (MapUtils.isEmpty(map)) {
+            return sqlSession.selectList(String.valueOf(param.get("path")), param.get("data"));
+        } else {
+            return sqlSession.selectList(String.valueOf(map.get("path")), map.get("data"));
+        }
+    }
+
+    /**
+     * 단건 조회
+     * @param map
+     * @param param
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Map<String, Object> getData(Map<String, Object> map, Map<String, Object> param) throws Exception {
+        if (MapUtils.isEmpty(map)) {
+            return sqlSession.selectOne(String.valueOf(param.get("path")), param.get("data"));
+        } else {
+            return sqlSession.selectOne(String.valueOf(map.get("path")), map.get("data"));
+        }
     }
 
 }

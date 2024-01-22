@@ -1,6 +1,13 @@
-// obj : {'url':url, 'data':data}
+// obj : {'url':url, 'data':{data}, frmId : '폼태그아이디'}
 // 아작스 포스트 통신
 function ajaxPost(obj) {
+    if (obj.frmId) {
+        var frmData = new FormData(document.getElementById(obj.frmId));
+        var data = {};
+        frmData.forEach(function(value, key){
+            obj.data[key] = value;
+        });
+    }
     var dataMap = obj.data;
 
     var jsonData = JSON.stringify(dataMap);
@@ -48,12 +55,6 @@ function ajaxPostSerial(map) {
     })
 
     return returnData;
-}
-
-// 아작스 겟 통신
-// map : {'url':url, 'data'::data}
-function ajaxGet(map) {
-
 }
 
 // 값 비워주기
@@ -374,4 +375,70 @@ function sggEvent(map) {
             });
         }
     }
+}
+
+// 공통 목록조회
+// obj : {path : '쿼리', data : {}, frmId : '폼태그 아이디'}
+function sggGetList(obj) {
+    if (obj.frmId) {
+        var frmData = new FormData(document.getElementById(obj.frmId));
+        var data = {};
+        frmData.forEach(function(value, key){
+            obj.data[key] = value;
+        });
+    }
+
+    var jsonData = JSON.stringify(obj);
+
+    var returnData = '';
+
+    $.ajax({
+        url:'/cmn/getList',
+        type:'POST',
+        contentType: 'application/json',
+        data:jsonData,
+        dataType:"json",
+        async:false,
+        success:function(data){
+            returnData = data;
+        },
+        error:function(reject){
+            returnData = reject;
+        }
+    })
+
+    return returnData;
+}
+
+// 공통 단건조회
+// obj : {path : '쿼리', data : {}, frmId : '폼태그 아이디'}
+function sggGetData(obj) {
+    if (obj.frmId) {
+        var frmData = new FormData(document.getElementById(obj.frmId));
+        var data = {};
+        frmData.forEach(function(value, key){
+            obj.data[key] = value;
+        });
+    }
+
+    var jsonData = JSON.stringify(obj);
+
+    var returnData = '';
+
+    $.ajax({
+        url:'/cmn/getData',
+        type:'POST',
+        contentType: 'application/json',
+        data:jsonData,
+        dataType:"json",
+        async:false,
+        success:function(data){
+            returnData = data;
+        },
+        error:function(reject){
+            returnData = reject;
+        }
+    })
+
+    return returnData;
 }

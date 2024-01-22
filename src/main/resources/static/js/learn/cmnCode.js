@@ -10,7 +10,7 @@ $(document).ready(function(){
 
     // 조회
     $('#search').on('click', function() {
-       sggGrid(1, grid1.tblId);
+       sggGridRun(1, grid1.frmId);
     });
 
     if ($('#layoutUserAuth').val() != '999') {
@@ -60,7 +60,7 @@ sggGridList.push(grid1);
 
 // 상세조회
 function getDtl() {
-    goPageMap('learn/cmnDtlCode', {codeNo : grid1.trRowData[0]});
+    goPageMap('learn/cmnDtlCode', {codeNo : grid1.trData.codeNo});
 }
 
 // 작성 페이지 이동
@@ -68,6 +68,7 @@ function goWrite() {
     goPageMap('learn/cmnDtlCode', {codeNo : ''});
 }
 
+// 공통코드
 function drawCode() {
 
     var map = {cdId : 'CODE_TYPE_CD'
@@ -78,6 +79,7 @@ function drawCode() {
     getCode(map);
 }
 
+// 이벤트 추가
 function addEvent() {
     var map = [{id :'grdRow'
                 , event : 'change'
@@ -85,6 +87,7 @@ function addEvent() {
     sggEvent(map);
 }
 
+// select box 변경 시 몇개씩 보여주기 설정
 function rowChange(ele) {
     grid1.row = ele.value;
 
