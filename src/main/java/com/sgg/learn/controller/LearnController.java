@@ -46,18 +46,6 @@ public class LearnController {
     }
 
     /**
-     * 상세페이지
-     * @param map
-     * @return String
-     */
-    @PostMapping("/learn/goDtl")
-    public String goDtl(@RequestParam Map<String, String> map, Model model) throws Exception{
-        model.addAttribute("codeNo", map.get("codeNo"));
-
-        return "learn/cmnDtlCode";
-    }
-
-    /**
      * 상세정보
      * @param map
      * @return List<Map<String, String>>

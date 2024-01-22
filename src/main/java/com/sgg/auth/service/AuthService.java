@@ -1,5 +1,6 @@
 package com.sgg.auth.service;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,4 +11,6 @@ public interface AuthService {
     List<Map<String, Object>> getList(Map<String, String> map) throws Exception;
 
     int getListCnt(Map<String, String> map) throws Exception;
+
+    int doSave(Map<String, String> map, HttpSession session) throws Exception;
 }

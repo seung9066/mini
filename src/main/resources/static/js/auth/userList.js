@@ -56,7 +56,7 @@ var grid1 =
     , tdTypeData: []
 }
 
-var sggGridList = [grid1];
+sggGridList.push(grid1);
 
 // 상세조회
 function getDtl() {
@@ -90,14 +90,27 @@ function drawCode() {
 
 // 이벤트
 function addEvent() {
-    var map = [{id : 'btnSave'
+    var btnSv = {id : 'btnSave'
                 , event : 'click'
-                , eventDtl : 'btnSave'}]
+                , eventDtl : 'btnSave'};
+
+    var map = [btnSv];
 
     sggEvent(map);
 }
 
 // 저장
 function btnSave() {
+    var map = {url : '/auth/doSave'
+                , frmId : 'dtlFrm'};
 
+    var data = ajaxPostSerial(map);
+
+    if (data > 0) {
+        alert('수정 완료.');
+        sggGridRun(sggPgNum, grid1.frmId);
+
+        var dtlFrm = document.getElementById('dtlFrm');
+        sggToNull(dtlFrm);
+    }
 }

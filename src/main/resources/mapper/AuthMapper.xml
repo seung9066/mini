@@ -29,9 +29,7 @@
             FROM SGG_USER A1
                 , SGG_USER_INFO A2
             WHERE 1 = 1
-            AND A1.USER_ID = A2.USER_ID
-            AND A1.DEL_YN = 'N'
-            AND A2.DEL_YN = 'N'
+            AND A1.USER_ID = A2.USER_ID(+)
             <if test="type != null and type != ''">
                 AND A1.USER_AUTH = #{type}
             </if>
@@ -47,6 +45,7 @@
 
     <!-- 목록 수 -->
     <select id="getListCnt" parameterType="map" resultType="int">
+        /* com.sgg.auth.mapper.AuthMapper.getListCnt */
         SELECT COUNT(*)
         FROM (
             SELECT A1.USER_ID
@@ -68,9 +67,7 @@
             FROM SGG_USER A1
                 , SGG_USER_INFO A2
             WHERE 1 = 1
-            AND A1.USER_ID = A2.USER_ID
-            AND A1.DEL_YN = 'N'
-            AND A2.DEL_YN = 'N'
+            AND A1.USER_ID = A2.USER_ID(+)
             <if test="type != null and type != ''">
                 AND A1.USER_AUTH = #{type}
             </if>
@@ -82,4 +79,64 @@
             </if>
         )
     </select>
+
+    <!-- 수정, 등록 -->
+    <update id="doSave" parameterType="map">
+        /* com.sgg.auth.mapper.AuthMapper.doSave */
+        UPDATE SGG_USER
+        SET USER_AUTH = #{userAuth}
+            , DEL_YN = #{delYn}
+        WHERE USER_ID = #{userId}
+    </update>
+
+    <!-- 수정, 등록 -->
+    <insert id="doSaveInfo" parameterType="map">
+        /* com.sgg.auth.mapper.AuthMapper.doSaveInfo */
+        MERGE INTO SGG_USER_INFO A1
+        USING DUAL
+        ON (A1.USER_ID = #{userId})
+        WHEN MATCHED THEN
+        UPDATE
+        SET A1.TEL_NO = #{telNo}
+            , A1.EMAIL = #{email}
+            , A1.GEN = #{gen}
+            , A1.COUNTRY = '대한민국'
+            , A1.CITY = #{city}
+            , A1.ZIP = #{zip}
+            , A1.ADDR = #{addr}
+            , A1.ADDR_DTL = #{addrDtl}
+            , A1.DEL_YN = #{delYn}
+        WHEN NOT MATCHED THEN
+        INSERT
+        (	A1.USER_ID
+            , A1.TEL_NO
+            , A1.EMAIL
+            , A1.GEN
+            , A1.COUNTRY
+            , A1.CITY
+            , A1.ZIP
+            , A1.ADDR
+            , A1.ADDR_DTL
+            , A1.DEL_YN
+        )
+        VALUES
+        (	#{userId}
+            , #{telNo}
+            , #{email}
+            , #{gen}
+            , '대한민국'
+            , #{city}
+            , #{zip}
+            , #{addr}
+            , #{addrDtl}
+            , 'N'
+        )
+    </insert>
+
+    <!-- info 삭제 -->
+    <delete id="delInfo" parameterType="map">
+        /* com.sgg.auth.mapper.AuthMapper.doSaveInfo */
+        DELETE FROM SGG_USER_INFO
+        WHERE USER_ID = #{userId}
+    </delete>
 </mapper>

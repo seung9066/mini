@@ -12,6 +12,7 @@ import com.sgg.login.mapper.LoginMapper;
 import com.sgg.login.service.LoginService;
 
 import jakarta.servlet.http.HttpSession;
+import org.thymeleaf.util.StringUtils;
 
 @Service
 public class LoginServiceImpl implements LoginService {
@@ -38,8 +39,16 @@ public class LoginServiceImpl implements LoginService {
     public boolean loginChk(Map<String, String> map, HttpSession session) throws Exception {
         // 비밀번호 단방향 암호화
         String result = "";
-        result = cmnUtil.hashEncpt(map.get("userPw"));
-        map.put("userPw", result);
+        if (!StringUtils.isEmpty(map.get("userPw"))) {
+            result = cmnUtil.hashEncpt(map.get("userPw"));
+            map.put("userPw", result);
+        }
+
+        if (!StringUtils.isEmpty(map.get("rePw"))) {
+            result = cmnUtil.hashEncpt(map.get("rePw"));
+            map.put("userPw", result);
+            loginMapper.reAccount(map);
+        }
 
         int cnt = loginMapper.loginChk(map);
         if (cnt > 0) {

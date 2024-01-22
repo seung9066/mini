@@ -11,4 +11,10 @@ public interface AuthMapper {
     List<Map<String, Object>> getList(Map<String, String> map);
 
     int getListCnt(Map<String, String> map);
+
+    int doSave(Map<String, String> map);
+
+    int doSaveInfo(Map<String, String> map);
+
+    int delInfo(Map<String, String> map);
 }

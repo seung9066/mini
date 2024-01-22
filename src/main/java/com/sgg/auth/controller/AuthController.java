@@ -1,6 +1,7 @@
 package com.sgg.auth.controller;
 
 import com.sgg.auth.service.AuthService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,5 +39,18 @@ public class AuthController {
     public int getListCnt(@RequestParam Map<String, String> map) throws Exception{
 
         return authservice.getListCnt(map);
+    }
+
+    /**
+     * 저장
+     * @param map
+     * @return int
+     * @throws Exception
+     */
+    @PostMapping("/auth/doSave")
+    @ResponseBody
+    public int doSave(@RequestParam Map<String, String> map, HttpSession session) throws Exception{
+
+        return authservice.doSave(map, session);
     }
 }

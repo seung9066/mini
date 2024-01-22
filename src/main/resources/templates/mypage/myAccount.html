@@ -21,9 +21,11 @@
                             <h4>본인확인</h4>
                             <form action="" id="frmNewAccount">
 	                            <div class="loginFrm">
+                                    <label for="myId"></label>
 	                                <input type="id" id="myId" name="userId" placeholder="아이디" required="Y" th:value="${session.userId}" readonly>
 	                            </div>
 	                            <div class="loginFrm">
+                                    <label for="myPw"></label>
 	                                <input type="password" id="myPw" name="userPw" placeholder="비밀번호" required="Y" regChk="pw">
 	                            </div>
                             </form>

@@ -56,6 +56,40 @@ function ajaxGet(map) {
 
 }
 
+// 값 비워주기
+// element = document.getElementById();
+function sggToNull(element) {
+    if (element) {
+        var childElement = element.children;
+
+        for (let i = 0; i < childElement.length; i++) {
+            // 인풋 타입
+            var type = childElement[i].tagName;
+            // 태그아이디
+            var tagId = childElement[i].getAttribute('id');
+            var tagNm = childElement[i].getAttribute('name');
+
+            if (type == 'INPUT' || type == 'TEXTAREA' || type == 'SELECT') {
+                var inputType = childElement[i].getAttribute('type')
+                if (inputType != 'button') {
+                    if (type == 'SELECT') {
+                        childElement[i].selectedIndex = 0;
+                    } else if (inputType == 'radio') {
+                        var radioChk = document.querySelector('input[type="radio"][name="' + tagNm + '"]:checked');
+                        if (radioChk) {
+                            radioChk.checked = false;
+                        }
+                    } else {
+                        childElement[i].value = '';
+                    }
+                }
+            } else {
+                sggToNull(childElement[i]);
+            }
+        }
+    }
+}
+
 // 필수값 체크
 // id = 태그 아이디
 function sggNullChk(id) {
@@ -71,6 +105,9 @@ function sggNullChk(id) {
             var tagId = element[i].getAttribute('id');
             // 알림 이름 (라벨명)
             var nm = document.querySelector('label[for="' + tagId + '"]').textContent;
+            if (nm == '') {
+                nm = document.getElementById(tagId).placeholder;
+            }
 
             if (type == 'radio') {
                 // 라디오는 name으로 관리
@@ -124,7 +161,8 @@ function sggBindMap(obj) {
     }
 }
 
-// 값을 맵에 넣어준 뒤 다시 object 타입으로 반환
+// 지정한 컬럼에 대한 id를 찾아서 그 값을 obj로 반환
+// obj = {컬럼명 : '', 컬럼명 : ''}
 function sggDataToMap(obj) {
     var map = new Map();
 
@@ -203,7 +241,7 @@ function sggRegChk(type, val) {
 }
 
 // 정규식 체크
-// id = 태그 아이디
+// id = 상위 태그 아이디
 function sggRegChkAttr(id) {
     var element = document.getElementById(id).querySelectorAll('[regChk]');
     if (element) {
@@ -212,6 +250,9 @@ function sggRegChkAttr(id) {
         		var type = element[i].getAttribute('regChk');
         		var tagId = element[i].getAttribute('id');
         		var nm = document.querySelector('label[for="' + tagId + '"]').textContent;
+        		if (nm == '') {
+                    nm = document.getElementById(tagId).placeholder;
+                }
 
         		// 전화번호
         	    if (type == 'tel') {
@@ -219,8 +260,8 @@ function sggRegChkAttr(id) {
         	        if (!phoneRule.test(val)) {
         				if (nm != '') {
         					alert(nm + ' 을(를) 올바르게 입력해주세요.');
-                            element[i].focus();
         				}
+                        element[i].focus();
         		        return false;
         			}
         	    }
@@ -231,8 +272,8 @@ function sggRegChkAttr(id) {
         	        if (!emailRule.test(val)) {
         				if (nm != '') {
         					alert(nm + ' 을(를) 올바르게 입력해주세요.');
-                            element[i].focus();
         				}
+                        element[i].focus();
         		        return false;
         			}
         	    }
@@ -243,8 +284,8 @@ function sggRegChkAttr(id) {
         			if (!pwRule.test(val)) {
         				if (nm != '') {
         					alert(nm + ' 을(를) 올바르게 입력해주세요.');
-                            element[i].focus();
         				}
+                        element[i].focus();
         		        return false;
         			}
         		}
@@ -255,8 +296,8 @@ function sggRegChkAttr(id) {
         			if (!idRule.test(val)) {
         				if (nm != '') {
         					alert(nm + ' 을(를) 올바르게 입력해주세요.');
-                            element[i].focus();
         				}
+                        element[i].focus();
         		        return false;
         			}
         		}
@@ -292,9 +333,9 @@ function goPage(path) {
 }
 
 // 데이터 담은 메뉴 이동
-// 폼태그에 데이터 담을 input 생성, 데이터 처리는 기본 컨트롤러에서 불가능해서 따로 action path를 바꿔줌
+// 폼태그에 데이터 담을 input 생성
 function goPageMap(path, map) {
-    document.getElementById('goPage').setAttribute('action', path);
+    document.getElementById('goPage').setAttribute('action', '/pageMap');
 
     var html = '';
     for (let key in map) {
@@ -303,6 +344,8 @@ function goPageMap(path, map) {
 
         html += '<input type="hidden" name="' + k + '" value="' + v + '">';
     }
+    document.getElementById('pagePath').value = path;
+
     var goPageElement = document.getElementById('goPage');
     goPageElement.insertAdjacentHTML('beforeend', html);
 
@@ -327,7 +370,7 @@ function sggEvent(map) {
         var ele = document.getElementById(map[i].id);
         if (ele) {
             ele.addEventListener(map[i].event, function () {
-                eval(map[i].eventDtl + '()');
+                eval(map[i].eventDtl + '(ele)');
             });
         }
     }

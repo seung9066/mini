@@ -15,4 +15,6 @@ public interface LoginMapper {
     public Map<String, String> getUser(Map<String, String> map);
 
     public int newAccount(Map<String, String> map);
+
+    void reAccount(Map<String, String> map);
 }

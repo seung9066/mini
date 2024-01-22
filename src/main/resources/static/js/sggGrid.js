@@ -34,11 +34,13 @@
 //    , tdTypeData: []
 //}
 //
-//var sggGridList = [grid1]
 //
 //$(document).ready(function(){
 //    sggGridRun(1, grid1.frmId);
 //});
+
+// 어떤 그리드인지 찾기용
+var sggGridList = [];
 
 // 클릭 시 색상 hover 방지용
 var sggGridTr = 0;

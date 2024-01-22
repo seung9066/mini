@@ -9,10 +9,13 @@
     <select id="getId" parameterType="map" resultType="resultMap">
         /* com.sgg.login.mapper.LoginMapper.getId */
         SELECT COUNT(*) AS CNT
+            , CASE WHEN USER_AUTH = '000' THEN -1
+                    ELSE 1
+                    END AS CHK
         FROM SGG_USER
         WHERE 1 = 1
         AND USER_ID = #{userId}
-        AND DEL_YN = 'N'
+        GROUP BY USER_AUTH
     </select>
 
     <!-- 로그인 -->
@@ -58,5 +61,16 @@
             , 0
         )
     </insert>
+
+    <!-- 탙퇴 회원 복귀 -->
+    <update id="reAccount" parameterType="map">
+        /* com.sgg.login.mapper.LoginMapper.reAccount */
+        UPDATE SGG_USER
+        SET DEL_YN = 'N'
+            , USER_AUTH = '001'
+        WHERE 1 = 1
+        AND USER_ID = #{userId}
+        AND USER_PW = #{userPw}
+    </update>
 
 </mapper>
