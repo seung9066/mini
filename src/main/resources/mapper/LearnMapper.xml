@@ -143,4 +143,12 @@
         DELETE FROM SGG_CMN_CODE_DTL
         WHERE CODE_NO = #{codeNo}
     </delete>
+
+    <!-- 삭제 -->
+    <update id="delNo" parameterType="map">
+        /* com.sgg.learn.mapper.LearnMapper.delNo */
+        UPDATE SGG_CMN_CODE
+        SET DEL_YN = 'Y'
+        WHERE CODE_NO = #{codeNo}
+    </update>
 </mapper>

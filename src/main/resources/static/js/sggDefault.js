@@ -14,20 +14,37 @@ function ajaxPost(obj) {
 
     var returnData = '';
 
-    $.ajax({
-        url:obj.url,
-        type:'POST',
-        contentType: 'application/json',
-        data:jsonData,
-        dataType:"json",
-        async:false,
-        success:function(data){
-            returnData = data;
-        },
-        error:function(reject){
-            returnData = reject;
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', obj.url, false);
+
+    xhr.setRequestHeader('Content-Type', 'application/json'); // 설정한 Content-Type
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                returnData = JSON.parse(xhr.responseText);
+            } else {
+                console.error('Vanilla JavaScript AJAX Error:', xhr.status);
+            }
         }
-    })
+    };
+
+    xhr.send(jsonData);
+
+//    $.ajax({
+//        url:obj.url,
+//        type:'POST',
+//        contentType: 'application/json',
+//        data:jsonData,
+//        dataType:"json",
+//        async:false,
+//        success:function(data){
+//            returnData = data;
+//        },
+//        error:function(reject){
+//            returnData = reject;
+//        }
+//    })
 
     return returnData;
 }
@@ -392,20 +409,37 @@ function sggGetList(obj) {
 
     var returnData = '';
 
-    $.ajax({
-        url:'/cmn/getList',
-        type:'POST',
-        contentType: 'application/json',
-        data:jsonData,
-        dataType:"json",
-        async:false,
-        success:function(data){
-            returnData = data;
-        },
-        error:function(reject){
-            returnData = reject;
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/cmn/getList', false);
+
+    xhr.setRequestHeader('Content-Type', 'application/json'); // 설정한 Content-Type
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                returnData = JSON.parse(xhr.responseText);
+            } else {
+                console.error('Vanilla JavaScript AJAX Error:', xhr.status);
+            }
         }
-    })
+    };
+
+    xhr.send(jsonData);
+
+//    $.ajax({
+//        url:'/cmn/getList',
+//        type:'POST',
+//        contentType: 'application/json',
+//        data:jsonData,
+//        dataType:"json",
+//        async:false,
+//        success:function(data){
+//            returnData = data;
+//        },
+//        error:function(reject){
+//            returnData = reject;
+//        }
+//    })
 
     return returnData;
 }
@@ -425,27 +459,44 @@ function sggGetData(obj) {
 
     var returnData = '';
 
-    $.ajax({
-        url:'/cmn/getData',
-        type:'POST',
-        contentType: 'application/json',
-        data:jsonData,
-        dataType:"json",
-        async:false,
-        success:function(data){
-            returnData = data;
-        },
-        error:function(reject){
-            returnData = reject;
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/cmn/getData', false);
+
+    xhr.setRequestHeader('Content-Type', 'application/json'); // 설정한 Content-Type
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                returnData = JSON.parse(xhr.responseText);
+            } else {
+                console.error('Vanilla JavaScript AJAX Error:', xhr.status);
+            }
         }
-    })
+    };
+
+    xhr.send(jsonData);
+
+//    $.ajax({
+//        url:'/cmn/getData',
+//        type:'POST',
+//        contentType: 'application/json',
+//        data:jsonData,
+//        dataType:"json",
+//        async:false,
+//        success:function(data){
+//            returnData = data;
+//        },
+//        error:function(reject){
+//            returnData = reject;
+//        }
+//    })
 
     return returnData;
 }
 
 // 공통 업데이트
 // obj : {path : '쿼리', data : {}, frmId : '폼태그 아이디'}
-function sggUpdate() {
+function sggUpdate(obj) {
     if (obj.frmId) {
         var frmData = new FormData(document.getElementById(obj.frmId));
         var data = {};
@@ -458,20 +509,37 @@ function sggUpdate() {
 
     var returnData = '';
 
-    $.ajax({
-        url:'/cmn/upData',
-        type:'POST',
-        contentType: 'application/json',
-        data:jsonData,
-        dataType:"json",
-        async:false,
-        success:function(data){
-            returnData = data;
-        },
-        error:function(reject){
-            returnData = reject;
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/cmn/upData', false);
+
+    xhr.setRequestHeader('Content-Type', 'application/json'); // 설정한 Content-Type
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                returnData = JSON.parse(xhr.responseText);
+            } else {
+                console.error('Vanilla JavaScript AJAX Error:', xhr.status);
+            }
         }
-    })
+    };
+
+    xhr.send(jsonData);
+
+//    $.ajax({
+//        url:'/cmn/upData',
+//        type:'POST',
+//        contentType: 'application/json',
+//        data:jsonData,
+//        dataType:"json",
+//        async:false,
+//        success:function(data){
+//            returnData = data;
+//        },
+//        error:function(reject){
+//            returnData = reject;
+//        }
+//    })
 
     return returnData;
 }

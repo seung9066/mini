@@ -14,11 +14,13 @@ public interface LearnMapper {
 
     List<Map<String, Object>> getDtl(Map<String, String> map);
 
-    int doSave(Map<String, String> stringStringMap);
+    int doSave(Map<String, String> map);
 
     String getCodeNo();
 
-    int doSaveDtl(Map<String, String> stringStringMap);
+    int doSaveDtl(Map<String, String> map);
 
-    int delDtl(Map<String, String> newMap);
+    int delDtl(Map<String, String> map);
+
+    int delNo(Map<String, String> map);
 }

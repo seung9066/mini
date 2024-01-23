@@ -7,7 +7,7 @@
 
     <!-- 공통코드 조회 -->
     <select id="getCode" parameterType="map" resultType="resultMap">
-        /* com.sgg.cmn.mapper.CmnMapper.getCode s */
+        /* com.sgg.cmn.mapper.CmnMapper.getCode */
         SELECT CD_ID
             , CD_DTL
             , CD_DTL_NAME
@@ -18,4 +18,31 @@
             AND UP_CD_ID = #{upCdId}
         </if>
     </select>
+
+    <!-- 로그 기록 -->
+    <insert id="log" parameterType="map">
+        /* com.sgg.cmn.mapper.CmnMapper.log */
+        <selectKey keyProperty="logNo" resultType="resultMap" order="BEFORE">
+            SELECT NVL(MAX(LOG_NO), 0) + 1 AS LOG_NO
+            FROM SGG_LOG
+        </selectKey>
+        INSERT INTO SGG_LOG
+        (   LOG_NO
+            , USER_ID
+            , LOG_PATH
+            , USER_IP
+            , LOG_TIME
+            , MENU_NAME
+        )
+        VALUES
+        (   #{logNo}
+            , #{userId}
+            , #{logPath}
+            , #{userIp}
+            , SYSDATE
+            , (SELECT MENU_NAME
+                FROM SGG_MENU
+                WHERE MENU_PATH = #{logPath})
+        )
+    </insert>
 </mapper>

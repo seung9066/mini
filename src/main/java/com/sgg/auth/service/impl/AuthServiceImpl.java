@@ -62,4 +62,41 @@ public class AuthServiceImpl implements AuthService {
         }
         return chk;
     }
+
+    /**
+     * 접속 기록 조회
+     * @param map
+     * @param session
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<Map<String, Object>> logList(Map<String, String> map, HttpSession session) throws Exception {
+
+        return authMapper.logList(map);
+    }
+
+    /**
+     * 접속 기록 수
+     * @param map
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public int logListCnt(Map<String, String> map) throws Exception {
+
+        return authMapper.logListCnt(map);
+    }
+
+    /**
+     * 메뉴 조회
+     * @param map
+     * @param session
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<Map<String, Object>> menuList(Map<String, String> map, HttpSession session) throws Exception {
+        return authMapper.menuList(map);
+    }
 }

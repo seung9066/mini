@@ -17,4 +17,10 @@ public interface AuthMapper {
     int doSaveInfo(Map<String, String> map);
 
     int delInfo(Map<String, String> map);
+
+    List<Map<String, Object>> logList(Map<String, String> map);
+
+    int logListCnt(Map<String, String> map);
+
+    List<Map<String, Object>> menuList(Map<String, String> map);
 }

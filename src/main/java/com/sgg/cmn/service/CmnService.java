@@ -15,4 +15,6 @@ public interface CmnService {
     Map<String, Object> getData(Map<String, Object> map, Map<String, Object> param) throws Exception;
 
     int upData(Map<String, Object> map) throws Exception;
+
+    void log(Map<String, String> map) throws Exception;
 }

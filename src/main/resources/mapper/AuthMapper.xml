@@ -139,4 +139,81 @@
         DELETE FROM SGG_USER_INFO
         WHERE USER_ID = #{userId}
     </delete>
+
+    <!-- 접속 기록 -->
+    <select id="logList" parameterType="map" resultType="resultMap">
+        /* com.sgg.auth.mapper.AuthMapper.logList */
+        SELECT *
+        FROM (
+            SELECT ROW_NUMBER() OVER(ORDER BY A1.LOG_NO DESC) AS RNUM
+                , A1.USER_ID
+                , A2.USER_NM
+                , A1.LOG_PATH
+                , A1.USER_IP
+                , A1.LOG_TIME
+                , A1.MENU_NAME
+            FROM SGG_LOG A1
+                , SGG_USER A2
+            WHERE 1 = 1
+            AND A1.USER_ID = A2.USER_ID
+            <if test="userNm != null and userNm != ''">
+                AND A2.USER_NM LIKE '%' || #{userNm} || '%'
+            </if>
+            <if test="userId != null and userId != ''">
+                AND A1.USER_ID LIKE '%' || #{userId} || '%'
+            </if>
+            <if test="logTime != null and logTime != ''">
+                AND TO_CHAR(A1.LOG_TIME, 'YYYY-MM-DD') = #{logTime}
+            </if>
+        )
+        WHERE RNUM BETWEEN ((#{page} - 1) * #{row}) + 1 AND #{page} * #{row}
+    </select>
+
+    <!-- 접속 기록 수 -->
+    <select id="logListCnt" parameterType="map" resultType="int">
+        /* com.sgg.auth.mapper.AuthMapper.logListCnt */
+        SELECT COUNT(*)
+        FROM (
+            SELECT ROW_NUMBER() OVER(ORDER BY A1.LOG_NO DESC) AS RNUM
+                , A1.USER_ID
+                , A2.USER_NM
+                , A1.LOG_PATH
+                , A1.USER_IP
+                , A1.LOG_TIME
+                , A1.MENU_NAME
+            FROM SGG_LOG A1
+                , SGG_USER A2
+            WHERE 1 = 1
+            AND A1.USER_ID = A2.USER_ID
+            <if test="userNm != null and userNm != ''">
+                AND A2.USER_NM LIKE '%' || #{userNm} || '%'
+            </if>
+            <if test="userId != null and userId != ''">
+                AND A1.USER_ID LIKE '%' || #{userId} || '%'
+            </if>
+            <if test="logTime != null and logTime != ''">
+                AND TO_CHAR(A1.LOG_TIME, 'YYYY-MM-DD') = #{logTime}
+            </if>
+        )
+    </select>
+
+    <!-- 메뉴 목록 -->
+    <select id="menuList" parameterType="map" resultType="resultMap">
+        SELECT CASE WHEN LEVEL = 1 THEN MENU_ID END LEV1
+            , CASE WHEN LEVEL = 2 THEN MENU_ID END LEV2
+            , MENU_ID
+            , MENU_NAME
+            , UP_MENU_ID
+            , MENU_NO
+            , MENU_PATH
+            , USER_AUTH
+            , DEL_YN
+        FROM SGG_MENU a1
+        WHERE 1 = 1
+        AND USER_AUTH <![CDATA[ <= ]]> '999'
+        AND MENU_NO > 0
+        START WITH UP_MENU_ID IS NULL
+        CONNECT BY UP_MENU_ID = PRIOR MENU_ID
+        ORDER SIBLINGS BY MENU_NO
+    </select>
 </mapper>

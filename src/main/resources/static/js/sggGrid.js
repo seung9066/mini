@@ -118,16 +118,26 @@ function sggGridFrmData(pageNum, grid) {
 // type : GET, POST
 function sggGridAjax(data, url, type) {
     var returnData;
-    $.ajax({
-        url: url,
-        type: type,
-        data: data,
-        dataType: 'json',
-        async: false,
-        success: function (result) {
-            returnData = result;
+
+    url = url + '?' + data;
+
+    var xhr = new XMLHttpRequest();
+    xhr.open(type, url, false); // async: false
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                returnData = JSON.parse(xhr.responseText);
+            } else {
+                console.error('Vanilla JavaScript AJAX Error:', xhr.status);
+            }
         }
-    });
+    };
+
+    xhr.setRequestHeader('Content-Type', 'application/json'); // 설정한 Content-Type
+
+    xhr.send(data);
+
     return returnData;
 }
 
@@ -296,25 +306,24 @@ function sggGridTbodyData(grid) {
             idx = 1;
         }
         var tr = document.getElementById(grid.frmId + '_tbody').getElementsByTagName('tr')[i];
-        // 넣을 값
-        var obj = data[i];
         // thead 컬럼
         var th = grid.th;
-        for (let key in obj) {
-            var k = `${key}`;
-            var v = `${obj[key]}`;
+        // 넣을 값
+        var obj = data[i];
 
-            for (let key2 in th) {
-                var thk = `${key2}`;
-                var thv = `${th[key2]}`;
+        for (let key in th) {
+            var k = `${key}`;
+
+            for (let key2 in obj) {
+                var kk = `${key2}`;
+                var vv = `${obj[key2]}`;
 
                 // data 컬럼과 thead 컬럼이 같으면 값 넣어주기
-                if (k == thk) {
-                    tr.getElementsByTagName('td')[idx].innerText = v;
-                    idx++;
+                if (k == kk) {
+                    tr.getElementsByTagName('td')[idx].innerText = vv;
                 }
-
             }
+            idx++;
         }
     }
 
@@ -609,7 +618,9 @@ function sggGridtrData(grid) {
                 id = id.replace(frm, '');
                 grid.trData = grid.data[id];
 
-                eval(grid.tonC + '()');
+                if (grid.tonC) {
+                    eval(grid.tonC + '(tr)');
+                }
             });
         });
     }

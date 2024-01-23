@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -52,5 +53,47 @@ public class AuthController {
     public int doSave(@RequestParam Map<String, String> map, HttpSession session) throws Exception{
 
         return authservice.doSave(map, session);
+    }
+
+    /**
+     * 접속 기록 조회
+     * @param map
+     * @param session
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/auth/logList")
+    @ResponseBody
+    public List<Map<String, Object>> logList(@RequestParam Map<String, String> map, HttpSession session) throws Exception{
+
+        return authservice.logList(map, session);
+    }
+
+    /**
+     * 접속 기록 수
+     * @param map
+     * @param session
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/auth/logListCnt")
+    @ResponseBody
+    public int logListCnt(@RequestParam Map<String, String> map, HttpSession session) throws Exception{
+
+        return authservice.logListCnt(map);
+    }
+
+    /**
+     * 메뉴 조회
+     * @param map
+     * @param session
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/auth/menuList")
+    @ResponseBody
+    public List<Map<String, Object>> menuList(@RequestParam Map<String, String> map, HttpSession session) throws Exception{
+
+        return authservice.menuList(map, session);
     }
 }

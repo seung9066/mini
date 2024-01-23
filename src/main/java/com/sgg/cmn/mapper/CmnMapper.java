@@ -10,4 +10,5 @@ public interface CmnMapper {
 
     public List<Map<String, Object>> getCode(Map<String, Object> map);
 
+    void log(Map<String, String> map);
 }

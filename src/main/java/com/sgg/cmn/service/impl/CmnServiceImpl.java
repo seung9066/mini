@@ -93,4 +93,9 @@ public class CmnServiceImpl implements CmnService {
         return chk;
     }
 
+    @Override
+    public void log(Map<String, String> map) throws Exception {
+        cmnMapper.log(map);
+    }
+
 }

@@ -46,6 +46,7 @@ function chkCodeNo(chk) {
         $('#divType').show();
         $('#title').attr('readonly', false);
         $('#title').css('border', '1px solid #ccc');
+        $('#btnDel').hide();
 
         $('#btnUpdate').hide();
     }
@@ -331,5 +332,14 @@ function addEvent() {
 
 // 삭제 이벤트
 function doDel(ele) {
+    var map = {path : 'com.sgg.learn.mapper.LearnMapper.delNo'
+                , data : {codeNo : codeNo}};
 
+    var data = sggUpdate(map);
+
+    if (data > 0) {
+        goPage('learn/cmnCode');
+    } else {
+        alert('error');
+    }
 }
