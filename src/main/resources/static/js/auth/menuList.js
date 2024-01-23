@@ -288,10 +288,8 @@ function doUpMenu() {
 
 // 취소
 function doCancel() {
-    if (newChk == 0) {
-        chgToTxt(trId);
-    } else {
-        document.getElementById(trId).remove();
+    if (newChk != 0 || trId != '') {
+        sggGridRun(1, grid1.frmId);
     }
     trId = '';
     newChk = 0;
