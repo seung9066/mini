@@ -118,6 +118,10 @@ function idChk() {
     var id = '';
     id = $('#loginId').val();
 
+    if (!sggRegChk('id', id)) {
+        return false;
+    }
+
     var map = {'url' : '/login/getId'
                 , 'data':{'userId' : id}};
 
