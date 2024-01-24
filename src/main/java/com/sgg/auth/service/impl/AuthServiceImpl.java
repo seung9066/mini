@@ -99,4 +99,14 @@ public class AuthServiceImpl implements AuthService {
     public List<Map<String, Object>> menuList(Map<String, String> map, HttpSession session) throws Exception {
         return authMapper.menuList(map);
     }
+
+    @Override
+    public int menuSave(Map<String, String> map, HttpSession session) throws Exception {
+        int chk = 0;
+        if (session.getAttribute("userAuth").equals("999")) {
+            chk = authMapper.menuSave(map);
+        }
+
+        return chk;
+    }
 }

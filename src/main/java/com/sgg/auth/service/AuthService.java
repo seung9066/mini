@@ -19,4 +19,6 @@ public interface AuthService {
     int logListCnt(Map<String, String> map) throws Exception;
 
     List<Map<String, Object>> menuList(Map<String, String> map, HttpSession session) throws Exception;
+
+    int menuSave(Map<String, String> map, HttpSession session) throws Exception;
 }

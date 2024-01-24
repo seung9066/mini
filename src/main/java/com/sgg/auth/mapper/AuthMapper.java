@@ -23,4 +23,6 @@ public interface AuthMapper {
     int logListCnt(Map<String, String> map);
 
     List<Map<String, Object>> menuList(Map<String, String> map);
+
+    int menuSave(Map<String, String> map);
 }

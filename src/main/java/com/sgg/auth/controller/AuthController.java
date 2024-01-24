@@ -96,4 +96,11 @@ public class AuthController {
 
         return authservice.menuList(map, session);
     }
+
+    @PostMapping("/auth/menuSave")
+    @ResponseBody
+    public int menuSave(@RequestBody Map<String, String> map, HttpSession session) throws Exception{
+
+        return authservice.menuSave(map, session);
+    }
 }

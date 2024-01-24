@@ -26,6 +26,8 @@ var grid1 =
     , btn : 10
     // tr onclick function명
     , tonC : 'replaceMenu'
+    // tr onclick 색상 true, false
+    , tonCColor : 'false'
     // tr onclick시 데이터 담아줄 배열
     , trData : {}
     // callback function 없으면 ''
@@ -66,29 +68,15 @@ var trId = '';
 var colNm = ['menuId', 'menuId', 'menuName', 'menuNo', 'menuPath', 'userAuth', 'delYn'];
 // 수정 전 값
 var beforVal = [];
-// 신규 체크
-var newChk = 0;
 
 // 메뉴 수정
 function replaceMenu(tr) {
     var tds = tr.querySelectorAll('td');
 
     if (trId != '' && trId != tr.id) {
-        if (confirm('수정 중이던 내용이 사라집니다.')) {
-            // input > text
-            chgToTxt(trId);
-            // text > input
-            chgToInput(tds);
-
-            if (newChk == 1) {
-                document.getElementById(trId).remove();
-            }
-            newChk = 0;
-
-            trId = tr.id;
-        } else {
-            document.getElementById(trId).click();
-        }
+        document.getElementById(trId).click();
+        alert('저장 또는 취소 후 진행해주세요.');
+        return false;
     } else {
         trId = tr.id;
         // text > input
@@ -113,7 +101,19 @@ function chgToInput(tds) {
             var txt = td.innerText;
             beforVal.push(txt);
             if (txt != '') {
-                td.innerHTML = '<input type="text" class="form-control" value="' + txt + '" name="' + colNm[idx] + '">';
+                if (idx <= 1) {
+                    td.innerHTML = '<input type="text" class="form-control" value="' + txt + '" name="' + colNm[idx] + '" readonly required="Y">';
+                }
+                if (idx > 1 && idx != tds.length - 1) {
+                    if (colNm[idx] == 'menuNo') {
+                        td.innerHTML = '<input type="number" class="form-control" value="' + txt + '" name="' + colNm[idx] + '" required="Y">';
+                    } else {
+                        td.innerHTML = '<input type="text" class="form-control" value="' + txt + '" name="' + colNm[idx] + '" required="Y">';
+                    }
+                }
+                if (idx == tds.length - 1){
+                    td.innerHTML = makeDelYn(txt);
+                }
             } else {
                 if (idx == 0) {
                     // 하위메뉴일 시 상위메뉴 아이디 가져오기
@@ -139,36 +139,13 @@ function chgToInput(tds) {
     }
 }
 
-// 인풋 태그를 text로 바꾸기
-function chgToTxt(id) {
-    var tr = document.getElementById(id);
-    var tds = tr.querySelectorAll('td');
-
-    // 이미 수정중인지 체크
-    var cnt = 0;
-    tds.forEach(function(td) {
-        var html = td.innerHTML;
-        if (html.indexOf('<input') > -1) {
-            cnt++;
-        }
-    });
-
-    // 수정중이 아니면 input으로 바꿔주기
-    if (cnt > 0) {
-        tds.forEach(function(td, idx) {
-            td.innerHTML = '';
-            td.innerText = beforVal[idx];
-        });
-        beforVal = [];
-    }
-}
-
 // 상위 메뉴 selectBox 그려주기
 function makeSelect(val) {
     var tbodyEle = document.getElementById(grid1.frmId + '_tbody');
     var trs = tbodyEle.querySelectorAll('tr');
 
-    var html = '<select name="upMenuId" onChange="moveTr(this)">';
+    var html = '<select name="upMenuId" onChange="moveTr(this)" required="Y">';
+    html += '<option value="">선택</option>'
     trs.forEach(function(tr) {
         var upId = tr.querySelector('td').innerText;
         if (upId) {
@@ -184,22 +161,47 @@ function makeSelect(val) {
     return html;
 }
 
+// delYn selectbox
+function makeDelYn(val) {
+    var html = '<select name="delYn" required="Y">';
+    if (val == 'Y') {
+        html += '<option value="Y" selected>Y</option>';
+        html += '<option value="N">N</option>';
+    }
+    if (val == 'N') {
+        html += '<option value="Y">Y</option>';
+        html += '<option value="N" selected>N</option>';
+    }
+    html += '</select>';
+
+    return html;
+}
+
 // 저장
 function doSave() {
-    console.log('a')
+    if (!sggNullChk(trId)) {
+        return false;
+    }
+
+    var obj = {url: '/auth/menuSave'
+                , data: {}
+                , frmId : 'frm'};
+
+    var data = ajaxPost(obj);
+
+    if (data > 0) {
+        alert('수정 완료.');
+        sggGridRun(1, grid1.frmId);
+    }
 }
 
 // 메뉴 추가
 function doMenu() {
     if (trId != '') {
-        if (!confirm('수정 중이던 내용이 사라집니다.')) {
-            return false;
-        } else {
-            chgToTxt(trId);
-        }
+        alert('저장 또는 취소 후 진행해주세요.');
+        return false;
     }
 
-    newChk = 1;
     var tbodyEle = document.getElementById(grid1.frmId + '_tbody');
     var trLenth = tbodyEle.querySelectorAll('tr').length;
     var html = '<tr id="' + grid1.frmId + '_' + trLenth + '">';
@@ -211,7 +213,11 @@ function doMenu() {
         if (i == 0) {
             html += makeSelect();
         } else {
-            html += '<input type="text" class="form-control" value="" name="' + colNm[i] + '">';
+            if (colNm[i] == 'menuNo') {
+                html += '<input type="number" class="form-control" name="' + colNm[i] + '" required="Y">';
+            } else {
+                html += '<input type="text" class="form-control" name="' + colNm[i] + '" required="Y">';
+            }
         }
         html += '</td>';
     }
@@ -222,8 +228,6 @@ function doMenu() {
 
     tbodyEle.style.height = (((grid1.row + 1) * 30) + 60) + 'px';
 
-    sggGridClickHover(grid1);
-
     document.getElementById(trId).click();
 }
 
@@ -233,21 +237,40 @@ function moveTr(ele) {
     var trs = tbodyEle.querySelectorAll('tr');
     var val = ele.value;
     var upVal = '';
+    var upNo = '';
 
     var thisTr = ele.parentNode.parentNode;
-
-    trs.forEach(function(tr) {
+    var chk = 0;
+    trs.forEach(function(tr, idx) {
         upVal = tr.querySelector('td').innerText;
 
+        if (chk > 0) {
+            if (idx == trs.length - 1) {
+                upNo = tr.querySelectorAll('td')[3].innerText;
+            }
+            if (upVal || idx == trs.length - 1) {
+                chk = 0;
+                var trString = thisTr.outerHTML;
+                trString = trString.replace(' selected=""', '');
+                trString = trString.replace((val + '"'), (val + '" selected'));
+                var position = 'beforebegin';
+                if (idx == trs.length - 1) {
+                    position = 'afterend'
+                }
+                tr.insertAdjacentHTML(position, trString);
+                thisTr.remove();
+                document.getElementsByName('menuNo')[0].value = parseInt(upNo, 10) + 1;
+            }
+        }
+
         if (upVal && val == upVal) {
-            var trString = thisTr.outerHTML;
-            trString = trString.replace((val + '"'), (val + '" selected'));
-            tr.insertAdjacentHTML('afterend', trString);
-            thisTr.remove();
+            chk = 1;
+        }
+
+        if (chk > 0) {
+            upNo = tr.querySelectorAll('td')[3].innerText;
         }
     });
-
-    sggGridClickHover(grid1);
 }
 
 // 상위메뉴추가
@@ -260,7 +283,6 @@ function doUpMenu() {
         }
     }
 
-    newChk = 1;
     var tbodyEle = document.getElementById(grid1.frmId + '_tbody');
     var trLenth = tbodyEle.querySelectorAll('tr').length;
     var html = '<tr id="' + grid1.frmId + '_' + trLenth + '">';
@@ -270,7 +292,11 @@ function doUpMenu() {
     for (let i = 0; i < thLength; i++) {
         html += '<td>';
         if (i != 1 && i != 4) {
-            html += '<input type="text" class="form-control" value="" name="' + colNm[i] + '">';
+            if (colNm[i] == 'menuNo') {
+                html += '<input type="number" class="form-control" name="' + colNm[i] + '" required="Y">';
+            } else {
+                html += '<input type="text" class="form-control" name="' + colNm[i] + '" required="Y">';
+            }
         }
         html += '</td>';
     }
@@ -281,16 +307,13 @@ function doUpMenu() {
 
     tbodyEle.style.height = (((grid1.row + 1) * 30) + 60) + 'px';
 
-    sggGridClickHover(grid1);
-
     document.getElementById(trId).click();
 }
 
 // 취소
 function doCancel() {
-    if (newChk != 0 || trId != '') {
+    if (trId != '') {
         sggGridRun(1, grid1.frmId);
     }
     trId = '';
-    newChk = 0;
 }

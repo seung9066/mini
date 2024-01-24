@@ -216,4 +216,38 @@
         CONNECT BY UP_MENU_ID = PRIOR MENU_ID
         ORDER SIBLINGS BY MENU_NO
     </select>
+
+    <!-- 저장, 수정 -->
+    <insert id="menuSave" parameterType="map">
+        MERGE INTO SGG_MENU A1
+        USING DUAL
+        ON (A1.MENU_ID = #{menuId})
+        WHEN MATCHED THEN
+        UPDATE
+        SET A1.MENU_NAME = #{menuName}
+            , A1.UP_MENU_ID = #{upMenuId}
+            , A1.MENU_NO = #{menuNo}
+            , A1.MENU_PATH = #{menuPath}
+            , A1.USER_AUTH = #{userAuth}
+            , A1.DEL_YN = #{delYn}
+        WHEN NOT MATCHED THEN
+        INSERT
+        (	A1.MENU_ID
+            , A1.MENU_NAME
+            , A1.UP_MENU_ID
+            , A1.MENU_NO
+            , A1.MENU_PATH
+            , A1.USER_AUTH
+            , A1.DEL_YN
+        )
+        VALUES
+        (	#{menuId}
+            , #{menuName}
+            , #{upMenuId}
+            , #{menuNo}
+            , #{menuPath}
+            , #{userAuth}
+            , #{delYn}
+        )
+    </insert>
 </mapper>

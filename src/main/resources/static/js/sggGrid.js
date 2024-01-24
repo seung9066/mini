@@ -20,6 +20,8 @@
 //    , btn : 10
 //    // tr onclick function명
 //    , tonC : ''
+//    // tr onclick 색상 true, false
+//    , tonCColor : 'true'
 //    // tr onclick시 데이터 담아줄 배열
 //    , trData : {}
 //    // callback function명
@@ -416,7 +418,9 @@ function sggGridCss(grid) {
     // hover
     sggGridCssHover(grid);
     // 클릭 hover 방지
-    sggGridClickHover(grid);
+    if (grid.tonCColor && grid.tonCColor == 'true') {
+        sggGridClickHover(grid);
+    }
 
     // 버튼 css
     sggGridBtnCss(grid);

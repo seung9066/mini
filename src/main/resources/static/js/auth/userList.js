@@ -42,6 +42,8 @@ var grid1 =
     , btn : 10
     // tr onclick function명
     , tonC : 'getDtl'
+    // tr onclick 색상 true, false
+    , tonCColor : 'true'
     // tr onclick시 데이터 담아줄 배열
     , trData : {}
     // callback function 없으면 ''

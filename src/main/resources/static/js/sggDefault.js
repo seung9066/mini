@@ -115,16 +115,29 @@ function sggNullChk(id) {
     if (element) {
         // 필수 설정을 준 태그들
         for (let i = 0; i < element.length; i++) {
+            // 태그
+            var tagNm = element[i].tagName;
             // 인풋 타입
             var type = element[i].getAttribute('type');
             // 값
             var val = element[i].value;
             // 태그아이디
             var tagId = element[i].getAttribute('id');
+            var placeholder = element[i].placeholder;
+            var nm = '';
             // 알림 이름 (라벨명)
-            var nm = document.querySelector('label[for="' + tagId + '"]').textContent;
-            if (nm == '') {
-                nm = document.getElementById(tagId).placeholder;
+            var label = document.querySelector('label[for="' + tagId + '"]');
+            if (label) {
+                nm = label.textContent;
+            } else if (placeholder) {
+                nm = placeholder
+            }
+
+            var msg = '';
+            if (type == 'radio' || tagNm == 'SELECT') {
+                msg = '선택';
+            } else {
+                msg = '입력';
             }
 
             if (type == 'radio') {
@@ -136,14 +149,22 @@ function sggNullChk(id) {
                 nm = document.querySelector('legend[name="' + tagNm + '"]').textContent;
 
                 if (radioChk == 0) {
-                    alert(nm + ' 을(를) 선택해주세요.');
+                    if (nm != '') {
+                        alert(nm + ' 을(를) ' + msg + '해주세요.');
+                    } else {
+                        alert('값을 ' + msg + '해주세요.');
+                    }
                     element[i].focus();
 
                     return false;
                 }
             } else {
                 if (val.trim() == '') {
-                    alert(nm + ' 을(를) 입력해주세요.');
+                    if (nm != '') {
+                        alert(nm + ' 을(를) ' + msg + '해주세요.');
+                    } else {
+                        alert('값을 ' + msg + '해주세요.');
+                    }
                     element[i].focus();
 
                     return false;
