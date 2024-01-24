@@ -151,7 +151,9 @@
                 , A1.LOG_PATH
                 , A1.USER_IP
                 , A1.LOG_TIME
-                , A1.MENU_NAME
+                , CASE WHEN A1.MENU_NAME IS NULL AND A1.LOG_PATH IS NULL THEN '메인'
+                        ELSE A1.MENU_NAME
+                        END AS MENU_NAME
             FROM SGG_LOG A1
                 , SGG_USER A2
             WHERE 1 = 1
@@ -180,7 +182,9 @@
                 , A1.LOG_PATH
                 , A1.USER_IP
                 , A1.LOG_TIME
-                , A1.MENU_NAME
+                , CASE WHEN A1.MENU_NAME IS NULL AND A1.LOG_PATH IS NULL THEN '메인'
+                        ELSE A1.MENU_NAME
+                        END AS MENU_NAME
             FROM SGG_LOG A1
                 , SGG_USER A2
             WHERE 1 = 1
@@ -211,7 +215,6 @@
         FROM SGG_MENU a1
         WHERE 1 = 1
         AND USER_AUTH <![CDATA[ <= ]]> '999'
-        AND MENU_NO > 0
         START WITH UP_MENU_ID IS NULL
         CONNECT BY UP_MENU_ID = PRIOR MENU_ID
         ORDER SIBLINGS BY MENU_NO

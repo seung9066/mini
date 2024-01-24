@@ -167,8 +167,7 @@ function makeDelYn(val) {
     if (val == 'Y') {
         html += '<option value="Y" selected>Y</option>';
         html += '<option value="N">N</option>';
-    }
-    if (val == 'N') {
+    } else {
         html += '<option value="Y">Y</option>';
         html += '<option value="N" selected>N</option>';
     }
@@ -215,6 +214,8 @@ function doMenu() {
         } else {
             if (colNm[i] == 'menuNo') {
                 html += '<input type="number" class="form-control" name="' + colNm[i] + '" required="Y">';
+            } else if (colNm[i] == 'delYn') {
+                html += makeDelYn();
             } else {
                 html += '<input type="text" class="form-control" name="' + colNm[i] + '" required="Y">';
             }
@@ -294,6 +295,8 @@ function doUpMenu() {
         if (i != 1 && i != 4) {
             if (colNm[i] == 'menuNo') {
                 html += '<input type="number" class="form-control" name="' + colNm[i] + '" required="Y">';
+            } else if (colNm[i] == 'delYn') {
+                html += makeDelYn();
             } else {
                 html += '<input type="text" class="form-control" name="' + colNm[i] + '" required="Y">';
             }
