@@ -163,7 +163,7 @@
                 AND A1.USER_ID LIKE '%' || #{userId} || '%'
             </if>
             <if test="logTime != null and logTime != ''">
-                AND TO_CHAR(A1.LOG_TIME, 'YYYY-MM-DD') = #{logTime}
+                AND TRUNC(TO_DATE(TO_CHAR(A1.LOG_TIME, 'YYYYMMDD'), 'YYYYMMDD')) = TRUNC(TO_DATE(TO_CHAR(SYSDATE, 'YYYYMMDD'), 'YYYYMMDD')) - #{logTime}
             </if>
         )
         WHERE RNUM BETWEEN ((#{page} - 1) * #{row}) + 1 AND #{page} * #{row}
@@ -192,7 +192,7 @@
                 AND A1.USER_ID LIKE '%' || #{userId} || '%'
             </if>
             <if test="logTime != null and logTime != ''">
-                AND TO_CHAR(A1.LOG_TIME, 'YYYY-MM-DD') = #{logTime}
+                AND TRUNC(TO_DATE(TO_CHAR(A1.LOG_TIME, 'YYYYMMDD'), 'YYYYMMDD')) = TRUNC(TO_DATE(TO_CHAR(SYSDATE, 'YYYYMMDD'), 'YYYYMMDD')) - #{logTime}
             </if>
         )
     </select>

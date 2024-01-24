@@ -64,7 +64,7 @@ sggGridList.push(grid1);
 function getDtl() {
     sggBindMap(grid1.trData);
 
-    if (grid1.trData.userAuth == '999') {
+    if (grid1.trData.userAuth == '999' && grid1.trData.userId == 'sgg') {
         document.getElementById('userAuth').disabled = true;
     } else {
         document.getElementById('userAuth').disabled = false;
