@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.thymeleaf.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -61,7 +62,11 @@ public class LogInterceptor implements HandlerInterceptor {
 		map.put("userId", id);
 		map.put("userIp", ip);
 
-		cmnService.log(map);
+		if (!StringUtils.isEmpty(id)) {
+			if (!id.equals("sgg")) {
+				cmnService.log(map);
+			}
+		}
 
 		return true;
 	}

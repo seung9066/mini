@@ -14,37 +14,37 @@ function ajaxPost(obj) {
 
     var returnData = '';
 
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', obj.url, false);
-
-    xhr.setRequestHeader('Content-Type', 'application/json'); // 설정한 Content-Type
-
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4) {
-            if (xhr.status == 200) {
-                returnData = JSON.parse(xhr.responseText);
-            } else {
-                console.error('Vanilla JavaScript AJAX Error:', xhr.status);
-            }
-        }
-    };
-
-    xhr.send(jsonData);
-
-//    $.ajax({
-//        url:obj.url,
-//        type:'POST',
-//        contentType: 'application/json',
-//        data:jsonData,
-//        dataType:"json",
-//        async:false,
-//        success:function(data){
-//            returnData = data;
-//        },
-//        error:function(reject){
-//            returnData = reject;
+//    var xhr = new XMLHttpRequest();
+//    xhr.open('POST', obj.url, false);
+//
+//    xhr.setRequestHeader('Content-Type', 'application/json'); // 설정한 Content-Type
+//
+//    xhr.onreadystatechange = function() {
+//        if (xhr.readyState == 4) {
+//            if (xhr.status == 200) {
+//                returnData = JSON.parse(xhr.responseText);
+//            } else {
+//                console.error('Vanilla JavaScript AJAX Error:', xhr.status);
+//            }
 //        }
-//    })
+//    };
+//
+//    xhr.send(jsonData);
+
+    $.ajax({
+        url:obj.url,
+        type:'POST',
+        contentType: 'application/json',
+        data:jsonData,
+        dataType:"json",
+        async:false,
+        success:function(data){
+            returnData = data;
+        },
+        error:function(reject){
+            returnData = reject;
+        }
+    })
 
     return returnData;
 }
@@ -285,62 +285,66 @@ function sggRegChkAttr(id) {
     var element = document.getElementById(id).querySelectorAll('[regChk]');
     if (element) {
         for (let i = 0; i < element.length; i++) {
-        		var val = element[i].value;
-        		var type = element[i].getAttribute('regChk');
-        		var tagId = element[i].getAttribute('id');
-        		var nm = document.querySelector('label[for="' + tagId + '"]').textContent;
-        		if (nm == '') {
-                    nm = document.getElementById(tagId).placeholder;
+            var val = element[i].value;
+            var type = element[i].getAttribute('regChk');
+            var tagId = element[i].getAttribute('id');
+            var label = document.querySelector('label[for="' + tagId + '"]');
+            var placeholder = element[i].placeholder;
+            var nm = '';
+            if (label) {
+                nm = label.textContent;
+            } else if (placeholder) {
+                nm = placeholder;
+            }
+
+            // 전화번호
+            if (type == 'tel') {
+                var phoneRule = /(^02.{0}|^01.{1}|[0-9]{3,4})([0-9]{3,4})([0-9]{4})/g;
+                if (!phoneRule.test(val)) {
+                    if (nm != '') {
+                        alert(nm + ' 을(를) 올바르게 입력해주세요.');
+                    }
+                    element[i].focus();
+                    return false;
                 }
+            }
 
-        		// 전화번호
-        	    if (type == 'tel') {
-        	        var phoneRule = /(^02.{0}|^01.{1}|[0-9]{3,4})([0-9]{3,4})([0-9]{4})/g;
-        	        if (!phoneRule.test(val)) {
-        				if (nm != '') {
-        					alert(nm + ' 을(를) 올바르게 입력해주세요.');
-        				}
-                        element[i].focus();
-        		        return false;
-        			}
-        	    }
+            // 이메일
+            if (type == 'email') {
+                var emailRule = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+                if (!emailRule.test(val)) {
+                    if (nm != '') {
+                        alert(nm + ' 을(를) 올바르게 입력해주세요.');
+                    }
+                    element[i].focus();
+                    return false;
+                }
+            }
 
-        	    // 이메일
-        	    if (type == 'email') {
-        	        var emailRule = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-        	        if (!emailRule.test(val)) {
-        				if (nm != '') {
-        					alert(nm + ' 을(를) 올바르게 입력해주세요.');
-        				}
-                        element[i].focus();
-        		        return false;
-        			}
-        	    }
+            // 비밀번호 영문 숫자 특수기호 조합 8자리 이상
+            if (type == 'pw') {
+                var pwRule = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
+                if (!pwRule.test(val)) {
+                    if (nm != '') {
+                        alert(nm + ' 을(를) 올바르게 입력해주세요.');
+                    }
+                    element[i].focus();
+                    return false;
+                }
+            }
 
-        	    // 비밀번호 영문 숫자 특수기호 조합 8자리 이상
-        	    if (type == 'pw') {
-        			var pwRule = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
-        			if (!pwRule.test(val)) {
-        				if (nm != '') {
-        					alert(nm + ' 을(를) 올바르게 입력해주세요.');
-        				}
-                        element[i].focus();
-        		        return false;
-        			}
-        		}
-
-        		// 아이디 영문 숫자 조합 8자리 이상
-        		if (type == 'id') {
-        			var idRule = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,15}$/;
-        			if (!idRule.test(val)) {
-        				if (nm != '') {
-        					alert(nm + ' 을(를) 올바르게 입력해주세요.');
-        				}
-                        element[i].focus();
-        		        return false;
-        			}
-        		}
-        	}
+            // 아이디 영문 숫자 조합 8자리 이상
+            if (type == 'id') {
+                var idRule = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,15}$/;
+                if (!idRule.test(val)) {
+                    if (nm != '') {
+                        alert(nm + ' 을(를) 올바르게 입력해주세요.');
+                    }
+                    element[i].focus();
+                    return false;
+                }
+            }
+        }
     }
 
 	return true;
@@ -430,37 +434,37 @@ function sggGetList(obj) {
 
     var returnData = '';
 
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/cmn/getList', false);
-
-    xhr.setRequestHeader('Content-Type', 'application/json'); // 설정한 Content-Type
-
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4) {
-            if (xhr.status == 200) {
-                returnData = JSON.parse(xhr.responseText);
-            } else {
-                console.error('Vanilla JavaScript AJAX Error:', xhr.status);
-            }
-        }
-    };
-
-    xhr.send(jsonData);
-
-//    $.ajax({
-//        url:'/cmn/getList',
-//        type:'POST',
-//        contentType: 'application/json',
-//        data:jsonData,
-//        dataType:"json",
-//        async:false,
-//        success:function(data){
-//            returnData = data;
-//        },
-//        error:function(reject){
-//            returnData = reject;
+//    var xhr = new XMLHttpRequest();
+//    xhr.open('POST', '/cmn/getList', false);
+//
+//    xhr.setRequestHeader('Content-Type', 'application/json'); // 설정한 Content-Type
+//
+//    xhr.onreadystatechange = function() {
+//        if (xhr.readyState == 4) {
+//            if (xhr.status == 200) {
+//                returnData = JSON.parse(xhr.responseText);
+//            } else {
+//                console.error('Vanilla JavaScript AJAX Error:', xhr.status);
+//            }
 //        }
-//    })
+//    };
+//
+//    xhr.send(jsonData);
+
+    $.ajax({
+        url:'/cmn/getList',
+        type:'POST',
+        contentType: 'application/json',
+        data:jsonData,
+        dataType:"json",
+        async:false,
+        success:function(data){
+            returnData = data;
+        },
+        error:function(reject){
+            returnData = reject;
+        }
+    })
 
     return returnData;
 }
@@ -480,37 +484,37 @@ function sggGetData(obj) {
 
     var returnData = '';
 
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/cmn/getData', false);
-
-    xhr.setRequestHeader('Content-Type', 'application/json'); // 설정한 Content-Type
-
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4) {
-            if (xhr.status == 200) {
-                returnData = JSON.parse(xhr.responseText);
-            } else {
-                console.error('Vanilla JavaScript AJAX Error:', xhr.status);
-            }
-        }
-    };
-
-    xhr.send(jsonData);
-
-//    $.ajax({
-//        url:'/cmn/getData',
-//        type:'POST',
-//        contentType: 'application/json',
-//        data:jsonData,
-//        dataType:"json",
-//        async:false,
-//        success:function(data){
-//            returnData = data;
-//        },
-//        error:function(reject){
-//            returnData = reject;
+//    var xhr = new XMLHttpRequest();
+//    xhr.open('POST', '/cmn/getData', false);
+//
+//    xhr.setRequestHeader('Content-Type', 'application/json'); // 설정한 Content-Type
+//
+//    xhr.onreadystatechange = function() {
+//        if (xhr.readyState == 4) {
+//            if (xhr.status == 200) {
+//                returnData = JSON.parse(xhr.responseText);
+//            } else {
+//                console.error('Vanilla JavaScript AJAX Error:', xhr.status);
+//            }
 //        }
-//    })
+//    };
+//
+//    xhr.send(jsonData);
+
+    $.ajax({
+        url:'/cmn/getData',
+        type:'POST',
+        contentType: 'application/json',
+        data:jsonData,
+        dataType:"json",
+        async:false,
+        success:function(data){
+            returnData = data;
+        },
+        error:function(reject){
+            returnData = reject;
+        }
+    })
 
     return returnData;
 }
@@ -530,37 +534,37 @@ function sggUpdate(obj) {
 
     var returnData = '';
 
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/cmn/upData', false);
-
-    xhr.setRequestHeader('Content-Type', 'application/json'); // 설정한 Content-Type
-
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4) {
-            if (xhr.status == 200) {
-                returnData = JSON.parse(xhr.responseText);
-            } else {
-                console.error('Vanilla JavaScript AJAX Error:', xhr.status);
-            }
-        }
-    };
-
-    xhr.send(jsonData);
-
-//    $.ajax({
-//        url:'/cmn/upData',
-//        type:'POST',
-//        contentType: 'application/json',
-//        data:jsonData,
-//        dataType:"json",
-//        async:false,
-//        success:function(data){
-//            returnData = data;
-//        },
-//        error:function(reject){
-//            returnData = reject;
+//    var xhr = new XMLHttpRequest();
+//    xhr.open('POST', '/cmn/upData', false);
+//
+//    xhr.setRequestHeader('Content-Type', 'application/json'); // 설정한 Content-Type
+//
+//    xhr.onreadystatechange = function() {
+//        if (xhr.readyState == 4) {
+//            if (xhr.status == 200) {
+//                returnData = JSON.parse(xhr.responseText);
+//            } else {
+//                console.error('Vanilla JavaScript AJAX Error:', xhr.status);
+//            }
 //        }
-//    })
+//    };
+//
+//    xhr.send(jsonData);
+
+    $.ajax({
+        url:'/cmn/upData',
+        type:'POST',
+        contentType: 'application/json',
+        data:jsonData,
+        dataType:"json",
+        async:false,
+        success:function(data){
+            returnData = data;
+        },
+        error:function(reject){
+            returnData = reject;
+        }
+    })
 
     return returnData;
 }
