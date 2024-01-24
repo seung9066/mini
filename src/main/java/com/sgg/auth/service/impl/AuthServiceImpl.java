@@ -104,7 +104,12 @@ public class AuthServiceImpl implements AuthService {
     public int menuSave(Map<String, String> map, HttpSession session) throws Exception {
         int chk = 0;
         if (session.getAttribute("userAuth").equals("999")) {
+            // 메뉴 수정
             chk = authMapper.menuSave(map);
+            if (authMapper.chkUpMenu(map) > 0) {
+                // 상위 메뉴 사용여부 변경 시 하위메뉴 변경
+                chk += authMapper.updateMenu(map);
+            }
         }
 
         return chk;

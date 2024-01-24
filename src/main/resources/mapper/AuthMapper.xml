@@ -203,6 +203,7 @@
 
     <!-- 메뉴 목록 -->
     <select id="menuList" parameterType="map" resultType="resultMap">
+        /* com.sgg.auth.mapper.AuthMapper.menuList */
         SELECT CASE WHEN LEVEL = 1 THEN MENU_ID END LEV1
             , CASE WHEN LEVEL = 2 THEN MENU_ID END LEV2
             , MENU_ID
@@ -222,6 +223,7 @@
 
     <!-- 저장, 수정 -->
     <insert id="menuSave" parameterType="map">
+        /* com.sgg.auth.mapper.AuthMapper.menuSave */
         MERGE INTO SGG_MENU A1
         USING DUAL
         ON (A1.MENU_ID = #{menuId})
@@ -253,4 +255,20 @@
             , #{delYn}
         )
     </insert>
+
+    <!-- 상위메뉴인지 체크 -->
+    <select id="chkUpMenu" parameterType="map" resultType="int">
+        /* com.sgg.auth.mapper.AuthMapper.chkUpMenu */
+        SELECT COUNT(*)
+        FROM SGG_MENU
+        WHERE UP_MENU_ID = #{menuId}
+    </select>
+
+    <!-- 상위 메뉴 변경 시 -->
+    <update id="updateMenu" parameterType="map">
+        /* com.sgg.auth.mapper.AuthMapper.updateMenu */
+        UPDATE SGG_MENU
+        SET DEL_YN = #{delYn}
+        WHERE UP_MENU_ID = #{menuId}
+    </update>
 </mapper>

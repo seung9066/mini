@@ -25,4 +25,8 @@ public interface AuthMapper {
     List<Map<String, Object>> menuList(Map<String, String> map);
 
     int menuSave(Map<String, String> map);
+
+    int updateMenu(Map<String, String> map);
+
+    int chkUpMenu(Map<String, String> map);
 }
