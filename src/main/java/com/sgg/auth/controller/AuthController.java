@@ -97,10 +97,57 @@ public class AuthController {
         return authservice.menuList(map, session);
     }
 
+    /**
+     * 메뉴 수정
+     * @param map
+     * @param session
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/auth/menuSave")
     @ResponseBody
     public int menuSave(@RequestBody Map<String, String> map, HttpSession session) throws Exception{
 
         return authservice.menuSave(map, session);
+    }
+
+    /**
+     * 소개 목록
+     * @param map
+     * @param session
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/auth/indexList")
+    @ResponseBody
+    public List<Map<String, Object>> indexList(@RequestParam Map<String, String> map, HttpSession session) throws Exception{
+
+        return authservice.indexList(map, session);
+    }
+
+    /**
+     * 소개 목록 수
+     * @param map
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/auth/indexListCnt")
+    @ResponseBody
+    public int indexListCnt(@RequestParam Map<String, String> map) throws Exception{
+
+        return authservice.indexListCnt(map);
+    }
+
+    /**
+     * 소개 저장
+     * @param map
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/auth/saveIndex")
+    @ResponseBody
+    public int saveIndex(@RequestBody Map<String, String> map, HttpSession session) throws Exception{
+
+        return authservice.saveIndex(map, session);
     }
 }

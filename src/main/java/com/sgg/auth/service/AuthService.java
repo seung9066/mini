@@ -21,4 +21,10 @@ public interface AuthService {
     List<Map<String, Object>> menuList(Map<String, String> map, HttpSession session) throws Exception;
 
     int menuSave(Map<String, String> map, HttpSession session) throws Exception;
+
+    List<Map<String, Object>> indexList(Map<String, String> map, HttpSession session) throws Exception;
+
+    int indexListCnt(Map<String, String> map) throws Exception;
+
+    int saveIndex(Map<String, String> map, HttpSession session) throws Exception;
 }

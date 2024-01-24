@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/_layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGG</title>
+
+    <script type="text/javascript" th:src="@{/js/auth/indexList.js}"></script>
+
+</head>
+<body>
+<div layout:fragment="content">
+    <section id="breadcrumbs" class="breadcrumbs">
+        <div class="container" id="showPath">
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>소개목록</h2>
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-12 mt-5 mt-lg-0 d-flex align-items-stretch">
+                    <div class="php-email-form" id="frmNewAccount">
+                        <form id="frm">
+                            <label for="title">제목</label>
+                            <input type="text" id="title" name="title">
+                            <input type="button" id="search" name="search" value="조회" style="float:right;">
+                            <br><br>
+
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <br><br>
+
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>상세정보</h2>
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-12 mt-5 mt-lg-0 d-flex align-items-stretch">
+                    <div class="php-email-form" id="userDtlFrm">
+                        <form id="dtlFrm">
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="preHead">제목</label>
+                                    <input type="text" name="preHead" class="form-control" id="preHead" required="Y">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="delYn">삭제여부</label>
+                                    <select id="delYn" name="delYn" required="Y">
+                                        <option value="N" selected>N</option>
+                                        <option value="Y">Y</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xl" data-aos="fade-up" data-aos-delay="100">
+                                    <div class="box">
+                                        <label for="preDtl">내용</label>
+                                        <textarea class="form-control" name="preDtl" rows="20" id="preDtl" required="Y"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <input type="hidden" id="preNo" name="preNo">
+                            <br><br>
+
+                        </form>
+                        <div class="text-center">
+                            <input type="button" id="btnC" value="취소">
+                            <input type="button" id="btnSave" value="저장">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section><!-- End Contact Section -->
+</div>
+</body>
+</html>

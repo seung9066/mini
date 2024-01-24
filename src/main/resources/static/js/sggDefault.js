@@ -75,7 +75,7 @@ function ajaxPostSerial(map) {
 }
 
 // 값 비워주기
-// element = document.getElementById();
+// element = document.getElementById(); 아이디가 없는 태그도 있어서 element로 받음
 function sggToNull(element) {
     if (element) {
         var childElement = element.children;
@@ -177,7 +177,6 @@ function sggNullChk(id) {
 }
 
 // 값 바인딩
-// id = 태그 아이디
 // obj = 바인딩할 데이터 맵
 function sggBindMap(obj) {
     for (let key in obj) {

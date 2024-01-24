@@ -11,11 +11,9 @@
         SELECT LINE_NO
             , CONTENT_DTL
             , USER_ID
-            , USE_YN
             , DEL_YN
         FROM SGG_PRJ_LINE
         WHERE 1 = 1
-        AND USE_YN = 'Y'
         AND DEL_YN = 'N'
         ORDER BY LINE_NO
     </select>
@@ -27,13 +25,11 @@
             , PRE_HEAD
             , PRE_DTL
             , USER_ID
-            , USE_YN
             , DEL_YN
         FROM (
             SELECT *
             FROM SGG_PRE
             WHERE 1 = 1
-            AND USE_YN = 'Y'
             AND DEL_YN = 'N'
             ORDER BY DBMS_RANDOM.VALUE
         )

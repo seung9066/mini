@@ -29,4 +29,10 @@ public interface AuthMapper {
     int updateMenu(Map<String, String> map);
 
     int chkUpMenu(Map<String, String> map);
+
+    List<Map<String, Object>> indexList(Map<String, String> map);
+
+    int indexListCnt(Map<String, String> map);
+
+    int saveIndex(Map<String, String> map);
 }

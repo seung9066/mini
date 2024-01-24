@@ -114,4 +114,46 @@ public class AuthServiceImpl implements AuthService {
 
         return chk;
     }
+
+    /**
+     * 소개 목록 조회
+     * @param map
+     * @param session
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<Map<String, Object>> indexList(Map<String, String> map, HttpSession session) throws Exception {
+
+        return authMapper.indexList(map);
+    }
+
+    /**
+     * 소개목록 수
+     * @param map
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public int indexListCnt(Map<String, String> map) throws Exception {
+
+        return authMapper.indexListCnt(map);
+    }
+
+    /**
+     * 소개 저장
+     * @param map
+     * @param session
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public int saveIndex(Map<String, String> map, HttpSession session) throws Exception {
+        int chk = 0;
+        if (session.getAttribute("userAuth").equals("999")) {
+            map.put("userId", (String) session.getAttribute("userId"));
+            chk = authMapper.saveIndex(map);
+        }
+        return chk;
+    }
 }

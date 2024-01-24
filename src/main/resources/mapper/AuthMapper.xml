@@ -271,4 +271,72 @@
         SET DEL_YN = #{delYn}
         WHERE UP_MENU_ID = #{menuId}
     </update>
+
+    <!-- 소개 목록 -->
+    <select id="indexList" parameterType="map" resultType="resultMap">
+        /* com.sgg.auth.mapper.AuthMapper.indexList */
+        SELECT *
+        FROM (
+            SELECT ROW_NUMBER() OVER(ORDER BY PRE_NO DESC) AS RNUM
+                , PRE_NO
+                , PRE_HEAD
+                , PRE_DTL
+                , USER_ID
+                , DEL_YN
+            FROM SGG_PRE
+            WHERE 1 = 1
+            <if test="title != null and title != ''">
+                AND PRE_HEAD LIKE '%' || #{title} || '%'
+            </if>
+        )
+        WHERE RNUM BETWEEN ((#{page} - 1) * #{row}) + 1 AND #{page} * #{row}
+    </select>
+
+    <!-- 소개 목록 수 -->
+    <select id="indexListCnt" parameterType="map" resultType="int">
+        /* com.sgg.auth.mapper.AuthMapper.indexListCnt */
+        SELECT COUNT(*)
+        FROM (
+            SELECT ROW_NUMBER() OVER(ORDER BY PRE_NO DESC) AS RNUM
+                , PRE_NO
+                , PRE_HEAD
+                , PRE_DTL
+                , USER_ID
+                , DEL_YN
+            FROM SGG_PRE
+            WHERE 1 = 1
+            <if test="title != null and title != ''">
+                AND PRE_HEAD LIKE '%' || #{title} || '%'
+            </if>
+        )
+    </select>
+
+    <!-- 소개 저장 -->
+    <insert id="saveIndex" parameterType="map">
+        /* com.sgg.auth.mapper.AuthMapper.saveIndex */
+        MERGE INTO SGG_PRE A1
+        USING DUAL
+        ON (A1.PRE_NO = #{preNo})
+        WHEN MATCHED THEN
+        UPDATE
+        SET A1.PRE_HEAD = #{preHead}
+            , A1.PRE_DTL = #{preDtl}
+            , A1.DEL_YN = #{delYn}
+        WHEN NOT MATCHED THEN
+        INSERT
+        (	A1.PRE_NO
+            , A1.PRE_HEAD
+            , A1.PRE_DTL
+            , A1.USER_ID
+            , A1.DEL_YN
+        )
+        VALUES
+        (	(SELECT NVL(MAX(PRE_NO), 0) + 1
+                FROM SGG_PRE)
+            , #{preHead}
+            , #{preDtl}
+            , #{userId}
+            , #{delYn}
+        )
+    </insert>
 </mapper>
