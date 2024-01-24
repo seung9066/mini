@@ -67,6 +67,8 @@ function btnSearch(ele) {
 
 // 상세정보
 function getDtl(ele) {
+    btnC();
+
     var data = grid1.trData;
     var preDtl = data.preDtl;
     // db에 줄 바꿈을 <br>로 처리
