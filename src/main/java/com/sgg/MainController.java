@@ -4,7 +4,10 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.util.MapUtils;
+import org.thymeleaf.util.StringUtils;
 
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -46,6 +49,23 @@ public class MainController {
 
         model.addAttribute("data", formData);
         return formData.get("pagePath");
+    }
+
+    @PostMapping("/getSession")
+    @ResponseBody
+    public Map<String, Object> getSession(@RequestBody Map<String, String> map, HttpSession session) {
+        Map<String, Object> returnMap = new HashMap<>();
+        if (!StringUtils.isEmpty(map.get("sessionId"))) {
+            if (map.get("sessionId").equals("userInfo")) {
+                returnMap.put("userId", session.getAttribute("userId"));
+                returnMap.put("userNm", session.getAttribute("userNm"));
+                returnMap.put("userAuth", session.getAttribute("userAuth"));
+            } else {
+                returnMap.put(map.get("sessionId"), session.getAttribute(map.get("sessionId")));
+            }
+        }
+
+        return returnMap;
     }
 
 }

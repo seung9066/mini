@@ -567,3 +567,28 @@ function sggUpdate(obj) {
 
     return returnData;
 }
+
+// 세션 가져오기
+// type : 세션 종류 ex) userInfo
+function sggSession(type) {
+    var jsonData = JSON.stringify({sessionId : type});
+
+    var returnData = '';
+
+    $.ajax({
+        url:'/getSession',
+        type:'POST',
+        contentType: 'application/json',
+        data:jsonData,
+        dataType:"json",
+        async:false,
+        success:function(data){
+            returnData = data;
+        },
+        error:function(reject){
+            returnData = reject;
+        }
+    })
+
+    return returnData;
+}
