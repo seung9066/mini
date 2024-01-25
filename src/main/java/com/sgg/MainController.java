@@ -100,7 +100,7 @@ public class MainController {
                 File saveFile = new File(uploadFolder + "\\" + fileUuid + fileRealName);
                 try {
                     fileList.get(i).transferTo(saveFile);
-
+                    cnt++;
                 } catch (IllegalStateException | IOException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
