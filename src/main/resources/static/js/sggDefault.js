@@ -592,3 +592,27 @@ function sggSession(type) {
 
     return returnData;
 }
+
+// 파일 업로드
+// id = multipart form id
+function sggFileUpLoad(id) {
+    var formData = new FormData(document.getElementById(id));
+
+    var returnData = '';
+
+    $.ajax({
+        url:'/upLoadFile',
+        type : 'POST',
+        data : formData,
+        processData: false,
+        contentType: false,
+        async : false,
+        success:function(data){
+            returnData = data;
+        },error : function(reject){
+            returnData = reject;
+        }
+    });
+
+    return returnData;
+}

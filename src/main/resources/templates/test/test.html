@@ -10,8 +10,17 @@
 
     <script type="text/javascript">
         $(document).ready(function(){
-            console.log(sggSession('userInfo'));
-            console.log(sggSession('userId'));
+            var file = document.getElementsByName('files');
+            file.forEach(function(f) {
+                f.addEventListener('change', function() {
+                    console.log(f.files);
+                });
+            });
+
+            var upFile = document.getElementById('upFile');
+            upFile.addEventListener('click', function() {
+                sggFileUpLoad('fileForm2');
+            });
         });
     </script>
 </head>
@@ -39,8 +48,20 @@
 
                 <div class="col-lg-12 mt-5 mt-lg-0 d-flex align-items-stretch">
                     <div class="php-email-form" id="frmNewAccount">
-                        <form id="frm">
+                        <form action="upLoadFile" method="post" id="fileForm" enctype="multipart/form-data">
+                            <input type="file" multiple="multiple" name="files">
+                            <input type="submit" value="test">
+                        </form>
+                    </div>
+                </div>
 
+                <h2>ajax</h2>
+                <div class="col-lg-12 mt-5 mt-lg-0 d-flex align-items-stretch">
+                    <div class="php-email-form">
+                        <form id="fileForm2" enctype="multipart/form-data">
+                            <input type="file" multiple="multiple" name="files">
+                            <input type="file" multiple="multiple" name="files">
+                            <input type="button" value="test" id="upFile">
                         </form>
                     </div>
                 </div>
