@@ -191,6 +191,7 @@ function doSave() {
     if (data > 0) {
         alert('수정 완료.');
         sggGridRun(1, grid1.frmId);
+        trId = '';
     }
 }
 
