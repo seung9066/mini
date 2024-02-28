@@ -9,4 +9,6 @@ import java.util.Map;
 public interface EtcMapper {
 
     List<Map<String, Object>> diaryList(Map<String, Object> map);
+
+    int diaryListCnt(Map<String, Object> map);
 }

@@ -10,4 +10,6 @@ import java.util.Map;
 public interface EtcService {
 
     List<Map<String, Object>> diaryList(Map<String, Object> map, HttpSession session) throws Exception;
+
+    int diaryListCnt(Map<String, Object> map, HttpSession session) throws Exception;
 }

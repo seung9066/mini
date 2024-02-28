@@ -21,6 +21,33 @@
             upFile.addEventListener('click', function() {
                 sggFileUpLoad('fileForm2');
             });
+
+            var textBtn = document.getElementById('textBtn');
+            textBtn.addEventListener('click', function() {
+                var data = $('#test').serialize();
+                console.log(data);
+                var jsonData = JSON.stringify(data);
+                console.log(jsonData);
+                var testJson = JSON.stringify({test1 : 'test1', test2 : 'test2'});
+                console.log(testJson);
+
+                var returnData = '';
+                $.ajax({
+                    url:'/auth/menuSave',
+                    type:'POST',
+                    contentType: 'application/json',
+                    data:testJson,
+                    dataType:"json",
+                    async:false,
+                    success:function(data){
+                        returnData = data;
+                    },
+                    error:function(reject){
+                        returnData = reject;
+                    }
+                })
+                console.log(returnData);
+            });
         });
     </script>
 </head>
@@ -62,6 +89,18 @@
                             <input type="file" multiple="multiple" name="files">
                             <input type="file" multiple="multiple" name="files">
                             <input type="button" value="test" id="upFile">
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 mt-5 mt-lg-0 d-flex align-items-stretch">
+                    <div class="php-email-form">
+                        <form id="test">
+                            <label for="testTxt1">테스트</label>
+                            <input type="text" id="testTxt1" name="testTxt1">
+                            <label for="testTxt2">테스트2</label>
+                            <input type="text" id="testTxt2" name="testTxt2">
+                            <input type="button" id="textBtn" value="testBtn">
                         </form>
                     </div>
                 </div>

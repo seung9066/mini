@@ -48,7 +48,7 @@ var sggGridList = [];
 var sggGridTr = 0;
 
 // 클릭된 버튼 표시용
-var sggPgNum = 0;
+var sggPgNum = 1;
 
 function sggGridRun(pageNum, gridFrmId) {
     // 새로 그렸으니 tr onclick 색상용 변수 비워주기
@@ -618,12 +618,14 @@ function sggGridtrData(grid) {
         trs.forEach(function (tr) {
             tr.addEventListener('click', function () {
                 var id = this.id;
-                var frm = grid.frmId + '_';
-                id = id.replace(frm, '');
-                grid.trData = grid.data[id];
+                if (id) {
+                    var frm = grid.frmId + '_';
+                    id = id.replace(frm, '');
+                    grid.trData = grid.data[id];
 
-                if (grid.tonC) {
-                    eval(grid.tonC + '(tr)');
+                    if (grid.tonC) {
+                        eval(grid.tonC + '(tr)');
+                    }
                 }
             });
         });

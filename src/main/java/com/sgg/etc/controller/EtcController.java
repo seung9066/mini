@@ -41,5 +41,19 @@ public class EtcController {
         return etcService.diaryList(map, session);
     }
 
+    /**
+     * 일기 목록 수
+     * @param map
+     * @param session
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/etc/diaryListCnt")
+    @ResponseBody
+    public int diaryListCnt(@RequestParam Map<String, Object> map, HttpSession session) throws Exception{
+
+        return etcService.diaryListCnt(map, session);
+    }
+
 
 }
