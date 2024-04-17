@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="layout/_layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sggProgramDesign</title>
+
+    <script type="text/javascript" th:src="@{/js/program/monthly.js}"></script>
+</head>
+<body>
+    <div layout:fragment="content">
+        <main id="main">
+
+            <section id="breadcrumbs" class="breadcrumbs">
+                <div class="container" id="showPath">
+                </div>
+            </section>
+
+            <section class="inner-page">
+                <div class="container">
+                    <section id="pricing" class="pricing">
+                        <div class="container" data-aos="fade-up">
+
+                            <div class="section-title">
+                                <h2>주간보고 > 월간보고 취합 프로그램</h2>
+                            </div>
+
+                            <div class="writeFrm">
+                                <button type="button" class="btn btn-sm btn-primary" id="btnTrans">변환</button>
+                                <button type="button" class="btn btn-sm btn-primary" id="btnReset">초기화</button>
+                            </div>
+
+                            <br>
+
+                            <div class="row">
+
+                                <div class="col-xl" data-aos="fade-up" data-aos-delay="100">
+                                    <div class="box">
+                                        <h3>주간보고</h3>
+                                        <textarea class="form-control" name="message" rows="20" id="frmWrite" required></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-lg" data-aos="fade-up" data-aos-delay="100">
+                                    <div class="box">
+                                        <textarea class="form-control" name="message" rows="20" id="chg0" required></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg" data-aos="fade-up" data-aos-delay="100">
+                                    <div class="box">
+                                        <textarea class="form-control" name="message" rows="20" id="chg1" required></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-lg" data-aos="fade-up" data-aos-delay="100">
+                                    <div class="box">
+                                        <textarea class="form-control" name="message" rows="20" id="chg2" required></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg" data-aos="fade-up" data-aos-delay="100">
+                                    <div class="box">
+                                        <textarea class="form-control" name="message" rows="20" id="chg3" required></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </section><!-- End Pricing Section -->
+
+                </div>
+            </section>
+        </main><!-- End #main -->
+
+    </div>
+</body>
+</html>
