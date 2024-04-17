@@ -15,6 +15,17 @@ $(document).ready(function(){
     });
 });
 
+// 최종본
+function doFinal() {
+    var txt = "";
+    txt += document.getElementById("chg0").value;
+    txt += document.getElementById("chg1").value;
+    txt += document.getElementById("chg2").value;
+    txt += document.getElementById("chg3").value;
+    document.getElementById("frmFinal").value = txt;
+}
+
+// 초기화
 function doReset() {
     document.getElementById("frmWrite").value = "";
     document.getElementById("chg0").value = "";
@@ -23,6 +34,7 @@ function doReset() {
     document.getElementById("chg3").value = "";
 }
 
+// 변환
 function doChange() {
     var frmWrite = document.getElementById("frmWrite");
     var txt = frmWrite.value;
@@ -36,6 +48,9 @@ function doChange() {
 
         // 내용 합쳐주기
         changeFinal(txtList);
+
+        // 최종합본
+        doFinal();
     }
 }
 
