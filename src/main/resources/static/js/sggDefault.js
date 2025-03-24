@@ -239,7 +239,7 @@ function sggDataToMap(obj) {
 // val = 변환할 값
 function sggReg(type, val) {
     // 전화번호
-    if (type == 'tel') {
+    if (type == 'tel' && val) {
         var phoneRule = /(^02.{0}|^01.{1}|[0-9]{3,4})([0-9]{3,4})([0-9]{4})/g;
         var tel = val.replace(phoneRule, '$1-$2-$3');
         return tel;
